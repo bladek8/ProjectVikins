@@ -34,7 +34,8 @@ namespace Assets.Script.View
 
         public void TakeDamage(int? damage)
         {
-            enimyController.DecreaseStatus("Life", damage, this.GetInstanceID());
+            if (Convert.ToInt32(enimyController.DecreaseStats("Life", damage, this.GetInstanceID())) <= 0)
+                Destroy(this.gameObject);
         }
     }
 }

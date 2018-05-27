@@ -8,7 +8,7 @@ using Assets.Script.Helpers;
 
 namespace Assets.Script.Controller
 {
-    public class EnimyController : Shared.CharacterController<BLL.EnimyFunctions>
+    public class EnimyController : Shared.CharacterController
     {
         private readonly BLL.EnimyFunctions enimyFunctions;
         private readonly int id;
@@ -19,11 +19,12 @@ namespace Assets.Script.Controller
         public Transform target;
 
         public EnimyController(DAL.Enimy model)
+            : base("EnimyFunctions")
         {
-            enimyFunctions = new BLL.EnimyFunctions(model);
+            enimyFunctions = new BLL.EnimyFunctions();
+            enimyFunctions.Create(model);
             this.id = model.EnimyId;
             players = utils.GetTransformInLayer("Player");
-            SetFunction();
         }
 
 
@@ -54,15 +55,5 @@ namespace Assets.Script.Controller
                 target = null;
         }
 
-        public override void SetFunction()
-        {
-            this._TFuncitons = enimyFunctions;
-        }
-        //public void DecreaseStatus(string stats, object value, int id)
-        //{
-        //    Debug.Log(_TFuncitons);
-        //    enimyFunctions.DecreaseStats(stats, value, id);
-        //    Debug.Log(enimyFunctions.GetDataById(id).Life);
-        //}
     }
 }

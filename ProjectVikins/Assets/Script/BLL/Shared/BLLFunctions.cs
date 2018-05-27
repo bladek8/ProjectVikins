@@ -15,7 +15,6 @@ namespace Assets.Script.BLL.Shared
         protected List<TEntity> ListContext;
         protected string entityIdPropertyName;
 
-
         public BLLFunctions(string entityIdPropertyName)
         {
             this.entityIdPropertyName = entityIdPropertyName;
@@ -26,15 +25,57 @@ namespace Assets.Script.BLL.Shared
             return ListContext;
         }
 
-        public abstract TEntity GetDataById(int id);
+        public TEntity GetDataById(int id)
+        {
+            var idProperty = ListContext[0].GetType().GetProperty(entityIdPropertyName);
+            return ListContext.Where(x => Convert.ToInt32(idProperty.GetValue(x, null)) == id).First();
+
+        }
+        public void UpdateStats(string stats, object value, int id)
+        {
+            typeof(TEntity).GetProperty(stats).SetValue(GetDataById(id), value, null);
+        }
+        public object DecreaseStats(string stats, object value, int id)
+        {
+            int currentStats, _value, newValue;
+            try
+            {
+                currentStats = Convert.ToInt32(typeof(TEntity).GetProperty(stats).GetValue(GetDataById(id), null));
+                _value = Convert.ToInt32(value);
+                newValue = (currentStats - _value);
+            }
+            catch
+            {
+                return null;
+            }
+
+            typeof(DAL.Enimy).GetProperty(stats).SetValue(GetDataById(id), newValue, null);
+            return newValue;
+        }
+        public object IncreaseStats(string stats, object value, int id)
+        {
+            int currentStats, _value, newValue;
+            try
+            {
+                currentStats = Convert.ToInt32(typeof(TEntity).GetProperty(stats).GetValue(GetDataById(id), null));
+                _value = Convert.ToInt32(value);
+                newValue = (currentStats + _value);
+            }
+            catch
+            {
+                return null;
+            }
+
+            typeof(DAL.Enimy).GetProperty(stats).SetValue(GetDataById(id), newValue, null);
+            return newValue;
+        }
+        public void UpdateMultipleStats(Dictionary<string, object> datas, int id)
+        {
+            foreach (var data in datas)
+                typeof(TEntity).GetProperty(data.Key).SetValue(GetDataById(id), data.Value, null);
+        }
+
         public abstract int Create(TEntity model);
         public abstract void SetListContext();
-        public abstract void UpdateStats(string stats, object value, int id);
-        public abstract void DecreaseStats(string stats, object value, int id);
-        public abstract void IncreaseStats(string stats, object value, int id);
-        public abstract void UpdateMultipleStats(Dictionary<string, object> datas, int id);
-
-
-        //public abstract void UpdateStats(IEnumerable<string> stats, object value, int id)
     }
 }

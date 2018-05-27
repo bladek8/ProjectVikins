@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Script.Controller
 {
-    public class PlayerController : Shared.CharacterController<BLL.PlayerFunctions>
+    public class PlayerController : Shared.CharacterController
     {
         public Helpers.Utils utils = new Helpers.Utils();
         private readonly BLL.PlayerFunctions playerFunctions;
@@ -14,11 +14,12 @@ namespace Assets.Script.Controller
         private readonly GameObject gameObj;
 
         public PlayerController(DAL.Player model, GameObject gameObj)
+            : base("PlayerFunctions")
         {
-            playerFunctions = new BLL.PlayerFunctions(model);
+            playerFunctions = new BLL.PlayerFunctions();
+            playerFunctions.Create(model);
             this.id = model.PlayerId;
             this.gameObj = gameObj;
-            SetFunction();
         }
 
         public Vector2 Attack(Vector2 colSize)
@@ -73,10 +74,6 @@ namespace Assets.Script.Controller
             var player = playerFunctions.GetDataById(id);
             gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk);
         }
-
-        public override void SetFunction()
-        {
-            this._TFuncitons = playerFunctions;
-        }
+        
     }
 }

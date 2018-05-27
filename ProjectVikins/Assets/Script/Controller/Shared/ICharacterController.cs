@@ -10,9 +10,9 @@ namespace Assets.Script.Controller.Shared
     {
         void GiveDamage(Component script, int damage);
         int GetDamage(int minDamage, int maxDamage);
-        void DecreaseStatus(string stats, object value, object id);
-        void IncreaseStatus(string stats, object value, object id);
-        void UpdateStatus(string stats, object value, object id);
-        void UpdateMultipleStatus(Dictionary<string, object> datas, object id);
+        object DecreaseStats(string stats, object value, object id);
+        object IncreaseStats(string stats, object value, object id);
+        void UpdateStats(string stats, object value, object id);
+        void UpdateMultipleStats(Dictionary<string, object> datas, object id);
     }
 }

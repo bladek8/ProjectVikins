@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
 namespace Assets.Script.Controller.Shared
 {
-    public abstract class CharacterController<TFunctions> : MonoBehaviour, ICharacterController
-        where TFunctions : MonoBehaviour
+    public abstract class CharacterController : MonoBehaviour, ICharacterController
     {
-        protected TFunctions _TFuncitons;
-        
         System.Random rnd = new System.Random();
+        Type className;
+        object instatiatedFunction;
+
+        public CharacterController(string function)
+        {
+            string item = "Assets.Script.BLL." + function;
+            className = Type.GetType(item);
+            instatiatedFunction = Activator.CreateInstance(className);
+        }
 
         public void GiveDamage(Component script, int damage)
         {
@@ -23,23 +30,25 @@ namespace Assets.Script.Controller.Shared
             return rnd.Next(minDamage, maxDamage);
         }
 
-        public void DecreaseStatus(string stats, object value, object id)
+        public object DecreaseStats(string stats, object value, object id)
         {
-            _TFuncitons.SendMessage("DecreaseStats", new { stats, value, id });
+            MethodInfo m = className.GetMethod("DecreaseStats");
+            return m.Invoke(instatiatedFunction, new object[] { stats, value, id });
         }
-        public void IncreaseStatus(string stats, object value, object id)
+        public object IncreaseStats(string stats, object value, object id)
         {
-            _TFuncitons.SendMessage("IncreaseStatus", new { stats, value, id });
+            MethodInfo m = className.GetMethod("IncreaseStats");
+            return m.Invoke(instatiatedFunction, new object[] { stats, value, id });
         }
-        public void UpdateStatus(string stats, object value, object id)
+        public void UpdateStats(string stats, object value, object id)
         {
-            _TFuncitons.SendMessage("UpdateStatus", new { stats, value, id });
+            MethodInfo m = className.GetMethod("UpdateStats");
+            m.Invoke(instatiatedFunction, new object[] { stats, value, id });
         }
-        public void UpdateMultipleStatus(Dictionary<string, object> datas, object id)
+        public void UpdateMultipleStats(Dictionary<string, object> datas, object id)
         {
-            _TFuncitons.SendMessage("UpdateMultipleStatus", new { datas, id });
+            MethodInfo m = className.GetMethod("UpdateMultipleStats");
+            m.Invoke(instatiatedFunction, new object[] { datas, id });
         }
-
-        public abstract void SetFunction();
     }
 }

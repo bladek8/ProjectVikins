@@ -12,8 +12,7 @@ namespace Assets.Script.View
 
         private void Start()
         {
-            enimyBossController = new Controller.EnimyBossController(this.GetInstanceID(),100, 3 , 5, 10, 10, 20);
-            enimyBossController.MudarVelocidade(50);
+            enimyBossController = new Controller.EnimyBossController(new Script.DAL.EnimyBoss { EnimyBossId = this.GetInstanceID(), Life = 100, CharacterTypeId = 3, SpeedWalk = 5, SpeedRun = 10, AttackMin = 10, AttackMax = 20 });
         }
 
 
