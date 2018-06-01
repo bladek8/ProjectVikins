@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Script.Models;
 using UnityEngine;
 
 namespace Assets.Script.Controller
 {
-    public class PlayerController : Shared.CharacterController
+    public class PlayerController : Shared.CharacterController<Models.PlayerViewModel>
     {
-        public Helpers.Utils utils = new Helpers.Utils();
+        System.Random rnd = new System.Random();
+        private Helpers.Utils utils = new Helpers.Utils();
         private readonly BLL.PlayerFunctions playerFunctions;
         private readonly int id;
         private readonly GameObject gameObj;
@@ -74,6 +76,29 @@ namespace Assets.Script.Controller
             var player = playerFunctions.GetDataById(id);
             gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk);
         }
-        
+
+        public override int GetDamage()
+        {
+            var player = playerFunctions.GetDataById(id);
+            return rnd.Next(player.AttackMin , player.AttackMax);
+        }
+
+        public override void UpdateStats(PlayerViewModel model)
+        {
+            model.PlayerId = id;
+            playerFunctions.UpdateStats(model);
+        }
+
+        public override void Decrease(PlayerViewModel model)
+        {
+            model.PlayerId = id;
+            playerFunctions.Decrease(model);
+        }
+
+        public override void Increase(PlayerViewModel model)
+        {
+            model.PlayerId = id;
+            playerFunctions.Increase(model);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Assets.Script.View
 
         void Start()
         {
-            enimyController = new Controller.EnimyController( new DAL.Enimy { EnimyId = this.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 });
+            enimyController = new Controller.EnimyController( new DAL.Enimy { EnimyId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 });
 
             fow = gObject.GetComponent<FieldOfView>();
         }
@@ -32,10 +32,10 @@ namespace Assets.Script.View
                 enimyController.target = null;
         }
 
-        public void TakeDamage(int? damage)
-        {
-            if (Convert.ToInt32(enimyController.DecreaseStats("Life", damage, this.GetInstanceID())) <= 0)
-                Destroy(this.gameObject);
-        }
+        //public void TakeDamage(int? damage)
+        //{
+        //    if (Convert.ToInt32(enimyController.DecreaseStats("Life", damage, this.GetInstanceID())) <= 0)
+        //        Destroy(this.gameObject);
+        //}
     }
 }

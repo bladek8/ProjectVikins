@@ -8,7 +8,7 @@ namespace Assets.Script.DAL
     {
         public static List<CharacterType> CharactersType;
         public static List<Enimy> enimies = new List<Enimy>();
-        public static List<EnimyBoss> enimyBosses = new List<EnimyBoss>();
+        //public static List<EnimyBoss> enimyBosses = new List<EnimyBoss>();
         public static List<Player> players = new List<Player>();
 
         //public MVC_Game2Context()
@@ -28,10 +28,10 @@ namespace Assets.Script.DAL
         {
             return enimies;
         }
-        public List<EnimyBoss> GetEnimyBosses()
-        {
-            return enimyBosses;
-        }
+        //public List<EnimyBoss> GetEnimyBosses()
+        //{
+        //    return enimyBosses;
+        //}
         public void SetPlayer(Player model)
         {
             players.Add(model);

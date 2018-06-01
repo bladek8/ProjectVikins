@@ -4,8 +4,9 @@ using System.Linq;
 
 namespace Assets.Script.BLL.Shared
 {
-    public interface IBLLFunctions<TEntity>
+    public interface IBLLFunctions<TEntity, TViewModel>
         where TEntity : class
+        where TViewModel : class
     {
         List<TEntity> GetData();
         TEntity GetDataById(int id);

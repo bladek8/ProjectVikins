@@ -5,17 +5,18 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Assets.Script.Helpers;
+using Assets.Script.Models;
 
 namespace Assets.Script.Controller
 {
-    public class EnimyController : Shared.CharacterController
+    public class EnimyController : Shared.CharacterController<Models.EnimyViewModel>
     {
         private readonly BLL.EnimyFunctions enimyFunctions;
         private readonly int id;
         List<Transform> players;
         private Utils utils = new Utils();
 
-        public Models.Shared.CountDown followPlayer = new Models.Shared.CountDown();
+        public CountDown followPlayer = new CountDown();
         public Transform target;
 
         public EnimyController(DAL.Enimy model)
@@ -55,5 +56,24 @@ namespace Assets.Script.Controller
                 target = null;
         }
 
+        public override int GetDamage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateStats(EnimyViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Decrease(EnimyViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Increase(EnimyViewModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

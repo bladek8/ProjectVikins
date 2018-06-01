@@ -7,48 +7,66 @@ using UnityEngine;
 
 namespace Assets.Script.Controller.Shared
 {
-    public abstract class CharacterController : MonoBehaviour, ICharacterController
+    public abstract class CharacterController<TViewModel> : MonoBehaviour, ICharacterController<TViewModel>
+        where TViewModel : class
     {
-        System.Random rnd = new System.Random();
         Type className;
-        object instatiatedFunction;
 
         public CharacterController(string function)
         {
             string item = "Assets.Script.BLL." + function;
-            className = Type.GetType(item);
-            instatiatedFunction = Activator.CreateInstance(className);
         }
 
-        public void GiveDamage(Component script, int damage)
+        public void GiveDamage(string target, int? damage, int? id)
         {
-            script.SendMessage("TakeDamage", damage);
+            if(!damage.HasValue && !id.HasValue) return;
+
+            DecreaseStats(target, "Life", damage, id);
+            //script.SendMessage("TakeDamage", damage);
         }
 
-        public int GetDamage(int minDamage, int maxDamage)
-        {
-            return rnd.Next(minDamage, maxDamage);
-        }
 
-        public object DecreaseStats(string stats, object value, object id)
+
+        public object DecreaseStats(string target, string stats, object value, object id)
         {
+            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
             MethodInfo m = className.GetMethod("DecreaseStats");
-            return m.Invoke(instatiatedFunction, new object[] { stats, value, id });
+            return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
-        public object IncreaseStats(string stats, object value, object id)
+        public object IncreaseStats(string target, string stats, object value, object id)
         {
+            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
             MethodInfo m = className.GetMethod("IncreaseStats");
-            return m.Invoke(instatiatedFunction, new object[] { stats, value, id });
+            return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
-        public void UpdateStats(string stats, object value, object id)
+        public void DecreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
         {
+            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            MethodInfo m = className.GetMethod("DecreaseMultipleStats");
+            m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
+        }
+        public void IncreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
+        {
+            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            MethodInfo m = className.GetMethod("IncreaseMultipleStats");
+            m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
+        }
+        public void UpdateStats(string target, string stats, object value, object id)
+        {
+            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
             MethodInfo m = className.GetMethod("UpdateStats");
-            m.Invoke(instatiatedFunction, new object[] { stats, value, id });
+            m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
-        public void UpdateMultipleStats(Dictionary<string, object> datas, object id)
+        public void UpdateMultipleStats(string target, Dictionary<string, object> datas, object id)
         {
+            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
             MethodInfo m = className.GetMethod("UpdateMultipleStats");
-            m.Invoke(instatiatedFunction, new object[] { datas, id });
+            m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
         }
+
+        public abstract int GetDamage();
+        public abstract void UpdateStats(TViewModel model);
+        public abstract void Decrease(TViewModel model);
+        public abstract void Increase(TViewModel model);
     }
 }

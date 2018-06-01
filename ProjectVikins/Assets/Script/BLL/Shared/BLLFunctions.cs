@@ -8,8 +8,9 @@ using UnityEngine;
 
 namespace Assets.Script.BLL.Shared
 {
-    public abstract class BLLFunctions<TEntity> : MonoBehaviour, IBLLFunctions<TEntity>
+    public abstract class BLLFunctions<TEntity, TViewModel> : MonoBehaviour, IBLLFunctions<TEntity, TViewModel>
         where TEntity : class
+        where TViewModel : class
     {
         protected DAL.MVC_Game2Context context = new DAL.MVC_Game2Context();
         protected List<TEntity> ListContext;
@@ -28,7 +29,7 @@ namespace Assets.Script.BLL.Shared
         public TEntity GetDataById(int id)
         {
             var idProperty = ListContext[0].GetType().GetProperty(entityIdPropertyName);
-            return ListContext.Where(x => Convert.ToInt32(idProperty.GetValue(x, null)) == id).First();
+            return ListContext.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == id).First();
 
         }
         public void UpdateStats(string stats, object value, int id)
@@ -74,8 +75,60 @@ namespace Assets.Script.BLL.Shared
             foreach (var data in datas)
                 typeof(TEntity).GetProperty(data.Key).SetValue(GetDataById(id), data.Value, null);
         }
+        public Dictionary<string, object> DecreaseMultipleStats(Dictionary<string, object> datas, int id)
+        {
+            int currentStats, _value, newValue;
+            var newDatas = new Dictionary<string, object>();
+            var model = GetDataById(id);
+
+            foreach (KeyValuePair<string, object> data in datas)
+            {
+                try
+                {
+                    currentStats = Convert.ToInt32(typeof(TEntity).GetProperty(data.Key).GetValue(model, null));
+                    _value = Convert.ToInt32(data.Value);
+                    newValue = (currentStats - _value);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                typeof(DAL.Enimy).GetProperty(data.Key).SetValue(GetDataById(id), newValue, null);
+                newDatas.Add(data.Key, newValue);
+            }
+
+            return newDatas;
+        }
+        public Dictionary<string, object> IncreaseMultipleStats(Dictionary<string, object> datas, int id)
+        {
+            int currentStats, _value, newValue;
+            var newDatas = new Dictionary<string, object>();
+
+            foreach (var data in datas)
+            {
+                try
+                {
+                    currentStats = Convert.ToInt32(typeof(TEntity).GetProperty(data.Key).GetValue(GetDataById(id), null));
+                    _value = Convert.ToInt32(data.Value);
+                    newValue = (currentStats + _value);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                typeof(DAL.Enimy).GetProperty(data.Key).SetValue(GetDataById(id), newValue, null);
+                newDatas.Add(data.Key, newValue);
+            }
+
+            return newDatas;
+        }
 
         public abstract int Create(TEntity model);
         public abstract void SetListContext();
+        public abstract void UpdateStats(TViewModel model);
+        public abstract void Decrease(TViewModel model);
+        public abstract void Increase(TViewModel model);
     }
 }

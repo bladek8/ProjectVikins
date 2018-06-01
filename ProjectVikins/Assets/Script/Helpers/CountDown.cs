@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.Script.Models.Shared
+namespace Assets.Script.Helpers
 {
     public class CountDown
     {

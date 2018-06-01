@@ -6,13 +6,18 @@ using UnityEngine;
 
 namespace Assets.Script.Controller.Shared
 {
-    public interface ICharacterController
+    public interface ICharacterController<TViewModel>
+        where TViewModel : class
     {
-        void GiveDamage(Component script, int damage);
-        int GetDamage(int minDamage, int maxDamage);
-        object DecreaseStats(string stats, object value, object id);
-        object IncreaseStats(string stats, object value, object id);
-        void UpdateStats(string stats, object value, object id);
-        void UpdateMultipleStats(Dictionary<string, object> datas, object id);
+        void GiveDamage(string targetFunction, int? damage, int? id);
+        int GetDamage();
+        object DecreaseStats(string target, string stats, object value, object id);
+        object IncreaseStats(string target, string stats, object value, object id);
+        void UpdateStats(string target, string stats, object value, object id);
+        void UpdateMultipleStats(string target, Dictionary<string, object> datas, object id);
+
+        void UpdateStats(TViewModel model);
+        void Decrease(TViewModel model);
+        void Increase(TViewModel model);
     }
 }

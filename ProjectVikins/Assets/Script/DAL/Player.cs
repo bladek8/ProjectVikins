@@ -6,8 +6,8 @@ namespace Assets.Script.DAL
 {
     public class Player : Shared.Character
     {
-        public Helpers.PossibleMoviment LastMoviment { get; set; }
         public int PlayerId { get; set; }
+        public Helpers.PossibleMoviment LastMoviment { get; set; }
 
         public Player()
         {

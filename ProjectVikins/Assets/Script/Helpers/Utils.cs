@@ -8,12 +8,12 @@ namespace Assets.Script.Helpers
 {
     public class Utils
     {
-        public List<Models.Shared.KeyMove> moveKeyCode = new List<Models.Shared.KeyMove>
+        public List<KeyMove> moveKeyCode = new List<KeyMove>
         {
-           new Models.Shared.KeyMove(KeyCode.A, Vector2.left, false),
-           new Models.Shared.KeyMove(KeyCode.D, Vector2.right, true),
-           new Models.Shared.KeyMove(KeyCode.W, Vector2.up),
-           new Models.Shared.KeyMove(KeyCode.S, Vector2.down)
+           new KeyMove(KeyCode.A, Vector2.left, false),
+           new KeyMove(KeyCode.D, Vector2.right, true),
+           new KeyMove(KeyCode.W, Vector2.up),
+           new KeyMove(KeyCode.S, Vector2.down)
         };
 
         public List<Transform> GetTransformInLayer(string layer)

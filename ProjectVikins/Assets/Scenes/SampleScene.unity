@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 1217270222}
   m_Layer: 10
   m_Name: Enimy
-  m_TagString: Untagged
+  m_TagString: Enimy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -501,7 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2058668451}
   - component: {fileID: 2058668452}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: FieldOfView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 7
-  viewAngle: 98
+  viewAngle: 0
   rotation: 0
   targetMask:
     serializedVersion: 2
