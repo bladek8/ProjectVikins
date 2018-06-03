@@ -217,6 +217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3760dd086248f81468ba5d8f4189c748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enimyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!95 &961287763
 Animator:
   serializedVersion: 3
@@ -369,6 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b1d98e6f35bf94685155a584b67fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
   gObject: {fileID: 2058668450}
 --- !u!95 &1217270219
 Animator:
@@ -533,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 7
-  viewAngle: 106
+  viewAngle: 77
   rotation: 0
   targetMask:
     serializedVersion: 2
