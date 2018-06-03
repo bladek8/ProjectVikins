@@ -23,7 +23,7 @@ namespace Assets.Script.Helpers
             CoolDown = 0;
         }
 
-        public void DecreaseTime(CountDown model)
+        public static void DecreaseTime(CountDown model)
         {
             if (model.CoolDown > 0)
                 model.CoolDown -= Time.deltaTime;

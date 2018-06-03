@@ -26,12 +26,8 @@ namespace Assets.Script.Helpers
             GameObject[] gos = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
 
             foreach (GameObject go in gos)
-            {
                 if (go.layer == playerLayerId)
-                {
                     players.Add(go.transform);
-                }
-            }
 
             return players;
         }
@@ -39,30 +35,26 @@ namespace Assets.Script.Helpers
 
         public Transform NearTargetInView(List<Transform> players, List<Transform> visiblePlayers, Transform transform)
         {
+            if (players.Count == 0 || visiblePlayers.Count == 0) return null;
             List<Transform> playersList = ConcatEqualItemList(players, visiblePlayers);
             Transform _player = players[0];
             foreach (var player in playersList)
-            {
                 if (Vector3.Distance(transform.position, player.transform.position) < Vector3.Distance(transform.position, _player.transform.position))
-                {
                     _player = player;
-                }
-            }
 
             return _player;
         }
 
         public Transform NearTarget(List<Transform> players, Transform transform, Transform target)
         {
+            if (players.Count == 0) return null;
             Transform _player = target;
             foreach (var player in players)
             {
                 var distance = Vector3.Distance(transform.position, player.transform.position);
-                
+
                 if (distance < 2 && distance < Vector3.Distance(transform.position, _player.transform.position))
-                {
                     _player = player;
-                }
             }
 
             return _player;
@@ -71,11 +63,11 @@ namespace Assets.Script.Helpers
         public List<Transform> ConcatEqualItemList(List<Transform> list1, List<Transform> list2)
         {
             var newList = new List<Transform>();
-            foreach(var item in list2)
+            foreach (var item in list2)
             {
                 if (!list1.Contains(item)) continue;
                 newList.Add(item);
-                }
+            }
             return newList;
         }
     }

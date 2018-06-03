@@ -7,9 +7,8 @@ using UnityEngine;
 
 namespace Assets.Script.Controller
 {
-    public class PlayerController : Shared.CharacterController<Models.PlayerViewModel>
+    public class PlayerController : Shared._CharacterController<Models.PlayerViewModel>
     {
-        System.Random rnd = new System.Random();
         private Helpers.Utils utils = new Helpers.Utils();
         private readonly BLL.PlayerFunctions playerFunctions;
         private readonly int id;
@@ -24,27 +23,24 @@ namespace Assets.Script.Controller
             this.gameObj = gameObj;
         }
 
-        public Vector2 Attack(Vector2 colSize)
+        public override void Attack(Transform transform, Vector3 size, LayerMask targetLayer)
+        {
+            var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f, targetLayer);
+            foreach (var hitCollider in hitColliders)
+            {
+
+                if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID()))   continue;
+                targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
+                
+                if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
+                    Destroy(hitCollider.gameObject);
+            }
+        }
+
+        public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
             var player = playerFunctions.GetDataById(id);
-            if (player.LastMoviment == Helpers.PossibleMoviment.Down)
-                return new Vector2(0, -(colSize.y/2));
-            if (player.LastMoviment == Helpers.PossibleMoviment.Down_Left)
-                return new Vector2(-(colSize.x / 2), -(colSize.y / 2));
-            if (player.LastMoviment == Helpers.PossibleMoviment.Down_Right)
-                return new Vector2(colSize.x / 2, -(colSize.y / 2));
-            if (player.LastMoviment == Helpers.PossibleMoviment.Left)
-                return new Vector2(-colSize.x, 0);
-            if (player.LastMoviment == Helpers.PossibleMoviment.Right)
-                return new Vector2(colSize.x, 0);
-            if (player.LastMoviment == Helpers.PossibleMoviment.Up)
-                return new Vector2(0, colSize.y / 2);
-            if (player.LastMoviment == Helpers.PossibleMoviment.Up_Left)
-                return new Vector2(-(colSize.x / 2), colSize.y / 2);
-            if (player.LastMoviment == Helpers.PossibleMoviment.Up_Right)
-                return new Vector2(colSize.x / 2, colSize.y / 2);
-
-            return new Vector2(0, 0);
+            return transform.position + PositionAttack(colSize, player.LastMoviment);
         }
 
         public void SetLastMoviment(float inputX, float inputY)
@@ -80,7 +76,7 @@ namespace Assets.Script.Controller
         public override int GetDamage()
         {
             var player = playerFunctions.GetDataById(id);
-            return rnd.Next(player.AttackMin , player.AttackMax);
+            return rnd.Next(player.AttackMin, player.AttackMax);
         }
 
         public override void UpdateStats(PlayerViewModel model)

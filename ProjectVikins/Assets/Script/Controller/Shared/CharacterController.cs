@@ -7,12 +7,14 @@ using UnityEngine;
 
 namespace Assets.Script.Controller.Shared
 {
-    public abstract class CharacterController<TViewModel> : MonoBehaviour, ICharacterController<TViewModel>
+    public abstract class _CharacterController<TViewModel> : MonoBehaviour, ICharacterController<TViewModel>
         where TViewModel : class
     {
+        public System.Random rnd = new System.Random();
+        public List<int> targetsAttacked = new List<int>();
         Type className;
 
-        public CharacterController(string function)
+        public _CharacterController(string function)
         {
             string item = "Assets.Script.BLL." + function;
         }
@@ -22,10 +24,33 @@ namespace Assets.Script.Controller.Shared
             if(!damage.HasValue && !id.HasValue) return;
 
             DecreaseStats(target, "Life", damage, id);
-            //script.SendMessage("TakeDamage", damage);
         }
 
 
+        public Vector3 PositionAttack(Vector2 colSize, Helpers.PossibleMoviment direction)
+        {
+            switch (direction)
+            {
+                case Helpers.PossibleMoviment.Down:
+                    return new Vector2(0, -(colSize.y / 2));
+                case Helpers.PossibleMoviment.Down_Left:
+                    return new Vector2(-(colSize.x / 2), -(colSize.y / 2));
+                case Helpers.PossibleMoviment.Down_Right:
+                    return new Vector2(colSize.x / 2, -(colSize.y / 2));
+                case Helpers.PossibleMoviment.Left:
+                    return new Vector2(-colSize.x, 0);
+                case Helpers.PossibleMoviment.Right:
+                    return new Vector2(colSize.x, 0);
+                case Helpers.PossibleMoviment.Up:
+                    return new Vector2(0, colSize.y / 2);
+                case Helpers.PossibleMoviment.Up_Left:
+                    return new Vector2(-(colSize.x / 2), colSize.y / 2);
+                case Helpers.PossibleMoviment.Up_Right:
+                    return new Vector2(colSize.x / 2, colSize.y / 2);
+                default:
+                    return new Vector2(0, 0);
+            }
+        }
 
         public object DecreaseStats(string target, string stats, object value, object id)
         {
@@ -68,5 +93,7 @@ namespace Assets.Script.Controller.Shared
         public abstract void UpdateStats(TViewModel model);
         public abstract void Decrease(TViewModel model);
         public abstract void Increase(TViewModel model);
+        public abstract void Attack(Transform transform, Vector3 size, LayerMask targetLayer);
+        public abstract Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }
 }
