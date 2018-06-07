@@ -21,8 +21,7 @@ namespace Assets.Script.Controller
         public CountDown followPlayer = new CountDown();
         public Transform target;
 
-        public EnimyController(DAL.Enimy model)
-            : base("EnimyFunctions")
+        public EnimyController(Models.EnimyViewModel model)
         {
             enimyFunctions = new BLL.EnimyFunctions();
             enimyFunctions.Create(model);

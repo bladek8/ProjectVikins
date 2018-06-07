@@ -14,10 +14,20 @@ namespace Assets.Script.BLL
         {
             SetListContext();
         }
-        public override int Create(Player model)
+        public override int Create(Models.PlayerViewModel model)
         {
-            ListContext.Add(model);
-            return model.PlayerId;
+            var player = new DAL.Player()
+            {
+                AttackMax = model.AttackMax.Value,
+                CharacterTypeId = model.CharacterTypeId.Value,
+                AttackMin = model.AttackMin.Value,
+                PlayerId = model.PlayerId,
+                Life = model.Life.Value,
+                SpeedRun = model.SpeedRun.Value,
+                SpeedWalk = model.SpeedWalk.Value
+            };
+            ListContext.Add(player);
+            return player.PlayerId;
         }
 
         public override void SetListContext()

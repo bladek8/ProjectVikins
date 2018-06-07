@@ -26,10 +26,10 @@ namespace Assets.Script.BLL.Shared
             return ListContext;
         }
 
-        public TEntity GetDataById(int id)
+        public TEntity GetDataById(object id)
         {
             var idProperty = ListContext[0].GetType().GetProperty(entityIdPropertyName);
-            return ListContext.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == id).First();
+            return ListContext.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
 
         }
         public void UpdateStats(string stats, object value, int id)
@@ -125,7 +125,7 @@ namespace Assets.Script.BLL.Shared
             return newDatas;
         }
 
-        public abstract int Create(TEntity model);
+        public abstract int Create(TViewModel model);
         public abstract void SetListContext();
         public abstract void UpdateStats(TViewModel model);
         public abstract void Decrease(TViewModel model);

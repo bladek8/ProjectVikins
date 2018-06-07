@@ -22,6 +22,7 @@ namespace Assets.Script.View
         private BoxCollider2D _boxCollider2D;
         private BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
+        BoxCollider2D colliderTransform;
         public LayerMask enimyLayer;
         bool returnSpeed = false;
         float inputX, inputY;
@@ -29,7 +30,8 @@ namespace Assets.Script.View
 
         private void Start()
         {
-            playerController = new PlayerController(new DAL.Player { PlayerId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 }, this.gameObject);
+            playerController = new PlayerController(new Models.PlayerViewModel { PlayerId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 }, this.gameObject);
+            colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }
 
         private void FixedUpdate()
@@ -87,6 +89,7 @@ namespace Assets.Script.View
                     PlayerAnimator.SetBool("isWalking", false);
                 }
             }
+            transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
     }
 }

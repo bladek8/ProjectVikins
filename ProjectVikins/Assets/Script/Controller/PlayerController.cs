@@ -14,8 +14,7 @@ namespace Assets.Script.Controller
         private readonly int id;
         private readonly GameObject gameObj;
 
-        public PlayerController(DAL.Player model, GameObject gameObj)
-            : base("PlayerFunctions")
+        public PlayerController(Models.PlayerViewModel model, GameObject gameObj)
         {
             playerFunctions = new BLL.PlayerFunctions();
             playerFunctions.Create(model);
@@ -32,7 +31,7 @@ namespace Assets.Script.Controller
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID()))   continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
                 
-                if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
+                if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
                     Destroy(hitCollider.gameObject);
             }
         }

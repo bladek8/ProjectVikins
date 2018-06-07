@@ -16,10 +16,20 @@ namespace Assets.Script.BLL
             SetListContext();
         }
 
-        public override int Create(Enimy model)
+        public override int Create(Models.EnimyViewModel model)
         {
-            context.SetEnimy(model);
-            return model.EnimyId;
+            var enemy= new DAL.Enimy()
+            {
+                AttackMax = model.AttackMax.Value,
+                CharacterTypeId = model.CharacterTypeId.Value,
+                AttackMin = model.AttackMin.Value,
+                EnimyId = model.EnimyId,
+                Life = model.Life.Value,
+                SpeedRun = model.SpeedRun.Value,
+                SpeedWalk = model.SpeedWalk.Value
+            };
+            ListContext.Add(enemy);
+            return enemy.EnimyId;
         }
 
         public override void Decrease(EnimyViewModel model)

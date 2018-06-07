@@ -14,10 +14,10 @@ namespace Assets.Script.Controller.Shared
         public List<int> targetsAttacked = new List<int>();
         Type className;
 
-        public _CharacterController(string function)
-        {
-            string item = "Assets.Script.BLL." + function;
-        }
+        //public _CharacterController(string function)
+        //{
+        //    string item = "Assets.Script.BLL." + function;
+        //}
 
         public void GiveDamage(string target, int? damage, int? id)
         {
@@ -25,8 +25,7 @@ namespace Assets.Script.Controller.Shared
 
             DecreaseStats(target, "Life", damage, id);
         }
-
-
+        
         public Vector3 PositionAttack(Vector2 colSize, Helpers.PossibleMoviment direction)
         {
             switch (direction)

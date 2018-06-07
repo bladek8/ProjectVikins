@@ -70,5 +70,10 @@ namespace Assets.Script.Helpers
             }
             return newList;
         }
+
+        public static Vector3 SetPositionZ(Transform objectTransform, float vectorPositionZ)
+        {
+            return new Vector3(objectTransform.position.x, objectTransform.position.y, vectorPositionZ);
+        }
     }
 }

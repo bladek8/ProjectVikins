@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Script.DAL
 {
     public class MVC_Game2Context
     {
+        //public PlayerPrefs Player = new PlayerPrefs();
+        //PlayerPrefs a = new PlayerPrefs();
         public static List<CharacterType> CharactersType;
         public static List<Enimy> enimies = new List<Enimy>();
         //public static List<EnimyBoss> enimyBosses = new List<EnimyBoss>();
         public static List<Player> players = new List<Player>();
+        public static List<EnemyAssassin> enemyAssassins = new List<EnemyAssassin>();
 
         //public MVC_Game2Context()
         //{
@@ -27,6 +31,14 @@ namespace Assets.Script.DAL
         public List<Enimy> GetEnimies()
         {
             return enimies;
+        }
+        public void SetEnemyAssassin(EnemyAssassin model)
+        {
+            enemyAssassins.Add(model);
+        }
+        public List<EnemyAssassin> GetEnemyAssassin()
+        {
+            return enemyAssassins;
         }
         //public List<EnimyBoss> GetEnimyBosses()
         //{

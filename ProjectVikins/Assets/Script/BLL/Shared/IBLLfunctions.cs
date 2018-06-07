@@ -9,8 +9,8 @@ namespace Assets.Script.BLL.Shared
         where TViewModel : class
     {
         List<TEntity> GetData();
-        TEntity GetDataById(int id);
-        int Create(TEntity model);
+        TEntity GetDataById(object id);
+        int Create(TViewModel model);
         void UpdateStats(string stats, object value, int id);
         object DecreaseStats(string stats, object value, int id);
         object IncreaseStats(string stats, object value, int id);
