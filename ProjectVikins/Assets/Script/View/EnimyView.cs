@@ -60,7 +60,6 @@ namespace Assets.Script.View
             }
 
             var input = enimyController.GetInput();
-            Debug.Log(input.Vector2);
             enemySpriteRenderer.flipX = input.Flip.Value;
             enemyAnimator.SetFloat("speedX", input.Vector2.x);
             enemyAnimator.SetFloat("speedY", input.Vector2.y);
