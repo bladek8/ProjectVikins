@@ -49,7 +49,7 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-                    Debug.Log(target);
+                    //Debug.Log(target);
                 }
             }
         }

@@ -9,6 +9,6 @@ namespace Assets.Script.DAL
     public class Enimy : Shared.Character
     {   
         public int EnimyId { get; set; }
-        
+        public Helpers.PossibleMoviment LastMoviment { get; set; }
     }
 }

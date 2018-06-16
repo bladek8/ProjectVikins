@@ -14,18 +14,6 @@ namespace Assets.Script.Controller.Shared
         public List<int> targetsAttacked = new List<int>();
         Type className;
 
-        //public _CharacterController(string function)
-        //{
-        //    string item = "Assets.Script.BLL." + function;
-        //}
-
-        public void GiveDamage(string target, int? damage, int? id)
-        {
-            if(!damage.HasValue && !id.HasValue) return;
-
-            DecreaseStats(target, "Life", damage, id);
-        }
-        
         public Vector3 PositionAttack(Vector2 colSize, Helpers.PossibleMoviment direction)
         {
             switch (direction)
@@ -49,6 +37,11 @@ namespace Assets.Script.Controller.Shared
                 default:
                     return new Vector2(0, 0);
             }
+        }
+
+        public void NPCInteraction(Component NPCView)
+        {
+            NPCView.SendMessage("Interaction");
         }
 
         public object DecreaseStats(string target, string stats, object value, object id)
@@ -92,7 +85,7 @@ namespace Assets.Script.Controller.Shared
         public abstract void UpdateStats(TViewModel model);
         public abstract void Decrease(TViewModel model);
         public abstract void Increase(TViewModel model);
-        public abstract void Attack(Transform transform, Vector3 size, LayerMask targetLayer);
+        //public abstract void Attack(Transform transform, Vector3 size);
         public abstract Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }
 }

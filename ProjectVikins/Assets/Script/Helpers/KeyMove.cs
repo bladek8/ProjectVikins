@@ -8,14 +8,14 @@ namespace Assets.Script.Helpers
 {
     public class KeyMove
     {
-        public KeyCode KeyCode { get; set; }
+        public KeyCode? KeyCode { get; set; }
         public Vector2 Vector2 { get; set; }
         public bool? Flip { get; set; }
 
         public KeyMove()
         {
         }
-        public KeyMove(KeyCode keyCode, Vector2 vector2, bool flip)
+        public KeyMove(KeyCode? keyCode, Vector2 vector2, bool flip)
         {
             this.KeyCode = keyCode;
             this.Vector2 = vector2;

@@ -130,5 +130,6 @@ namespace Assets.Script.BLL.Shared
         public abstract void UpdateStats(TViewModel model);
         public abstract void Decrease(TViewModel model);
         public abstract void Increase(TViewModel model);
+        //public abstract TViewModel GetDataViewModel(TEntity data);
     }
 }

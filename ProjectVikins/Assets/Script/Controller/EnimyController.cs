@@ -48,6 +48,7 @@ namespace Assets.Script.Controller
                 if (target == null) return;
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enimyFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
+                enimyFunctions.UpdateStats(new Models.EnimyViewModel() { LastMoviment = GetDirection(_transform), EnimyId = id });
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
                     canAttack = true;
                 else canAttack = false;
@@ -109,7 +110,7 @@ namespace Assets.Script.Controller
             throw new NotImplementedException();
         }
 
-        public override void Attack(Transform transform, Vector3 size, LayerMask targetLayer)
+        public void Attack(Transform transform, Vector3 size, LayerMask targetLayer)
         {
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f, targetLayer);
             foreach (var hitCollider in hitColliders)
@@ -136,6 +137,33 @@ namespace Assets.Script.Controller
         public void SetFieldOfView(FieldOfView fow)
         {
             this.fow = fow;
+        }
+
+        public Helpers.KeyMove GetInput()
+        {
+            var enemy = enimyFunctions.GetDataById(id);
+
+            switch (enemy.LastMoviment)
+            {
+                case Helpers.PossibleMoviment.Down:
+                    return new Helpers.KeyMove(null,new Vector2(0, -1),false);
+                case Helpers.PossibleMoviment.Down_Left:
+                    return new Helpers.KeyMove(null,new Vector2(-1, -1),false);
+                case Helpers.PossibleMoviment.Down_Right:
+                    return new Helpers.KeyMove(null, new Vector2(1, -1), true);
+                case Helpers.PossibleMoviment.Left:
+                    return new Helpers.KeyMove(null, new Vector2(-1, 0), false);
+                case Helpers.PossibleMoviment.Right:
+                    return new Helpers.KeyMove(null, new Vector2(1, 0), true);
+                case Helpers.PossibleMoviment.Up:
+                    return new Helpers.KeyMove(null, new Vector2(0, 1), false);
+                case Helpers.PossibleMoviment.Up_Left:
+                    return new Helpers.KeyMove(null, new Vector2(-1, 1), false);
+                case Helpers.PossibleMoviment.Up_Right:
+                    return new Helpers.KeyMove(null, new Vector2(1, 1), true);
+                default:
+                    return new Helpers.KeyMove(null, new Vector2(0, 0), false);
+            }
         }
     }
 }

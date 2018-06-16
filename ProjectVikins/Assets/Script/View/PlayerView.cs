@@ -23,71 +23,115 @@ namespace Assets.Script.View
         private BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
         BoxCollider2D colliderTransform;
-        public LayerMask enimyLayer;
-        bool returnSpeed = false;
         float inputX, inputY;
+        [SerializeField] bool isPlayable;
         Helpers.CountDown attackCountDown = new Helpers.CountDown(1.5);
+        Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
+        [SerializeField] GameObject FieldOfViewObj;
+        Camera mainCamera;
+        CameraView cv;
 
         private void Start()
         {
-            playerController = new PlayerController(new Models.PlayerViewModel { PlayerId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 }, this.gameObject);
+            mainCamera = Camera.main;
+            cv = mainCamera.GetComponent<CameraView>();
+            playerController = new PlayerController(new Models.PlayerViewModel { PlayerId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1, IsBeingControllable = isPlayable }, this.gameObject);
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
+            playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
         }
 
         private void FixedUpdate()
         {
             CountDown.DecreaseTime(attackCountDown);
-
-            foreach (var keyMove in utils.moveKeyCode)
+            CountDown.DecreaseTime(changeCharacterCountDown);
+            var tempIsControllable = playerController.GetIsControllable();
+            if (isPlayable != tempIsControllable)
+                changeCharacterCountDown.StartToCount();
+            isPlayable = tempIsControllable;
+            if (isPlayable)
             {
-                if (Input.GetKey(keyMove.KeyCode))
+                foreach (var keyMove in utils.moveKeyCode)
                 {
-                    playerController.Walk(keyMove.Vector2);
-                    if (!keyMove.Flip.HasValue) continue;
-                    PlayerSpriteRenderer.flipX = keyMove.Flip.Value;
+                    if (Input.GetKey(keyMove.KeyCode.Value))
+                    {
+                        playerController.SetLastMoviment(inputX, inputY);
+                        PlayerAnimator.SetFloat("speedX", inputX);
+                        PlayerAnimator.SetFloat("speedY", inputY);
+
+                        playerController.Walk(keyMove.Vector2);
+                        if (!keyMove.Flip.HasValue) continue;
+                        PlayerSpriteRenderer.flipX = keyMove.Flip.Value;
+                    }
+                }
+                inputX = Input.GetAxis("Horizontal");
+                inputY = Input.GetAxis("Vertical");
+
+
+                if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K))
+                    playerController.ChangeControllableCharacter();
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, cv.player.transform.position) > 5)
+                {
+                    playerController.WalkToPlayer(transform, cv.player.transform);
+                }
+                else if (playerController.fow.visibleTargets.Count > 0)
+                {
+                    playerController.WalkTowardTo(transform);
+                    PlayerAnimator.SetBool("isWalking", true);
+                }
+                else
+                {
+                    PlayerAnimator.SetBool("isWalking", false);
+                    playerController.target = null;
+                    playerController.canAttack = false;
                 }
             }
-            inputX = Input.GetAxis("Horizontal");
-            inputY = Input.GetAxis("Vertical");
 
             if (attackCountDown.CoolDown <= 0)
             {
                 playerController.targetsAttacked.Clear();
 
-                if (Input.GetKey(KeyCode.L))
-                {
-                    playerController.Decrease(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
-                    attackCountDown.CoolDown = attackCountDown.Rate;
-                }
-                if (returnSpeed)
-                {
+                if (attackCountDown.ReturnedToZero)
                     playerController.Increase(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
-                    returnSpeed = false;
+                if (isPlayable)
+                {
+                    if (Input.GetKey(KeyCode.L))
+                    {
+                        playerController.Decrease(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
+                        attackCountDown.StartToCount();
+                    }
+                }
+                else
+                {
+
                 }
             }
             else
-                playerController.Attack(transform, BoxCollider2D.size, enimyLayer);
+                playerController.Attack(transform, BoxCollider2D.size);
 
-            if (Input.GetKeyUp(KeyCode.L))
-                returnSpeed = true;
-
-            playerController.SetLastMoviment(inputX, inputY);
-            PlayerAnimator.SetFloat("speedX", inputX);
-            PlayerAnimator.SetFloat("speedY", inputY);
         }
 
         private void Update()
         {
-            foreach (var keyMove in utils.moveKeyCode)
+            if (isPlayable)
             {
-                if (Input.GetKey(keyMove.KeyCode))
+                foreach (var keyMove in utils.moveKeyCode)
                 {
-                    PlayerAnimator.SetBool("isWalking", true);
+                    if (Input.GetKey(keyMove.KeyCode.Value))
+                    {
+                        PlayerAnimator.SetBool("isWalking", true);
+                    }
+                    if (Input.GetKeyUp(keyMove.KeyCode.Value))
+                    {
+                        PlayerAnimator.SetBool("isWalking", false);
+                    }
                 }
-                if (Input.GetKeyUp(keyMove.KeyCode))
-                {
-                    PlayerAnimator.SetBool("isWalking", false);
-                }
+            }
+            else
+            {
+
             }
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }

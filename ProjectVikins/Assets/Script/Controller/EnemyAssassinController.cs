@@ -20,7 +20,7 @@ namespace Assets.Script.Controller
             this.id = model.EnemyAssassinId.Value;
         }
 
-        public override void Attack(Transform transform, Vector3 size, LayerMask targetLayer)
+        public void Attack(Transform transform, Vector3 size)
         {
             throw new NotImplementedException();
         }

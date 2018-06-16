@@ -8,6 +8,7 @@ namespace Assets.Script.DAL
     {
         public int PlayerId { get; set; }
         public Helpers.PossibleMoviment LastMoviment { get; set; }
+        public bool IsBeingControllable { get; set; }
 
         public Player()
         {
@@ -20,7 +21,7 @@ namespace Assets.Script.DAL
             this.SpeedWalk = speedWalk;
             this.SpeedRun = speedRun;
             this.AttackMin = attackMin;
-            this.AttackMax = attackMax;
+            this.AttackMax = attackMax; 
 
         }
     }

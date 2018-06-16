@@ -15,5 +15,6 @@ namespace Assets.Script.Models
         public int? SpeedRun { get; set; }
         public int? AttackMin { get; set; }
         public int? AttackMax { get; set; }
+        public bool? IsBeingControllable { get; set; }
     }
 }

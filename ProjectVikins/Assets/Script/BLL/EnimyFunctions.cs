@@ -49,7 +49,14 @@ namespace Assets.Script.BLL
 
         public override void UpdateStats(EnimyViewModel model)
         {
-            throw new NotImplementedException();
+            var enemy = this.GetDataById(model.EnimyId);
+
+            if (model.LastMoviment.HasValue) enemy.LastMoviment = model.LastMoviment.Value;
+            if (model.Life.HasValue) enemy.Life = model.Life.Value;
+            if (model.SpeedRun.HasValue) enemy.SpeedRun = model.SpeedRun.Value;
+            if (model.SpeedWalk.HasValue) enemy.SpeedWalk = model.SpeedWalk.Value;
+            if (model.AttackMin.HasValue) enemy.AttackMin = model.AttackMin.Value;
+            if (model.AttackMax.HasValue) enemy.AttackMax = model.AttackMax.Value;
         }
     }
 }

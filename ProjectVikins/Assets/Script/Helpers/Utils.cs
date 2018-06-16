@@ -16,6 +16,19 @@ namespace Assets.Script.Helpers
            new KeyMove(KeyCode.S, Vector2.down)
         };
 
+        public List<Psm> Psm = new List<Psm>
+        {
+           new Psm(PossibleMoviment.Down, false),
+           new Psm(PossibleMoviment.Down_Left, false),
+           new Psm(PossibleMoviment.Down_Right, true),
+           new Psm(PossibleMoviment.Left, false),
+           new Psm(PossibleMoviment.Right, true),
+           new Psm(PossibleMoviment.Up, false),
+           new Psm(PossibleMoviment.Up_Left, false),
+           new Psm(PossibleMoviment.Up_Right, true),
+           new Psm(PossibleMoviment.None, false)
+        };
+        
         public List<Transform> GetTransformInLayer(string layer)
         {
             if (string.IsNullOrEmpty(layer)) return new List<Transform>();

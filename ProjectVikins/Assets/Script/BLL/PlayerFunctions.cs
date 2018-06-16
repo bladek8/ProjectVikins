@@ -24,7 +24,8 @@ namespace Assets.Script.BLL
                 PlayerId = model.PlayerId,
                 Life = model.Life.Value,
                 SpeedRun = model.SpeedRun.Value,
-                SpeedWalk = model.SpeedWalk.Value
+                SpeedWalk = model.SpeedWalk.Value,
+                IsBeingControllable = model.IsBeingControllable.Value
             };
             ListContext.Add(player);
             return player.PlayerId;
@@ -67,6 +68,22 @@ namespace Assets.Script.BLL
             if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk + model.SpeedWalk.Value;
             if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin + model.AttackMin.Value;
             if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax + model.AttackMax.Value;
+        }
+
+        public void ChangeControllableCharacter(int id)
+        {
+            var player = this.GetDataById(id);
+            player.IsBeingControllable = false;
+            var nextPlayer = new DAL.Player();
+            try
+            {
+                nextPlayer = ListContext[ListContext.IndexOf(player) + 1];
+            }
+            catch (Exception ex)
+            {
+                nextPlayer = ListContext.First();
+            }
+            nextPlayer.IsBeingControllable = true;
         }
     }
 }
