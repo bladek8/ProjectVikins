@@ -65,7 +65,7 @@ namespace Assets.Script.BLL.Shared
                 return null;
             }
 
-            typeof(DAL.Enimy).GetProperty(stats).SetValue(GetDataById(id), newValue, null);
+            typeof(DAL.Enemy).GetProperty(stats).SetValue(GetDataById(id), newValue, null);
             return newValue;
         }
         public object IncreaseStats(string stats, object value, int id)
@@ -82,7 +82,7 @@ namespace Assets.Script.BLL.Shared
                 return null;
             }
 
-            typeof(DAL.Enimy).GetProperty(stats).SetValue(GetDataById(id), newValue, null);
+            typeof(DAL.Enemy).GetProperty(stats).SetValue(GetDataById(id), newValue, null);
             return newValue;
         }
         public void UpdateMultipleStats(Dictionary<string, object> datas, int id)
@@ -109,7 +109,7 @@ namespace Assets.Script.BLL.Shared
                     return null;
                 }
 
-                typeof(DAL.Enimy).GetProperty(data.Key).SetValue(GetDataById(id), newValue, null);
+                typeof(DAL.Enemy).GetProperty(data.Key).SetValue(GetDataById(id), newValue, null);
                 newDatas.Add(data.Key, newValue);
             }
 
@@ -133,7 +133,7 @@ namespace Assets.Script.BLL.Shared
                     return null;
                 }
 
-                typeof(DAL.Enimy).GetProperty(data.Key).SetValue(GetDataById(id), newValue, null);
+                typeof(DAL.Enemy).GetProperty(data.Key).SetValue(GetDataById(id), newValue, null);
                 newDatas.Add(data.Key, newValue);
             }
 

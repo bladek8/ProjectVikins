@@ -7,7 +7,7 @@ using Assets.Script.Helpers;
 
 namespace Assets.Script.View
 {
-    public class EnimyView : MonoBehaviour
+    public class EnemyView : MonoBehaviour
     {
         private BoxCollider2D _boxCollider2D;
         private BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
@@ -20,46 +20,46 @@ namespace Assets.Script.View
 
         public LayerMask playerLayer;
         BoxCollider2D colliderTransform;
-        Controller.EnimyController enimyController;
+        Controller.EnemyController enemyController;
         [SerializeField] GameObject gObject;
         CountDown attackCountDown = new CountDown(3);
         
         void Start()
         {
-            enimyController = new Controller.EnimyController( new Models.EnimyViewModel { EnimyId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 });
-            enimyController.SetFieldOfView(gObject.GetComponent<FieldOfView>());
+            enemyController = new Controller.EnemyController( new Models.EnemyViewModel { EnemyId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 });
+            enemyController.SetFieldOfView(gObject.GetComponent<FieldOfView>());
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }
 
         private void FixedUpdate()
         {
-            CountDown.DecreaseTime(enimyController.followPlayer);
+            CountDown.DecreaseTime(enemyController.followPlayer);
             CountDown.DecreaseTime(attackCountDown);
             
-            if (enimyController.fow.visibleTargets.Count > 0)
+            if (enemyController.fow.visibleTargets.Count > 0)
             {
-                enimyController.WalkTowardTo(transform);
+                enemyController.WalkTowardTo(transform);
                 enemyAnimator.SetBool("isWalking", true);
             }
             else
             {
                 enemyAnimator.SetBool("isWalking", false);
-                enimyController.target = null;
-                enimyController.canAttack = false;
+                enemyController.target = null;
+                enemyController.canAttack = false;
             }
 
             if (attackCountDown.CoolDown <= 0)
             {
-                enimyController.targetsAttacked.Clear();
-                if (enimyController.canAttack)
+                enemyController.targetsAttacked.Clear();
+                if (enemyController.canAttack)
                     attackCountDown.CoolDown = attackCountDown.Rate;
             }
-            else if (enimyController.canAttack)
+            else if (enemyController.canAttack)
             {
-                enimyController.Attack(transform, BoxCollider2D.size, playerLayer);
+                enemyController.Attack(transform, BoxCollider2D.size, playerLayer);
             }
 
-            var input = enimyController.GetInput();
+            var input = enemyController.GetInput();
             enemySpriteRenderer.flipX = input.Flip.Value;
             enemyAnimator.SetFloat("speedX", input.Vector2.x);
             enemyAnimator.SetFloat("speedY", input.Vector2.y);

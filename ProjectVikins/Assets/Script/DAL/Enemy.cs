@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Assets.Script.DAL
 {
-    public class Enimy : Shared.Character
+    public class Enemy : Shared.Character
     {   
-        public int EnimyId { get; set; }
+        public int EnemyId { get; set; }
         public Helpers.PossibleMoviment LastMoviment { get; set; }
     }
 }
