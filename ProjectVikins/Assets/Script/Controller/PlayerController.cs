@@ -232,6 +232,11 @@ namespace Assets.Script.Controller
                     return Helpers.PossibleMoviment.None;
             }
         }
+        
+        public DAL.Player GetData(Vector3 position)
+        {
+            return playerFunctions.GetDataByInitialPosition(position);
+        }
 
     }
 }

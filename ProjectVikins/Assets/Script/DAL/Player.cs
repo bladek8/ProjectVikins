@@ -11,7 +11,9 @@ namespace Assets.Script.DAL
         public PossibleMoviment LastMoviment { get; set; }
         public bool IsBeingControllable { get; set; }
         public PlayerModes PlayerMode { get; set; }
-        
+        public int InitialX { get; set; }
+        public int InitialY { get; set; }
+
         public Player()
         {
         }

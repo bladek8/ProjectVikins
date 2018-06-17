@@ -82,7 +82,6 @@ namespace Assets.Script.DAL
                     var e = d.Split('=');
                     className.GetProperty(e[0]).SetValue(dal, int.Parse(e[1]), null);
                     varTxt.Add(e[0], e[1]);
-                    Debug.Log(e[0] + " " + e[1]);
                 }
                 if (className == typeof(Player))
                     players.Add((Player)dal);

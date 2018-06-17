@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Script.Helpers;
+using UnityEngine;
 
 namespace Assets.Script.Models
 {
@@ -18,5 +19,7 @@ namespace Assets.Script.Models
         public int? AttackMax { get; set; }
         public bool? IsBeingControllable { get; set; }
         public PlayerModes? PlayerMode { get; set; }
+        public int? InitialX { get; set; }
+        public int? InitialY { get; set; }
     }
 }
