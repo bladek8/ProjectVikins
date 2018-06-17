@@ -25,7 +25,8 @@ namespace Assets.Script.BLL
                 Life = model.Life.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value,
-                IsBeingControllable = model.IsBeingControllable.Value
+                IsBeingControllable = model.IsBeingControllable.Value,
+                PlayerMode = model.PlayerMode.Value
             };
             ListContext.Add(player);
             return player.PlayerId;
@@ -46,6 +47,8 @@ namespace Assets.Script.BLL
             if (model.SpeedWalk.HasValue) player.SpeedWalk = model.SpeedWalk.Value;
             if (model.AttackMin.HasValue) player.AttackMin = model.AttackMin.Value;
             if (model.AttackMax.HasValue) player.AttackMax = model.AttackMax.Value;
+            if (model.IsBeingControllable.HasValue) player.IsBeingControllable = model.IsBeingControllable.Value;
+            if (model.PlayerMode.HasValue) player.PlayerMode = model.PlayerMode.Value;
         }
 
         public override void Decrease(PlayerViewModel model)

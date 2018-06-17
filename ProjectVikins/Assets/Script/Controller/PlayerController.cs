@@ -35,10 +35,10 @@ namespace Assets.Script.Controller
             foreach (var hitCollider in hitColliders)
             {
 
-                if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID()))   continue;
+                if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
-                
-                if(hitCollider.tag == "Enemy")
+
+                if (hitCollider.tag == "Enemy")
                 {
                     if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
                         Destroy(hitCollider.gameObject);
@@ -114,8 +114,12 @@ namespace Assets.Script.Controller
         public void WalkToPlayer(Transform _transform, Transform controllablePlayer)
         {
             target = controllablePlayer.transform;
-            _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
-            fow.TurnView(target);
+            if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
+            {
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
+                fow.TurnView(target);
+                playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform), PlayerId = id });
+            }
         }
 
 
@@ -135,11 +139,15 @@ namespace Assets.Script.Controller
             else if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
-                fow.TurnView(target);
-                if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
+                if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
+                {
+                    _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
+                    fow.TurnView(target);
+                    playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform), PlayerId = id });
+                    canAttack = false;
+                }
+                else
                     canAttack = true;
-                else canAttack = false;
             }
             else
             {
@@ -158,9 +166,72 @@ namespace Assets.Script.Controller
             return playerFunctions.GetDataById(id).IsBeingControllable;
         }
 
+        public bool GetPlayerMode()
+        {
+            return playerFunctions.GetDataById(id).IsBeingControllable;
+        }
+
         public void SetFieldOfView(FieldOfView fow)
         {
             this.fow = fow;
         }
+
+        public Helpers.KeyMove GetInput()
+        {
+            var player = playerFunctions.GetDataById(id);
+
+            switch (player.LastMoviment)
+            {
+                case Helpers.PossibleMoviment.Down:
+                    return new Helpers.KeyMove(null, new Vector2(0, -1), false);
+                case Helpers.PossibleMoviment.Down_Left:
+                    return new Helpers.KeyMove(null, new Vector2(-1, -1), false);
+                case Helpers.PossibleMoviment.Down_Right:
+                    return new Helpers.KeyMove(null, new Vector2(1, -1), true);
+                case Helpers.PossibleMoviment.Left:
+                    return new Helpers.KeyMove(null, new Vector2(-1, 0), false);
+                case Helpers.PossibleMoviment.Right:
+                    return new Helpers.KeyMove(null, new Vector2(1, 0), true);
+                case Helpers.PossibleMoviment.Up:
+                    return new Helpers.KeyMove(null, new Vector2(0, 1), false);
+                case Helpers.PossibleMoviment.Up_Left:
+                    return new Helpers.KeyMove(null, new Vector2(-1, 1), false);
+                case Helpers.PossibleMoviment.Up_Right:
+                    return new Helpers.KeyMove(null, new Vector2(1, 1), true);
+                default:
+                    return new Helpers.KeyMove(null, new Vector2(0, 0), false);
+            }
+        }
+
+
+        public Helpers.PossibleMoviment GetDirection(Transform transform)
+        {
+            var vectorDirection = target.transform.position - transform.position;
+            var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
+            var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
+
+            switch (position)
+            {
+                case 0:
+                    return Helpers.PossibleMoviment.Right;
+                case 1:
+                    return Helpers.PossibleMoviment.Up_Right;
+                case 2:
+                    return Helpers.PossibleMoviment.Up;
+                case 3:
+                    return Helpers.PossibleMoviment.Up_Left;
+                case 4:
+                    return Helpers.PossibleMoviment.Left;
+                case 5:
+                    return Helpers.PossibleMoviment.Down_Left;
+                case 6:
+                    return Helpers.PossibleMoviment.Down;
+                case 7:
+                    return Helpers.PossibleMoviment.Down_Right;
+                default:
+                    return Helpers.PossibleMoviment.None;
+            }
+        }
+
     }
 }

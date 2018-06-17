@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Script.Helpers;
 
 namespace Assets.Script.DAL
 {
     public class Player : Shared.Character
     {
         public int PlayerId { get; set; }
-        public Helpers.PossibleMoviment LastMoviment { get; set; }
+        public PossibleMoviment LastMoviment { get; set; }
         public bool IsBeingControllable { get; set; }
-
+        public PlayerModes PlayerMode { get; set; }
+        
         public Player()
         {
         }

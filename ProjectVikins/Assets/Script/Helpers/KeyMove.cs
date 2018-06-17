@@ -26,5 +26,10 @@ namespace Assets.Script.Helpers
             this.KeyCode = keyCode;
             this.Vector2 = vector2;
         }
+        public KeyMove(Vector2 vector2, bool? flip)
+        {
+            this.Vector2 = vector2;
+            this.Flip = flip;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Script.Helpers;
 
 namespace Assets.Script.Models
 {
@@ -16,5 +17,6 @@ namespace Assets.Script.Models
         public int? AttackMin { get; set; }
         public int? AttackMax { get; set; }
         public bool? IsBeingControllable { get; set; }
+        public PlayerModes? PlayerMode { get; set; }
     }
 }
