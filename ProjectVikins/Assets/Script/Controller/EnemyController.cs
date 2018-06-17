@@ -9,9 +9,9 @@ using Assets.Script.Models;
 
 namespace Assets.Script.Controller
 {
-    public class EnimyController : Shared._CharacterController<Models.EnimyViewModel>
+    public class EnemyController : Shared._CharacterController<Models.EnemyViewModel>
     {
-        private readonly BLL.EnimyFunctions enimyFunctions;
+        private readonly BLL.EnemyFunctions enemyFunctions;
         private readonly int id;
         List<Transform> players;
         private Utils utils = new Utils();
@@ -21,11 +21,11 @@ namespace Assets.Script.Controller
         public CountDown followPlayer = new CountDown();
         public Transform target;
 
-        public EnimyController(Models.EnimyViewModel model)
+        public EnemyController(Models.EnemyViewModel model)
         {
-            enimyFunctions = new BLL.EnimyFunctions();
-            enimyFunctions.Create(model);
-            this.id = model.EnimyId;
+            enemyFunctions = new BLL.EnemyFunctions();
+            enemyFunctions.Create(model);
+            this.id = model.EnemyId;
             players = utils.GetTransformInLayer("Player");
         }
 
@@ -46,9 +46,9 @@ namespace Assets.Script.Controller
             if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enimyFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
-                enimyFunctions.UpdateStats(new Models.EnimyViewModel() { LastMoviment = GetDirection(_transform), EnimyId = id });
+                enemyFunctions.UpdateStats(new Models.EnemyViewModel() { LastMoviment = GetDirection(_transform), EnemyId = id });
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
                     canAttack = true;
                 else canAttack = false;
@@ -91,21 +91,21 @@ namespace Assets.Script.Controller
 
         public override int GetDamage()
         {
-            var player = enimyFunctions.GetDataById(id);
+            var player = enemyFunctions.GetDataById(id);
             return rnd.Next(player.AttackMin, player.AttackMax);
         }
 
-        public override void UpdateStats(EnimyViewModel model)
+        public override void UpdateStats(EnemyViewModel model)
         {
             throw new NotImplementedException();
         }
 
-        public override void Decrease(EnimyViewModel model)
+        public override void Decrease(EnemyViewModel model)
         {
             throw new NotImplementedException();
         }
 
-        public override void Increase(EnimyViewModel model)
+        public override void Increase(EnemyViewModel model)
         {
             throw new NotImplementedException();
         }
@@ -130,7 +130,7 @@ namespace Assets.Script.Controller
 
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
-            var player = enimyFunctions.GetDataById(id);
+            var player = enemyFunctions.GetDataById(id);
             return transform.position + PositionAttack(colSize, GetDirection(transform));
         }
 
@@ -141,7 +141,7 @@ namespace Assets.Script.Controller
 
         public Helpers.KeyMove GetInput()
         {
-            var enemy = enimyFunctions.GetDataById(id);
+            var enemy = enemyFunctions.GetDataById(id);
 
             switch (enemy.LastMoviment)
             {

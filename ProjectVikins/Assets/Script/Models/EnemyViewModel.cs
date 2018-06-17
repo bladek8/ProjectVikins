@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Assets.Script.Models
 {
-    public class EnimyViewModel
+    public class EnemyViewModel
     {
         public Helpers.PossibleMoviment? LastMoviment { get; set; }
-        public int EnimyId { get; set; }
+        public int EnemyId { get; set; }
         public int? CharacterTypeId { get; set; }
         public int? Life { get; set; }
         public int? SpeedWalk { get; set; }

@@ -8,48 +8,48 @@ using UnityEngine;
 
 namespace Assets.Script.BLL
 {
-    public class EnimyFunctions : BLL.Shared.BLLFunctions<DAL.Enimy,Models.EnimyViewModel>
+    public class EnemyFunctions : BLL.Shared.BLLFunctions<DAL.Enemy,Models.EnemyViewModel>
     {
-        public EnimyFunctions()
-            : base("EnimyId")
+        public EnemyFunctions()
+            : base("EnemyId")
         {
             SetListContext();
         }
 
-        public override int Create(Models.EnimyViewModel model)
+        public override int Create(Models.EnemyViewModel model)
         {
-            var enemy= new DAL.Enimy()
+            var enemy= new DAL.Enemy()
             {
                 AttackMax = model.AttackMax.Value,
                 CharacterTypeId = model.CharacterTypeId.Value,
                 AttackMin = model.AttackMin.Value,
-                EnimyId = model.EnimyId,
+                EnemyId = model.EnemyId,
                 Life = model.Life.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value
             };
             ListContext.Add(enemy);
-            return enemy.EnimyId;
+            return enemy.EnemyId;
         }
 
-        public override void Decrease(EnimyViewModel model)
+        public override void Decrease(EnemyViewModel model)
         {
             throw new NotImplementedException();
         }
 
-        public override void Increase(EnimyViewModel model)
+        public override void Increase(EnemyViewModel model)
         {
             throw new NotImplementedException();
         }
 
         public override void SetListContext()
         {
-            this.ListContext = context.GetEnimies();
+            this.ListContext = context.GetEnemies();
         }
 
-        public override void UpdateStats(EnimyViewModel model)
+        public override void UpdateStats(EnemyViewModel model)
         {
-            var enemy = this.GetDataById(model.EnimyId);
+            var enemy = this.GetDataById(model.EnemyId);
 
             if (model.LastMoviment.HasValue) enemy.LastMoviment = model.LastMoviment.Value;
             if (model.Life.HasValue) enemy.Life = model.Life.Value;

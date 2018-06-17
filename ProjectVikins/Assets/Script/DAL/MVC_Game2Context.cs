@@ -16,8 +16,8 @@ namespace Assets.Script.DAL
         //public PlayerPrefs Player = new PlayerPrefs();
         //PlayerPrefs a = new PlayerPrefs();
         public static List<CharacterType> CharactersType;
-        public static List<Enimy> enimies = new List<Enimy>();
-        //public static List<EnimyBoss> enimyBosses = new List<EnimyBoss>();
+        public static List<Enemy> enemies = new List<Enemy>();
+        //public static List<EnemyBoss> enemyBosses = new List<EnemyBoss>();
         public static List<Player> players = new List<Player>();
         public static List<EnemyAssassin> enemyAssassins = new List<EnemyAssassin>();
 
@@ -26,17 +26,17 @@ namespace Assets.Script.DAL
         //    CharactersType = new List<CharacterType>
         //    {
         //        new CharacterType(1, "Player", "PLAYER"),
-        //        new CharacterType(2, "SimpleEnimy", "SIMPLEENIMY")
+        //        new CharacterType(2, "SimpleEnemy", "SIMPLEENEMY")
         //    };
         //}
 
-        public void SetEnimy(Enimy model)
+        public void SetEnemy(Enemy model)
         {
-            enimies.Add(model);
+            enemies.Add(model);
         }
-        public List<Enimy> GetEnimies()
+        public List<Enemy> GetEnemies()
         {
-            return enimies;
+            return enemies;
         }
         public void SetEnemyAssassin(EnemyAssassin model)
         {
@@ -46,9 +46,9 @@ namespace Assets.Script.DAL
         {
             return enemyAssassins;
         }
-        //public List<EnimyBoss> GetEnimyBosses()
+        //public List<EnemyBoss> GetEnemyBosses()
         //{
-        //    return enimyBosses;
+        //    return enemyBosses;
         //}
         public void SetPlayer(Player model)
         {
@@ -86,8 +86,8 @@ namespace Assets.Script.DAL
                 }
                 if (className == typeof(Player))
                     players.Add((Player)dal);
-                else if (className == typeof(Enimy))
-                    enimies.Add((Enimy)dal);
+                else if (className == typeof(Enemy))
+                    enemies.Add((Enemy)dal);
             }
         }
     }
