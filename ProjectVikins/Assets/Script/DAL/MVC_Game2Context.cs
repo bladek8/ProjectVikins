@@ -65,10 +65,13 @@ namespace Assets.Script.DAL
             var currentDirectory = Directory.GetCurrentDirectory();
             var dataDirectory = Path.Combine(currentDirectory, "teste");
             var files = new DirectoryInfo(dataDirectory).GetFiles("*.txt");
-            foreach (var a in files)
+            foreach (var file in files)
             {
-                StreamReader stwToLaw = new StreamReader(Path.Combine(dataDirectory, a.FullName));
-                //stwToLaw.ReadToEnd();
+                StreamReader stwToLaw = new StreamReader(Path.Combine(dataDirectory, file.FullName));
+                var fileName = file.Name.Split('.');
+                var className = Type.GetType("Assets.Script.DAL." + fileName[0]);
+                var dal = Activator.CreateInstance(className);
+
                 string b;
                 b = stwToLaw.ReadToEnd();
                 var c = b.Split(';');
@@ -77,9 +80,14 @@ namespace Assets.Script.DAL
                     if (!d.Contains("="))
                         continue;
                     var e = d.Split('=');
+                    className.GetProperty(e[0]).SetValue(dal, int.Parse(e[1]), null);
                     varTxt.Add(e[0], e[1]);
                     Debug.Log(e[0] + " " + e[1]);
                 }
+                if (className == typeof(Player))
+                    players.Add((Player)dal);
+                else if (className == typeof(Enimy))
+                    enimies.Add((Enimy)dal);
             }
         }
     }

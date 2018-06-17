@@ -1,2 +1,0 @@
-Life=3;
-SpeedWalk=0;

@@ -17,14 +17,14 @@ namespace Assets.Script.Helpers
     }
     public enum PossibleMoviment
     {
-        None,
-        Left,
-        Right,
-        Up,
-        Down,
-        Up_Left,
-        Up_Right,
-        Down_Left,
-        Down_Right
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Up = 3,
+        Down = 4,
+        Up_Left = 5,
+        Up_Right = 6,
+        Down_Left = 7,
+        Down_Right = 8
     };
 }
