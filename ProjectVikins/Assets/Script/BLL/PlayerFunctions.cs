@@ -34,7 +34,7 @@ namespace Assets.Script.BLL
 
         public override void SetListContext()
         {
-            this.ListContext = context.GetPlayers();
+            this.ListContext = DAL.MVC_Game2Context.players;
         }
 
         public override void UpdateStats(PlayerViewModel model)

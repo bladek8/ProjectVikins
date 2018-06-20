@@ -53,7 +53,7 @@ namespace Assets.Script.BLL
 
         public override void SetListContext()
         {
-            this.ListContext = context.GetEnemyAssassin();
+            this.ListContext = DAL.MVC_Game2Context.enemyAssassins;
         }
 
         public override void UpdateStats(EnemyAssassinViewModel model)

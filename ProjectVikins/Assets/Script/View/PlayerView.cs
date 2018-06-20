@@ -31,7 +31,7 @@ namespace Assets.Script.View
         [SerializeField] GameObject FieldOfViewObj;
         Camera mainCamera;
         CameraView cv;
-        DAL.Player a;
+        //DAL.Player a;
 
         private void Start()
         {

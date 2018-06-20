@@ -12,7 +12,7 @@ namespace Assets.Script.BLL.Shared
         where TEntity : class
         where TViewModel : class
     {
-        protected DAL.MVC_Game2Context context = new DAL.MVC_Game2Context();
+        //protected DAL.MVC_Game2Context context;
         protected List<TEntity> ListContext;
         protected string entityIdPropertyName;
 

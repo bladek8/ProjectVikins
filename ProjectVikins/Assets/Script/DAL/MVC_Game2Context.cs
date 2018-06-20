@@ -5,22 +5,69 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
+using UnityEditor;
+using System.Reflection;
 
 namespace Assets.Script.DAL
 {
-    public class MVC_Game2Context
+    [InitializeOnLoad]
+    public static class MVC_Game2Context
     {
-        Dictionary<string, string> varTxt = new Dictionary<string, string>();
-        public MVC_Game2Context()
+
+        static MVC_Game2Context()
         {
-            //teste();
+            int i = -39087;
+
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var dataDirectory = Path.Combine(currentDirectory, "teste");
+            var files = new DirectoryInfo(dataDirectory).GetFiles("*.txt");
+
+            //StreamWriter sWriter = new StreamWriter(Path.Combine("C:\\Desenvolvimento\\github.com-UpsideDownHub\\ProjectVikins\\ProjectVikins\\teste", "Player.txt"));
+
+            //sWriter.Write(DataManagement.DataManagement.Encrypt("Life=3;SpeedWalk=0;PlayerId=1;InitialX=0;InitialY=0;AttackMax=10;", "FelipeMae"));
+
+            foreach (var file in files)
+            {
+                StreamReader stwToLaw = new StreamReader(Path.Combine(dataDirectory, file.FullName));
+                var fileName = file.Name.Split('.');
+                var className = Type.GetType("Assets.Script.DAL." + fileName[0]);
+                object dal;
+
+                string b;
+                b = stwToLaw.ReadToEnd();
+                b = DataManagement.DataManagement.Decrypt(b, "FelipeMae");
+                var f = b.Split(new[] { "\n" }, StringSplitOptions.None);
+                foreach (var o in f)
+                {
+                    dal = Activator.CreateInstance(className);
+                    PropertyInfo[] classeInfo = className.GetProperties();
+                    if (string.IsNullOrEmpty(o))
+                        continue;
+                    var c = o.Split(';');
+                    foreach (var d in c)
+                    {
+                        if (!d.Contains("="))
+                            continue;
+                        var e = d.Split('=');
+                        var l = classeInfo.Where(x => x.Name == e[0]).First();
+                        int.TryParse(e[1], out i);
+                        className.GetProperty(e[0]).SetValue(dal, Convert.ChangeType(e[1], l.PropertyType), null);
+                    }
+                    if (className == typeof(Player))
+                        players.Add((Player)dal);
+                    else if (className == typeof(Enemy))
+                        enemies.Add((Enemy)dal);
+                }
+                stwToLaw.Close();
+            }
         }
+
         public static List<CharacterType> CharactersType;
         public static List<Enemy> enemies = new List<Enemy>();
         public static List<Player> players = new List<Player>();
         public static List<EnemyAssassin> enemyAssassins = new List<EnemyAssassin>();
-        
-        public void SetEnemy(Enemy model)
+
+        /*public void SetEnemy(Enemy model)
         {
             enemies.Add(model);
         }
@@ -43,19 +90,20 @@ namespace Assets.Script.DAL
         public List<Player> GetPlayers()
         {
             return players;
-        }
+        }*/
 
         //PEGAR DADOS
-        public void teste()
+        /*public void teste()
         {
             
             var currentDirectory = Directory.GetCurrentDirectory();
             var dataDirectory = Path.Combine(currentDirectory, "teste");
             var files = new DirectoryInfo(dataDirectory).GetFiles("*.txt");
 
-            StreamWriter sWriter = new StreamWriter(Path.Combine("C:\\Desenvolvimento\\github.com-UpsideDownHub\\ProjectVikins\\ProjectVikins\\teste", "Player.txt"));
+            //StreamWriter sWriter = new StreamWriter(Path.Combine("C:\\Desenvolvimento\\github.com-UpsideDownHub\\ProjectVikins\\ProjectVikins\\teste", "Player.txt"));
+            
             //sWriter.Write(DataManagement.DataManagement.Encrypt("Life=3;SpeedWalk=0;PlayerId=1;InitialX=0;InitialY=0;AttackMax=10;", "FelipeMae"));
-            sWriter.Close();
+            
             foreach (var file in files)
             {
                 StreamReader stwToLaw = new StreamReader(Path.Combine(dataDirectory, file.FullName));
@@ -66,20 +114,26 @@ namespace Assets.Script.DAL
                 string b;
                 b = stwToLaw.ReadToEnd();
                 b = DataManagement.DataManagement.Decrypt(b, "FelipeMae");
-                var c = b.Split(';');
-                foreach (var d in c)
+                var f = b.Split(new[] { "\n" }, StringSplitOptions.None);
+                foreach (var o in f)
                 {
-                    if (!d.Contains("="))
-                        continue;
-                    var e = d.Split('=');
-                    className.GetProperty(e[0]).SetValue(dal, int.Parse(e[1]), null);
-                    varTxt.Add(e[0], e[1]);
+                    dal = null;
+                    var c = o.Split(';');
+                    foreach (var d in c)
+                    {
+                        if (!d.Contains("="))
+                            continue;
+                        var e = d.Split('=');
+                        className.GetProperty(e[0]).SetValue(dal, int.Parse(e[1]), null);
+                        varTxt.Add(e[0], e[1]);
+                    }
+                    if (className == typeof(Player))
+                        players.Add((Player)dal);
+                    else if (className == typeof(Enemy))
+                        enemies.Add((Enemy)dal);
                 }
-                if (className == typeof(Player))
-                    players.Add((Player)dal);
-                else if (className == typeof(Enemy))
-                    enemies.Add((Enemy)dal);
+                stwToLaw.Close();
             }
-        }
+        }*/
     }
 }
