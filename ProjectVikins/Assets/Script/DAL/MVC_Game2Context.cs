@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Assets.Script.DAL
 {
@@ -11,25 +13,13 @@ namespace Assets.Script.DAL
         Dictionary<string, string> varTxt = new Dictionary<string, string>();
         public MVC_Game2Context()
         {
-            teste();
+            //teste();
         }
-        //public PlayerPrefs Player = new PlayerPrefs();
-        //PlayerPrefs a = new PlayerPrefs();
         public static List<CharacterType> CharactersType;
         public static List<Enemy> enemies = new List<Enemy>();
-        //public static List<EnemyBoss> enemyBosses = new List<EnemyBoss>();
         public static List<Player> players = new List<Player>();
         public static List<EnemyAssassin> enemyAssassins = new List<EnemyAssassin>();
-
-        //public MVC_Game2Context()
-        //{
-        //    CharactersType = new List<CharacterType>
-        //    {
-        //        new CharacterType(1, "Player", "PLAYER"),
-        //        new CharacterType(2, "SimpleEnemy", "SIMPLEENEMY")
-        //    };
-        //}
-
+        
         public void SetEnemy(Enemy model)
         {
             enemies.Add(model);
@@ -46,10 +36,6 @@ namespace Assets.Script.DAL
         {
             return enemyAssassins;
         }
-        //public List<EnemyBoss> GetEnemyBosses()
-        //{
-        //    return enemyBosses;
-        //}
         public void SetPlayer(Player model)
         {
             players.Add(model);
@@ -62,9 +48,14 @@ namespace Assets.Script.DAL
         //PEGAR DADOS
         public void teste()
         {
+            
             var currentDirectory = Directory.GetCurrentDirectory();
             var dataDirectory = Path.Combine(currentDirectory, "teste");
             var files = new DirectoryInfo(dataDirectory).GetFiles("*.txt");
+
+            StreamWriter sWriter = new StreamWriter(Path.Combine("C:\\Desenvolvimento\\github.com-UpsideDownHub\\ProjectVikins\\ProjectVikins\\teste", "Player.txt"));
+            //sWriter.Write(DataManagement.DataManagement.Encrypt("Life=3;SpeedWalk=0;PlayerId=1;InitialX=0;InitialY=0;AttackMax=10;", "FelipeMae"));
+            sWriter.Close();
             foreach (var file in files)
             {
                 StreamReader stwToLaw = new StreamReader(Path.Combine(dataDirectory, file.FullName));
@@ -74,6 +65,7 @@ namespace Assets.Script.DAL
 
                 string b;
                 b = stwToLaw.ReadToEnd();
+                b = DataManagement.DataManagement.Decrypt(b, "FelipeMae");
                 var c = b.Split(';');
                 foreach (var d in c)
                 {

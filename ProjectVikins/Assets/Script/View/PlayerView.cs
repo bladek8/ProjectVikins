@@ -38,9 +38,9 @@ namespace Assets.Script.View
             mainCamera = Camera.main;
             cv = mainCamera.GetComponent<CameraView>();
             playerController = new PlayerController(new Models.PlayerViewModel { PlayerId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1, IsBeingControllable = isPlayable, PlayerMode = PlayerModes.Attack }, this.gameObject);
-            a = playerController.GetData(transform.position);
-            if (a != null)
-                Debug.Log(a.AttackMax);
+            //a = playerController.GetData(transform.position);
+            //if (a != null)
+            //    Debug.Log(a.AttackMax);
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
         }

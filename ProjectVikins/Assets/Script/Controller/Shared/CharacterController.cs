@@ -56,6 +56,8 @@ namespace Assets.Script.Controller.Shared
             MethodInfo m = className.GetMethod("IncreaseStats");
             return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
+
+
         public void DecreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
         {
             className = Type.GetType("Assets.Script.BLL." + target + "Functions");
