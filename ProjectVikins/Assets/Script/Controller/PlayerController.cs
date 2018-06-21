@@ -11,8 +11,8 @@ namespace Assets.Script.Controller
     public class PlayerController : Shared._CharacterController<Models.PlayerViewModel>
     {
         private Helpers.Utils utils = new Helpers.Utils();
-        private readonly BLL.PlayerFunctions playerFunctions;
-        private readonly int id;
+        private readonly BLL.PlayerFunctions playerFunctions = new BLL.PlayerFunctions();
+        private int id;
         private readonly GameObject gameObj;
         public FieldOfView fow;
         public bool canAttack;
@@ -20,11 +20,8 @@ namespace Assets.Script.Controller
         public Transform target;
         List<Transform> enemies;
 
-        public PlayerController(Models.PlayerViewModel model, GameObject gameObj)
+        public PlayerController(GameObject gameObj)
         {
-            playerFunctions = new BLL.PlayerFunctions();
-            playerFunctions.Create(model);
-            this.id = model.PlayerId;
             this.gameObj = gameObj;
             enemies = utils.GetTransformInLayer("Enemy");
         }
@@ -233,9 +230,19 @@ namespace Assets.Script.Controller
             }
         }
         
-        public DAL.Player GetData(Vector3 position)
+        public DAL.Player GetInitialData(Vector3 position)
         {
-            return playerFunctions.GetDataByInitialPosition(position);
+            var dal = playerFunctions.GetDataByInitialPosition(position);
+            if (dal == null)
+            {
+                dal = DAL.MVC_Game2Context.defaultPlayer;
+                dal.InitialX = position.x;
+                dal.InitialY = position.y;
+                playerFunctions.Create(dal);
+            }
+            else
+                id = dal.PlayerId;
+            return dal;
         }
 
     }

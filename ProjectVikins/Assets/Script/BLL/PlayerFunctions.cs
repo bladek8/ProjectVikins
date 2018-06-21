@@ -26,10 +26,38 @@ namespace Assets.Script.BLL
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value,
                 IsBeingControllable = model.IsBeingControllable.Value,
-                PlayerMode = model.PlayerMode.Value
+                PlayerMode = model.PlayerMode.Value,
+                InitialX = model.InitialX.Value,
+                InitialY = model.InitialY.Value,
+                LastMoviment = model.LastMoviment.Value
             };
             ListContext.Add(player);
             return player.PlayerId;
+        }
+
+        public int Create(Player data)
+        {
+            ListContext.Add(data);
+            return data.PlayerId;
+        }
+
+        public PlayerViewModel GetDataViewModel(Player data)
+        {
+            return new PlayerViewModel()
+            {
+                AttackMax = data.AttackMax,
+                AttackMin = data.AttackMin,
+                CharacterTypeId = data.CharacterTypeId,
+                InitialX = data.InitialX,
+                InitialY = data.InitialY,
+                IsBeingControllable = data.IsBeingControllable,
+                LastMoviment = data.LastMoviment,
+                Life = data.Life,
+                PlayerId = data.PlayerId,
+                PlayerMode = data.PlayerMode,
+                SpeedRun = data.SpeedRun,
+                SpeedWalk = data.SpeedWalk
+            };
         }
 
         public override void SetListContext()
@@ -54,7 +82,7 @@ namespace Assets.Script.BLL
         public override void Decrease(PlayerViewModel model)
         {
             var player = this.GetDataById(model.PlayerId);
-            
+
             if (model.Life.HasValue) player.Life = player.Life - model.Life.Value;
             if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun - model.SpeedRun.Value;
             if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk - model.SpeedWalk.Value;

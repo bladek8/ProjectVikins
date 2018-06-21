@@ -16,8 +16,6 @@ namespace Assets.Script.DAL
 
         static MVC_Game2Context()
         {
-            int i = -39087;
-
             var currentDirectory = Directory.GetCurrentDirectory();
             var dataDirectory = Path.Combine(currentDirectory, "teste");
             var files = new DirectoryInfo(dataDirectory).GetFiles("*.txt");
@@ -50,7 +48,6 @@ namespace Assets.Script.DAL
                             continue;
                         var e = d.Split('=');
                         var l = classeInfo.Where(x => x.Name == e[0]).First();
-                        int.TryParse(e[1], out i);
                         className.GetProperty(e[0]).SetValue(dal, Convert.ChangeType(e[1], l.PropertyType), null);
                     }
                     if (className == typeof(Player))
@@ -67,73 +64,6 @@ namespace Assets.Script.DAL
         public static List<Player> players = new List<Player>();
         public static List<EnemyAssassin> enemyAssassins = new List<EnemyAssassin>();
 
-        /*public void SetEnemy(Enemy model)
-        {
-            enemies.Add(model);
-        }
-        public List<Enemy> GetEnemies()
-        {
-            return enemies;
-        }
-        public void SetEnemyAssassin(EnemyAssassin model)
-        {
-            enemyAssassins.Add(model);
-        }
-        public List<EnemyAssassin> GetEnemyAssassin()
-        {
-            return enemyAssassins;
-        }
-        public void SetPlayer(Player model)
-        {
-            players.Add(model);
-        }
-        public List<Player> GetPlayers()
-        {
-            return players;
-        }*/
-
-        //PEGAR DADOS
-        /*public void teste()
-        {
-            
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var dataDirectory = Path.Combine(currentDirectory, "teste");
-            var files = new DirectoryInfo(dataDirectory).GetFiles("*.txt");
-
-            //StreamWriter sWriter = new StreamWriter(Path.Combine("C:\\Desenvolvimento\\github.com-UpsideDownHub\\ProjectVikins\\ProjectVikins\\teste", "Player.txt"));
-            
-            //sWriter.Write(DataManagement.DataManagement.Encrypt("Life=3;SpeedWalk=0;PlayerId=1;InitialX=0;InitialY=0;AttackMax=10;", "FelipeMae"));
-            
-            foreach (var file in files)
-            {
-                StreamReader stwToLaw = new StreamReader(Path.Combine(dataDirectory, file.FullName));
-                var fileName = file.Name.Split('.');
-                var className = Type.GetType("Assets.Script.DAL." + fileName[0]);
-                var dal = Activator.CreateInstance(className);
-
-                string b;
-                b = stwToLaw.ReadToEnd();
-                b = DataManagement.DataManagement.Decrypt(b, "FelipeMae");
-                var f = b.Split(new[] { "\n" }, StringSplitOptions.None);
-                foreach (var o in f)
-                {
-                    dal = null;
-                    var c = o.Split(';');
-                    foreach (var d in c)
-                    {
-                        if (!d.Contains("="))
-                            continue;
-                        var e = d.Split('=');
-                        className.GetProperty(e[0]).SetValue(dal, int.Parse(e[1]), null);
-                        varTxt.Add(e[0], e[1]);
-                    }
-                    if (className == typeof(Player))
-                        players.Add((Player)dal);
-                    else if (className == typeof(Enemy))
-                        enemies.Add((Enemy)dal);
-                }
-                stwToLaw.Close();
-            }
-        }*/
+        public static readonly Player defaultPlayer = new Player() { PlayerId = players.Count, PlayerMode = Helpers.PlayerModes.Follow, IsBeingControllable = false, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, Life = 3, SpeedRun = 3, SpeedWalk = 4, CharacterTypeId = 1 };
     }
 }

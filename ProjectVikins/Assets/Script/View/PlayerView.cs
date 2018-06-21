@@ -31,16 +31,15 @@ namespace Assets.Script.View
         [SerializeField] GameObject FieldOfViewObj;
         Camera mainCamera;
         CameraView cv;
-        //DAL.Player a;
+        DAL.Player dal;
 
         private void Start()
         {
             mainCamera = Camera.main;
             cv = mainCamera.GetComponent<CameraView>();
-            playerController = new PlayerController(new Models.PlayerViewModel { PlayerId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1, IsBeingControllable = isPlayable, PlayerMode = PlayerModes.Attack }, this.gameObject);
-            //a = playerController.GetData(transform.position);
-            //if (a != null)
-            //    Debug.Log(a.AttackMax);
+            playerController = new PlayerController(this.gameObject);
+            dal = playerController.GetInitialData(transform.position);
+                Debug.Log(dal.AttackMax);
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
         }
@@ -164,7 +163,7 @@ namespace Assets.Script.View
                 }
             }
             else
-            {
+               {
 
             }
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);

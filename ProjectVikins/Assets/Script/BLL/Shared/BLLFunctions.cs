@@ -32,16 +32,17 @@ namespace Assets.Script.BLL.Shared
             return ListContext.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
 
         }
-        public TEntity GetDataByInitialPosition(object initialPosition)
+        public TEntity GetDataByInitialPosition(Vector3 initialPosition)
         {
+            Vector2 vector2 = initialPosition;
             var initialX = ListContext[0].GetType().GetProperty("InitialX");
             var initialY = ListContext[0].GetType().GetProperty("InitialY");
             foreach(var a in ListContext)
             {
                 string b = initialX.GetValue(a, null).ToString();
                 string c = initialY.GetValue(a, null).ToString();
-                var d = new Vector3(Convert.ToInt32(b), Convert.ToInt32(c), Convert.ToInt32(c));
-                if (d == (Vector3)initialPosition)
+                var d = new Vector2(Convert.ToInt32(b), Convert.ToInt32(c));
+                if (d == vector2)
                     return a;
             }
             return null;

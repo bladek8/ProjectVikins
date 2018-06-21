@@ -19,7 +19,7 @@ namespace Assets.Script.Models
         public int? AttackMax { get; set; }
         public bool? IsBeingControllable { get; set; }
         public PlayerModes? PlayerMode { get; set; }
-        public int? InitialX { get; set; }
-        public int? InitialY { get; set; }
+        public float? InitialX { get; set; }
+        public float? InitialY { get; set; }
     }
 }
