@@ -7,7 +7,8 @@ using UnityEngine;
 namespace Assets.Script.DAL
 {
     public class Enemy : Shared.Character
-    {   
+    {
+        public string Key = "EnemyId";
         public int EnemyId { get; set; }
         public Helpers.PossibleMoviment LastMoviment { get; set; }
         public float InitialX { get; set; }

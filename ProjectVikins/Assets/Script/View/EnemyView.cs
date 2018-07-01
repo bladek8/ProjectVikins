@@ -23,10 +23,12 @@ namespace Assets.Script.View
         Controller.EnemyController enemyController;
         [SerializeField] GameObject gObject;
         CountDown attackCountDown = new CountDown(3);
+        public DAL.Enemy dal;
         
         void Start()
         {
-            enemyController = new Controller.EnemyController( new Models.EnemyViewModel { EnemyId = this.gameObject.GetInstanceID(), Life = 2, CharacterTypeId = 5, SpeedRun = 3, SpeedWalk = 3, AttackMin = 1, AttackMax = 1 });
+            enemyController = new Controller.EnemyController();
+            dal = enemyController.GetInitialData(transform.position);
             enemyController.SetFieldOfView(gObject.GetComponent<FieldOfView>());
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }

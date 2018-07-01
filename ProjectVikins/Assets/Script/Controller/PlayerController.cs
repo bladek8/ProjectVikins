@@ -245,41 +245,9 @@ namespace Assets.Script.Controller
 
             return dal;
         }
-        public void SavePlayerData(DAL.Player data)
+        public void SaveData()
         {
-            var id = data.PlayerId;
-            string newData = "";
-            string lineData = "";
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "teste");
-            string currentData = "";
-            StreamReader sReader = new StreamReader(Path.Combine(path, "Player.txt"));
-            while (true)
-            {
-                lineData = sReader.ReadLine();
-                if (lineData == null)
-                    break;
-                currentData += DataManagement.DataManagement.Decrypt(lineData, "FelipeMae");
-                if (lineData.Contains("\0"))
-                    break;
-            }
-            sReader.Close();
-            if (!currentData.Contains("PlayerId=" + id))
-            {
-                return;
-            }
-            int pFrom = currentData.IndexOf("PlayerId=" + id);
-            var partData = currentData.Substring(pFrom, currentData.Length - pFrom);
-            int _pTo = partData.IndexOf("\n");
-            var a = partData.Substring(0, _pTo);
-            var b = currentData.Remove(pFrom, a.Length);
-            foreach (var variable in data.GetType().GetProperties())
-            {
-                newData += variable.Name + "=" + variable.GetValue(data, null) + ";";
-            }
-            newData += "\n";
-            StreamWriter sWriter = new StreamWriter(Path.Combine(path, "Player.txt"));
-            sWriter.WriteLine(DataManagement.DataManagement.Encrypt(newData, "FelipeMae"));
-            sWriter.Close();
+            BLL.SaveFunctions.Save();
         }
     }
 }

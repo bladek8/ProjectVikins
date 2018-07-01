@@ -6,7 +6,8 @@ using Assets.Script.Helpers;
 namespace Assets.Script.DAL
 {
     public class Player : Shared.Character
-    {        
+    {
+        public string Key = "PlayerId";
         public int PlayerId { get; set; }
         public PossibleMoviment LastMoviment { get; set; }
         public bool IsBeingControllable { get; set; }

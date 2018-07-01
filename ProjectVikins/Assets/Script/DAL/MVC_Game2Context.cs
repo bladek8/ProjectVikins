@@ -50,7 +50,10 @@ namespace Assets.Script.DAL
                                 continue;
                             var e = d.Split('=');
                             var l = classeInfo.Where(x => x.Name == e[0]).First();
-                            className.GetProperty(e[0]).SetValue(dal, Convert.ChangeType(e[1], l.PropertyType), null);
+                            if (l.PropertyType.IsEnum)
+                                className.GetProperty(e[0]).SetValue(dal, Enum.Parse(l.PropertyType, e[1]), null);
+                            else
+                                className.GetProperty(e[0]).SetValue(dal, Convert.ChangeType(e[1], l.PropertyType), null);
                         }
                         if (className == typeof(Player))
                             players.Add((Player)dal);
