@@ -30,7 +30,13 @@ namespace Assets.Script.View
         [SerializeField] GameObject FieldOfViewObj;
         Camera mainCamera;
         CameraView cv;
+        public GameObject camera1;
+        public GameObject camera2;
+        public GameObject player1;
+        public GameObject player2;
+
         public DAL.Player dal;
+
 
         private void Start()
         {
@@ -89,7 +95,21 @@ namespace Assets.Script.View
                     playerController.Attack(transform, BoxCollider2D.size);
 
                 if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K))
+                {
                     playerController.ChangeControllableCharacter();
+                    if (camera1.activeSelf == true)
+                    {
+                        camera2.transform.position = new Vector3(player2.transform.position.x, player2.transform.position.y, -100);
+                        camera1.SetActive(false);
+                        camera2.SetActive(true);
+                    }
+                    else if (camera2.activeSelf == true)
+                    {
+                        camera1.transform.position = new Vector3(player1.transform.position.x, player1.transform.position.y, -100);
+                        camera1.SetActive(true);
+                        camera2.SetActive(false);
+                    }
+                }
             }
             else
             {
@@ -166,9 +186,15 @@ namespace Assets.Script.View
                     }
                 }
 
+                //if (Input.GetButton("getData"))
+                //{
+                //    playerController.SavePlayerData(dal);
+
+                //}
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     playerController.SaveData();
+
                 }
             }
             else

@@ -41,6 +41,7 @@ public class CameraView : MonoBehaviour {
         {
             cameraMove.y -= MoveSpeed();
         }
+
         transform.position = cameraMove;
     }
 
