@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Assets.Script.Controller.Shared
@@ -46,13 +47,13 @@ namespace Assets.Script.Controller.Shared
 
         public object DecreaseStats(string target, string stats, object value, object id)
         {
-            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
             MethodInfo m = className.GetMethod("DecreaseStats");
             return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
         public object IncreaseStats(string target, string stats, object value, object id)
         {
-            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
             MethodInfo m = className.GetMethod("IncreaseStats");
             return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
@@ -60,25 +61,25 @@ namespace Assets.Script.Controller.Shared
 
         public void DecreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
         {
-            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
             MethodInfo m = className.GetMethod("DecreaseMultipleStats");
             m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
         }
         public void IncreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
         {
-            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
             MethodInfo m = className.GetMethod("IncreaseMultipleStats");
             m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
         }
         public void UpdateStats(string target, string stats, object value, object id)
         {
-            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
             MethodInfo m = className.GetMethod("UpdateStats");
             m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
         }
         public void UpdateMultipleStats(string target, Dictionary<string, object> datas, object id)
         {
-            className = Type.GetType("Assets.Script.BLL." + target + "Functions");
+            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
             MethodInfo m = className.GetMethod("UpdateMultipleStats");
             m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
         }
