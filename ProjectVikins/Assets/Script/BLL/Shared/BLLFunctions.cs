@@ -39,9 +39,9 @@ namespace Assets.Script.BLL.Shared
             var initialY = ListContext[0].GetType().GetProperty("InitialY");
             foreach(var a in ListContext)
             {
-                string b = initialX.GetValue(a, null).ToString();
-                string c = initialY.GetValue(a, null).ToString();
-                var d = new Vector2(Convert.ToInt32(b), Convert.ToInt32(c));
+                var b = initialX.GetValue(a, null);
+                var c = initialY.GetValue(a, null);
+                var d = new Vector2((float)b, (float)c);
                 if (d == vector2)
                     return a;
             }

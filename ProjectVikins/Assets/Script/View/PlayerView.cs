@@ -39,7 +39,6 @@ namespace Assets.Script.View
             cv = mainCamera.GetComponent<CameraView>();
             playerController = new PlayerController(this.gameObject);
             dal = playerController.GetInitialData(transform.position);
-                Debug.Log(dal.AttackMax);
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
         }
@@ -140,10 +139,14 @@ namespace Assets.Script.View
                     playerController.Attack(transform, BoxCollider2D.size);
             }
 
-            if (Vector3.Distance(transform.position, cv.player.transform.position) > 5)
+            if (Vector3.Distance(transform.position, cv.player.transform.position) > 15)
             {
                 playerMode = PlayerModes.Follow;
             }
+            //else if (Vector3.Distance(transform.position, cv.player.transform.position) < 2)
+            //{
+            //    playerMode = PlayerModes.Attack;
+            //}
         }
 
         private void Update()

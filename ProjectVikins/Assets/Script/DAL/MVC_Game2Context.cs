@@ -33,29 +33,39 @@ namespace Assets.Script.DAL
 
                 string b;
                 b = stwToLaw.ReadToEnd();
-                b = DataManagement.DataManagement.Decrypt(b, "FelipeMae");
-                var f = b.Split(new[] { "\n" }, StringSplitOptions.None);
-                foreach (var o in f)
+                try
                 {
-                    dal = Activator.CreateInstance(className);
-                    PropertyInfo[] classeInfo = className.GetProperties();
-                    if (string.IsNullOrEmpty(o))
-                        continue;
-                    var c = o.Split(';');
-                    foreach (var d in c)
+                    b = DataManagement.DataManagement.Decrypt(b, "FelipeMae");
+                    var f = b.Split(new[] { "\n" }, StringSplitOptions.None);
+                    foreach (var o in f)
                     {
-                        if (!d.Contains("="))
+                        dal = Activator.CreateInstance(className);
+                        PropertyInfo[] classeInfo = className.GetProperties();
+                        if (string.IsNullOrEmpty(o))
                             continue;
-                        var e = d.Split('=');
-                        var l = classeInfo.Where(x => x.Name == e[0]).First();
-                        className.GetProperty(e[0]).SetValue(dal, Convert.ChangeType(e[1], l.PropertyType), null);
+                        var c = o.Split(';');
+                        foreach (var d in c)
+                        {
+                            if (!d.Contains("="))
+                                continue;
+                            var e = d.Split('=');
+                            var l = classeInfo.Where(x => x.Name == e[0]).First();
+                            className.GetProperty(e[0]).SetValue(dal, Convert.ChangeType(e[1], l.PropertyType), null);
+                        }
+                        if (className == typeof(Player))
+                            players.Add((Player)dal);
+                        else if (className == typeof(Enemy))
+                            enemies.Add((Enemy)dal);
                     }
-                    if (className == typeof(Player))
-                        players.Add((Player)dal);
-                    else if (className == typeof(Enemy))
-                        enemies.Add((Enemy)dal);
                 }
-                stwToLaw.Close();
+                catch
+                {
+                    Debug.Log("Save Corrompido.");
+                }
+                finally
+                {
+                    stwToLaw.Close();
+                }
             }
         }
 

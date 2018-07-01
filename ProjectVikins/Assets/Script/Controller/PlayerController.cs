@@ -240,8 +240,8 @@ namespace Assets.Script.Controller
                 dal.InitialY = position.y;
                 playerFunctions.Create(dal);
             }
-            else
-                id = dal.PlayerId;
+            id = dal.PlayerId;
+
             return dal;
         }
 
