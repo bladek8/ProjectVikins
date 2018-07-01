@@ -16,6 +16,13 @@ namespace Assets.Script.Helpers
            new KeyMove(KeyCode.S, Vector2.down)
         };
 
+        public List<_PlayerModes> playerModes = new List<_PlayerModes>
+        {
+            new _PlayerModes(PlayerModes.Attack, new List<KeyCode>{ KeyCode.LeftShift, KeyCode.P }),
+            new _PlayerModes(PlayerModes.Follow, new List<KeyCode>{ KeyCode.LeftShift, KeyCode.O }),
+            new _PlayerModes(PlayerModes.Wait, new List<KeyCode>{ KeyCode.LeftShift, KeyCode.I })
+        };
+
         public List<Psm> Psm = new List<Psm>
         {
            new Psm(PossibleMoviment.Down, false),
