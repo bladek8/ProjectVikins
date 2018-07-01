@@ -11,7 +11,7 @@ namespace Assets.Script.Controller
 {
     public class EnemyController : Shared._CharacterController<Models.EnemyViewModel>
     {
-        private readonly BLL.EnemyFunctions enemyFunctions;
+        private readonly BLL.EnemyFunctions enemyFunctions = new BLL.EnemyFunctions();
         private int id;
         List<Transform> players;
         private Utils utils = new Utils();
@@ -21,11 +21,8 @@ namespace Assets.Script.Controller
         public CountDown followPlayer = new CountDown();
         public Transform target;
 
-        public EnemyController(Models.EnemyViewModel model)
+        public EnemyController()
         {
-            enemyFunctions = new BLL.EnemyFunctions();
-            enemyFunctions.Create(model);
-            this.id = model.EnemyId;
             players = utils.GetTransformInLayer("Player");
         }
 

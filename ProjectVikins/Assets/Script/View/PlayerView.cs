@@ -22,7 +22,6 @@ namespace Assets.Script.View
         private BoxCollider2D _boxCollider2D;
         private BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
-        PlayerModes playerMode = PlayerModes.Attack;
         BoxCollider2D colliderTransform;
         KeyMove input = new KeyMove(null, new Vector2(), false);
         [SerializeField] bool isPlayable;
@@ -31,11 +30,13 @@ namespace Assets.Script.View
         [SerializeField] GameObject FieldOfViewObj;
         Camera mainCamera;
         CameraView cv;
-        DAL.Player dal;
         public GameObject camera1;
         public GameObject camera2;
         public GameObject player1;
         public GameObject player2;
+
+        public DAL.Player dal;
+
 
         private void Start()
         {
@@ -85,7 +86,7 @@ namespace Assets.Script.View
                         playerController.Increase(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
                     if (Input.GetKey(KeyCode.L))
                     {
-                        playerMode = PlayerModes.Attack;
+                        dal.PlayerMode = PlayerModes.Attack;
                         playerController.Decrease(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
                         attackCountDown.StartToCount();
                     }
@@ -112,7 +113,7 @@ namespace Assets.Script.View
             }
             else
             {
-                if (playerMode == PlayerModes.Follow)
+                if (dal.PlayerMode == PlayerModes.Follow)
                 {
                     playerController.WalkToPlayer(transform, cv.player.transform);
                     if (Mathf.Abs(Vector3.Distance(transform.position, cv.player.transform.position)) > 0.5)
@@ -120,7 +121,7 @@ namespace Assets.Script.View
                     else
                         PlayerAnimator.SetBool("isWalking", false);
                 }
-                else if (playerMode == PlayerModes.Attack)
+                else if (dal.PlayerMode == PlayerModes.Attack)
                 {
                     if (playerController.fow.visibleTargets.Count > 0)
                     {
@@ -161,7 +162,7 @@ namespace Assets.Script.View
 
             if (Vector3.Distance(transform.position, cv.player.transform.position) > 15)
             {
-                playerMode = PlayerModes.Follow;
+                dal.PlayerMode = PlayerModes.Follow;
             }
             //else if (Vector3.Distance(transform.position, cv.player.transform.position) < 2)
             //{
@@ -184,9 +185,16 @@ namespace Assets.Script.View
                         PlayerAnimator.SetBool("isWalking", false);
                     }
                 }
-                if (Input.GetButton("getData"))
+
+                //if (Input.GetButton("getData"))
+                //{
+                //    playerController.SavePlayerData(dal);
+
+                //}
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    playerController.SavePlayerData(dal);
+                    playerController.SaveData();
+
                 }
             }
             else
@@ -195,13 +203,11 @@ namespace Assets.Script.View
                 {
                     if (Input.GetKey(playerMode.KeyButton[0]) && Input.GetKey(playerMode.KeyButton[1]))
                     {
-                        this.playerMode = playerMode.Value;
-
+                        dal.PlayerMode = playerMode.Value;
                         if(playerMode.Value == PlayerModes.Wait)
                             PlayerAnimator.SetBool("isWalking", false);
                     }
                 }
-                Debug.Log(playerMode);
             }
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
