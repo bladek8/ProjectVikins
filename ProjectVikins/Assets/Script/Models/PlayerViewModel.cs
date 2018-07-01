@@ -9,7 +9,7 @@ namespace Assets.Script.Models
 {
     public class PlayerViewModel
     {
-        public Helpers.PossibleMoviment? LastMoviment { get; set; }
+        public PossibleMoviment? LastMoviment { get; set; }
         public int PlayerId { get; set; }
         public int? CharacterTypeId { get; set; }
         public int? Life { get; set; }

@@ -12,7 +12,7 @@ namespace Assets.Script.Controller
     public class EnemyController : Shared._CharacterController<Models.EnemyViewModel>
     {
         private readonly BLL.EnemyFunctions enemyFunctions;
-        private readonly int id;
+        private int id;
         List<Transform> players;
         private Utils utils = new Utils();
         public bool canAttack;
@@ -164,6 +164,20 @@ namespace Assets.Script.Controller
                 default:
                     return new Helpers.KeyMove(null, new Vector2(0, 0), false);
             }
+        }
+        public DAL.Enemy GetInitialData(Vector3 position)
+        {
+            var dal = enemyFunctions.GetDataByInitialPosition(position);
+            if (dal == null)
+            {
+                dal = DAL.MVC_Game2Context.defaultEnemy;
+                dal.InitialX = position.x;
+                dal.InitialY = position.y;
+                enemyFunctions.Create(dal);
+            }
+            id = dal.EnemyId;
+
+            return dal;
         }
     }
 }

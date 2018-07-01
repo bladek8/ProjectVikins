@@ -244,6 +244,5 @@ namespace Assets.Script.Controller
 
             return dal;
         }
-
     }
 }

@@ -10,5 +10,7 @@ namespace Assets.Script.DAL
     {   
         public int EnemyId { get; set; }
         public Helpers.PossibleMoviment LastMoviment { get; set; }
+        public float InitialX { get; set; }
+        public float InitialY { get; set; }
     }
 }

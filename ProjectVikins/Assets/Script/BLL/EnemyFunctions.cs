@@ -31,6 +31,11 @@ namespace Assets.Script.BLL
             ListContext.Add(enemy);
             return enemy.EnemyId;
         }
+        public int Create(Enemy data)
+        {
+            ListContext.Add(data);
+            return data.EnemyId;
+        }
 
         public override void Decrease(EnemyViewModel model)
         {
