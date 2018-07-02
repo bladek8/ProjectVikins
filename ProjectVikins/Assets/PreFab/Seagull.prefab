@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4255252421189810}
   - component: {fileID: 212217443152136090}
   - component: {fileID: 61849191692063542}
-  - component: {fileID: 114953481079119508}
+  - component: {fileID: 114675233128214424}
+  - component: {fileID: 95357253564804760}
   m_Layer: 0
-  m_Name: quadrado
+  m_Name: Seagull
   m_TagString: Objeto1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +59,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.41, y: 0.41}
+    oldSize: {x: 1.1, y: 1.68}
     newSize: {x: 0.41, y: 0.41}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -67,7 +68,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 47.90126, y: 0.41}
   m_EdgeRadius: 0
---- !u!114 &114953481079119508
+--- !u!95 &95357253564804760
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1584749795342264}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8a06acbea69562747acab5a36a8eda7d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114675233128214424
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,10 +94,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1584749795342264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f8d24a61beb5041afa5a287049aa9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e72478068afe67408cb0713dab9a59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objeto: {fileID: 1584749795342264}
 --- !u!212 &212217443152136090
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -92,6 +110,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -113,7 +132,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c76fdf4034d99b49ae28bab18ab96df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d62c3f19a452e804b98052aef351e17a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

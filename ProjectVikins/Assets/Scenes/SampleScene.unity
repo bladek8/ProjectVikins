@@ -322,12 +322,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 221792598}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73bf9a589c2ec741b8d50f269eefd73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objeto1: {fileID: 1584749795342264, guid: eabe8b7f2d3e7074cb75a035b4a2a2dc, type: 2}
+  seagull: {fileID: 1584749795342264, guid: eabe8b7f2d3e7074cb75a035b4a2a2dc, type: 2}
 --- !u!4 &221792600
 Transform:
   m_ObjectHideFlags: 0
@@ -335,7 +335,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 221792598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.81, y: -0.31, z: 0.022288835}
+  m_LocalPosition: {x: -22.6, y: -0.31, z: 0.022288835}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5b4f68fa0349f47b193ea598974b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 961287761}
+  playerTranform: {fileID: 961287765}
   offset: 100
   speed: 4
   minMaxXPosition: {x: -15, y: 15}
@@ -535,10 +535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayable: 0
   FieldOfViewObj: {fileID: 1858802460}
-  camera1: {fileID: 519420028}
-  camera2: {fileID: 0}
-  player1: {fileID: 961287761}
-  player2: {fileID: 575452328}
 --- !u!95 &575452333
 Animator:
   serializedVersion: 3
@@ -828,10 +824,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayable: 1
   FieldOfViewObj: {fileID: 2046516968}
-  camera1: {fileID: 519420028}
-  camera2: {fileID: 0}
-  player1: {fileID: 961287761}
-  player2: {fileID: 575452328}
 --- !u!95 &961287763
 Animator:
   serializedVersion: 3
