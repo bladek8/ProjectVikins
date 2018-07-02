@@ -66,7 +66,7 @@ namespace Assets.Script.BLL
             if (typeof(PlayerView) == goType)
             {
                 var dal = (PlayerView)goView;
-                return new DalDataStruct() { Dal = dal.dal, Id = dal.dal.PlayerId };
+                return new DalDataStruct() { Dal = dal.data, Id = dal.data.PlayerId };
             }
             else if (typeof(EnemyView) == goType)
             {

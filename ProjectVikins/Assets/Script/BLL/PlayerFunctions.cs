@@ -77,6 +77,7 @@ namespace Assets.Script.BLL
             if (model.AttackMax.HasValue) player.AttackMax = model.AttackMax.Value;
             if (model.IsBeingControllable.HasValue) player.IsBeingControllable = model.IsBeingControllable.Value;
             if (model.PlayerMode.HasValue) player.PlayerMode = model.PlayerMode.Value;
+            if (model.Transform != null) player.Transform = model.Transform;
         }
 
         public override void Decrease(PlayerViewModel model)

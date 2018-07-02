@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraView : MonoBehaviour {
     
-    public GameObject player;
+    private readonly Assets.Script.Controller.CameraController cameraController = new Assets.Script.Controller.CameraController();
+    public Transform playerTranform;
 
     public float offset;
     public float speed;
@@ -25,19 +26,19 @@ public class CameraView : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if ((Camera.main.WorldToScreenPoint(player.transform.position).x > screenWidth - offset) && transform.position.x < minMaxXPosition.y)
+        if ((Camera.main.WorldToScreenPoint(playerTranform.transform.position).x > screenWidth - offset) && transform.position.x < minMaxXPosition.y)
         {
             cameraMove.x += MoveSpeed();
         }
-        if ((Camera.main.WorldToScreenPoint(player.transform.position).x < offset) && transform.position.x > minMaxXPosition.x)
+        if ((Camera.main.WorldToScreenPoint(playerTranform.transform.position).x < offset) && transform.position.x > minMaxXPosition.x)
         {
             cameraMove.x -= MoveSpeed();
         }
-        if ((Camera.main.WorldToScreenPoint(player.transform.position).y > screenHeight - offset) && transform.position.y < minMaxYPosition.y)
+        if ((Camera.main.WorldToScreenPoint(playerTranform.transform.position).y > screenHeight - offset) && transform.position.y < minMaxYPosition.y)
         {
             cameraMove.y += MoveSpeed();
         }
-        if ((Camera.main.WorldToScreenPoint(player.transform.position).y < offset) && transform.position.y > minMaxYPosition.x)
+        if ((Camera.main.WorldToScreenPoint(playerTranform.transform.position).y < offset) && transform.position.y > minMaxYPosition.x)
         {
             cameraMove.y -= MoveSpeed();
         }
@@ -49,4 +50,12 @@ public class CameraView : MonoBehaviour {
     {
         return speed * Time.deltaTime;
     }
+
+    public void UpdatePlayerTranform()
+    {
+        playerTranform = cameraController.UpdatePlayerTranform();
+        transform.position = new Vector3(playerTranform.position.x, playerTranform.position.y, transform.position.z);
+        cameraMove = transform.position;
+    }
+
 }

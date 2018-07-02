@@ -30,12 +30,8 @@ namespace Assets.Script.View
         [SerializeField] GameObject FieldOfViewObj;
         Camera mainCamera;
         CameraView cv;
-        public GameObject camera1;
-        public GameObject camera2;
-        public GameObject player1;
-        public GameObject player2;
 
-        public DAL.Player dal;
+        public DAL.Player data;
 
 
         private void Start()
@@ -43,9 +39,10 @@ namespace Assets.Script.View
             mainCamera = Camera.main;
             cv = mainCamera.GetComponent<CameraView>();
             playerController = new PlayerController(this.gameObject);
-            dal = playerController.GetInitialData(transform.position);
+            data = playerController.GetInitialData(transform);
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
+            if(data.IsBeingControllable) mainCamera.SendMessage("UpdatePlayerTranform");
         }
 
         private void FixedUpdate()
@@ -86,7 +83,7 @@ namespace Assets.Script.View
                         playerController.Increase(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
                     if (Input.GetKey(KeyCode.L))
                     {
-                        dal.PlayerMode = PlayerModes.Attack;
+                        data.PlayerMode = PlayerModes.Attack;
                         playerController.Decrease(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
                         attackCountDown.StartToCount();
                     }
@@ -97,31 +94,21 @@ namespace Assets.Script.View
                 if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K))
                 {
                     playerController.ChangeControllableCharacter();
-                    if (camera1.activeSelf == true)
-                    {
-                        camera2.transform.position = new Vector3(player2.transform.position.x, player2.transform.position.y, -100);
-                        camera1.SetActive(false);
-                        camera2.SetActive(true);
-                    }
-                    else if (camera2.activeSelf == true)
-                    {
-                        camera1.transform.position = new Vector3(player1.transform.position.x, player1.transform.position.y, -100);
-                        camera1.SetActive(true);
-                        camera2.SetActive(false);
-                    }
+                    
+                    mainCamera.SendMessage("UpdatePlayerTranform");
                 }
             }
             else
             {
-                if (dal.PlayerMode == PlayerModes.Follow)
+                if (data.PlayerMode == PlayerModes.Follow)
                 {
-                    playerController.WalkToPlayer(transform, cv.player.transform);
-                    if (Mathf.Abs(Vector3.Distance(transform.position, cv.player.transform.position)) > 0.5)
+                    playerController.WalkToPlayer(transform, cv.playerTranform.transform);
+                    if (Mathf.Abs(Vector3.Distance(transform.position, cv.playerTranform.transform.position)) > 0.5)
                         PlayerAnimator.SetBool("isWalking", true);
                     else
                         PlayerAnimator.SetBool("isWalking", false);
                 }
-                else if (dal.PlayerMode == PlayerModes.Attack)
+                else if (data.PlayerMode == PlayerModes.Attack)
                 {
                     if (playerController.fow.visibleTargets.Count > 0)
                     {
@@ -160,9 +147,9 @@ namespace Assets.Script.View
                 }
             }
 
-            if (Vector3.Distance(transform.position, cv.player.transform.position) > 15)
+            if (Vector3.Distance(transform.position, cv.playerTranform.transform.position) > 15)
             {
-                dal.PlayerMode = PlayerModes.Follow;
+                data.PlayerMode = PlayerModes.Follow;
             }
             //else if (Vector3.Distance(transform.position, cv.player.transform.position) < 2)
             //{
@@ -203,7 +190,7 @@ namespace Assets.Script.View
                 {
                     if (Input.GetKey(playerMode.KeyButton[0]) && Input.GetKey(playerMode.KeyButton[1]))
                     {
-                        dal.PlayerMode = playerMode.Value;
+                        data.PlayerMode = playerMode.Value;
                         if(playerMode.Value == PlayerModes.Wait)
                             PlayerAnimator.SetBool("isWalking", false);
                     }

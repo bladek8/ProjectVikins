@@ -231,20 +231,22 @@ namespace Assets.Script.Controller
             }
         }
 
-        public DAL.Player GetInitialData(Vector3 position)
+        public DAL.Player GetInitialData(Transform transform)
         {
-            var dal = playerFunctions.GetDataByInitialPosition(position);
-            if (dal == null)
+            var data = playerFunctions.GetDataByInitialPosition(transform.position);
+            if (data == null)
             {
-                dal = DAL.MVC_Game2Context.defaultPlayer;
-                dal.InitialX = position.x;
-                dal.InitialY = position.y;
-                playerFunctions.Create(dal);
+                data = DAL.MVC_Game2Context.defaultPlayer;
+                data.InitialX = transform.position.x;
+                data.InitialY = transform.position.y;
+                playerFunctions.Create(data);
             }
-            id = dal.PlayerId;
-
-            return dal;
+            id = data.PlayerId;
+            data.Transform = transform;
+            playerFunctions.UpdateStats(playerFunctions.GetDataViewModel(data));
+            return data;
         }
+
         public void SaveData()
         {
             BLL.SaveFunctions.Save();
