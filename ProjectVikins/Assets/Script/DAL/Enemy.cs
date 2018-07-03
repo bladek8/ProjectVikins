@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Assets.Script.DAL
 {
+    [Serializable]
     public class Enemy : Shared.Character
     {
         public string Key = "EnemyId";

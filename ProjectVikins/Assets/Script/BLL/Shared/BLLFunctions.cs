@@ -12,8 +12,8 @@ namespace Assets.Script.BLL.Shared
         where TEntity : class
         where TViewModel : class
     {
-        //protected DAL.MVC_Game2Context context;
         protected List<TEntity> ListContext;
+        protected List<TViewModel> ListModel;
         protected string entityIdPropertyName;
 
         public BLLFunctions(string entityIdPropertyName)
@@ -30,8 +30,19 @@ namespace Assets.Script.BLL.Shared
         {
             var idProperty = ListContext[0].GetType().GetProperty(entityIdPropertyName);
             return ListContext.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
-
         }
+
+        public List<TViewModel> GetModels()
+        {
+            return ListModel;
+        }
+
+        public TViewModel GetModelById(object id)
+        {
+            var idProperty = ListModel[0].GetType().GetProperty(entityIdPropertyName);
+            return ListModel.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
+        }
+
         public TEntity GetDataByInitialPosition(Vector3 initialPosition)
         {
             Vector2 vector2 = initialPosition;
@@ -143,9 +154,15 @@ namespace Assets.Script.BLL.Shared
 
         public abstract int Create(TViewModel model);
         public abstract void SetListContext();
+        public abstract void SetListModel();
         public abstract void UpdateStats(TViewModel model);
         public abstract void Decrease(TViewModel model);
         public abstract void Increase(TViewModel model);
-        //public abstract TViewModel GetDataViewModel(TEntity data);
+        public abstract int SetModel(TViewModel model);
+        public abstract TViewModel GetDataViewModel(TEntity data);
+        public abstract List<TViewModel> GetDataViewModel(List<TEntity> data);
+        public abstract TEntity GetDataByViewModel(TViewModel model);
+        public abstract List<TEntity> GetDataByViewModel(List<TViewModel> model);
+
     }
 }

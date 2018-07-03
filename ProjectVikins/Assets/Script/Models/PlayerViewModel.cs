@@ -9,7 +9,7 @@ namespace Assets.Script.Models
 {
     public class PlayerViewModel
     {
-        public Transform Transform { get; set; }
+        public Transform transform { get; set; }
         public PossibleMoviment? LastMoviment { get; set; }
         public int PlayerId { get; set; }
         public int? CharacterTypeId { get; set; }

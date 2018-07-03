@@ -14,6 +14,7 @@ namespace Assets.Script.BLL
             : base("EnemyId")
         {
             SetListContext();
+            SetListModel();
         }
 
         public override int Create(Models.EnemyViewModel model)
@@ -31,10 +32,17 @@ namespace Assets.Script.BLL
             ListContext.Add(enemy);
             return enemy.EnemyId;
         }
+
         public int Create(Enemy data)
         {
             ListContext.Add(data);
             return data.EnemyId;
+        }
+
+        public override int SetModel(Models.EnemyViewModel model)
+        {
+            ListModel.Add(model);
+            return model.EnemyId;
         }
 
         public override void Decrease(EnemyViewModel model)
@@ -52,6 +60,11 @@ namespace Assets.Script.BLL
             this.ListContext = DAL.MVC_Game2Context.enemies;
         }
 
+        public override void SetListModel()
+        {
+            this.ListModel = DAL.MVC_Game2Context.enemieModels;
+        }
+
         public override void UpdateStats(EnemyViewModel model)
         {
             var enemy = this.GetDataById(model.EnemyId);
@@ -62,6 +75,73 @@ namespace Assets.Script.BLL
             if (model.SpeedWalk.HasValue) enemy.SpeedWalk = model.SpeedWalk.Value;
             if (model.AttackMin.HasValue) enemy.AttackMin = model.AttackMin.Value;
             if (model.AttackMax.HasValue) enemy.AttackMax = model.AttackMax.Value;
+        }
+
+        public override EnemyViewModel GetDataViewModel(Enemy data)
+        {
+            return new EnemyViewModel()
+            {
+                AttackMax = data.AttackMax,
+                AttackMin = data.AttackMin,
+                CharacterTypeId = data.CharacterTypeId,
+                InitialX = data.InitialX,
+                InitialY = data.InitialY,
+                LastMoviment = data.LastMoviment,
+                Life = data.Life,
+                SpeedRun = data.SpeedRun,
+                SpeedWalk = data.SpeedWalk
+            };
+        }
+
+        public override List<EnemyViewModel> GetDataViewModel(List<Enemy> data)
+        {
+            return (from y in data
+                    select new EnemyViewModel() {
+                        AttackMax = y.AttackMax,
+                        AttackMin = y.AttackMin,
+                        CharacterTypeId = y.CharacterTypeId,
+                        EnemyId = y.EnemyId,
+                        InitialX = y.InitialX,
+                        InitialY = y.InitialY,
+                        LastMoviment = y.LastMoviment,
+                        Life = y.Life,
+                        SpeedRun = y.SpeedRun,
+                        SpeedWalk = y.SpeedWalk
+                    }).ToList();
+        }
+
+        public override Enemy GetDataByViewModel(EnemyViewModel model)
+        {
+            return new Enemy()
+            {
+                AttackMax = model.AttackMax.Value,
+                AttackMin = model.AttackMin.Value,
+                CharacterTypeId = model.CharacterTypeId.Value,
+                InitialX = model.InitialX.Value,
+                InitialY = model.InitialY.Value,
+                LastMoviment = model.LastMoviment.Value,
+                Life = model.Life.Value,
+                SpeedRun = model.SpeedRun.Value,
+                SpeedWalk = model.SpeedWalk.Value,
+            };
+        }
+
+        public override List<Enemy> GetDataByViewModel(List<EnemyViewModel> model)
+        {
+            return (from y in model
+                    select new Enemy()
+                    {
+                        AttackMax = y.AttackMax.Value,
+                        AttackMin = y.AttackMin.Value,
+                        CharacterTypeId = y.CharacterTypeId.Value,
+                        EnemyId = y.EnemyId,
+                        InitialX = y.InitialX.Value,
+                        InitialY = y.InitialY.Value,
+                        LastMoviment = y.LastMoviment.Value,
+                        Life = y.Life.Value,
+                        SpeedRun = y.SpeedRun.Value,
+                        SpeedWalk = y.SpeedWalk.Value,
+                    }).ToList();
         }
     }
 }

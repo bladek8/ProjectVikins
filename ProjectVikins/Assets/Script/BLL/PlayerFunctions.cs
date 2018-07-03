@@ -13,6 +13,7 @@ namespace Assets.Script.BLL
             : base("PlayerId")
         {
             SetListContext();
+            SetListModel();
         }
         public override int Create(Models.PlayerViewModel model)
         {
@@ -35,13 +36,19 @@ namespace Assets.Script.BLL
             return player.PlayerId;
         }
 
+        public override int SetModel(Models.PlayerViewModel model)
+        {
+            ListModel.Add(model);
+            return model.PlayerId;
+        }
+
         public int Create(Player data)
         {
             ListContext.Add(data);
             return data.PlayerId;
         }
 
-        public PlayerViewModel GetDataViewModel(Player data)
+        public override PlayerViewModel GetDataViewModel(Player data)
         {
             return new PlayerViewModel()
             {
@@ -60,14 +67,40 @@ namespace Assets.Script.BLL
             };
         }
 
+        public override List<PlayerViewModel> GetDataViewModel(List<Player> data)
+        {
+            var r = (from y in data.ToList()
+                     select new PlayerViewModel()
+                     {
+                         AttackMax = y.AttackMax,
+                         AttackMin = y.AttackMin,
+                         CharacterTypeId = y.CharacterTypeId,
+                         InitialX = y.InitialX,
+                         InitialY = y.InitialY,
+                         IsBeingControllable = y.IsBeingControllable,
+                         LastMoviment = y.LastMoviment,
+                         Life = y.Life,
+                         PlayerId = y.PlayerId,
+                         PlayerMode = y.PlayerMode,
+                         SpeedRun = y.SpeedRun,
+                         SpeedWalk = y.SpeedWalk
+                     }).ToList();
+            return r;
+        }
+
         public override void SetListContext()
         {
             this.ListContext = DAL.MVC_Game2Context.players;
         }
 
+        public override void SetListModel()
+        {
+            this.ListModel = DAL.MVC_Game2Context.playerModels;
+        }
+
         public override void UpdateStats(PlayerViewModel model)
         {
-            var player = this.GetDataById(model.PlayerId);
+            var player = this.GetModelById(model.PlayerId);
 
             if (model.LastMoviment.HasValue) player.LastMoviment = model.LastMoviment.Value;
             if (model.Life.HasValue) player.Life = model.Life.Value;
@@ -77,7 +110,7 @@ namespace Assets.Script.BLL
             if (model.AttackMax.HasValue) player.AttackMax = model.AttackMax.Value;
             if (model.IsBeingControllable.HasValue) player.IsBeingControllable = model.IsBeingControllable.Value;
             if (model.PlayerMode.HasValue) player.PlayerMode = model.PlayerMode.Value;
-            if (model.Transform != null) player.Transform = model.Transform;
+            if (model.transform != null) { player.transform = model.transform; }
         }
 
         public override void Decrease(PlayerViewModel model)
@@ -104,18 +137,58 @@ namespace Assets.Script.BLL
 
         public void ChangeControllableCharacter(int id)
         {
-            var player = this.GetDataById(id);
+            var player = this.GetModelById(id);
             player.IsBeingControllable = false;
-            var nextPlayer = new DAL.Player();
-            try
-            {
-                nextPlayer = ListContext[ListContext.IndexOf(player) + 1];
-            }
-            catch (Exception ex)
-            {
-                nextPlayer = ListContext.First();
-            }
+            var nextPlayer = new Models.PlayerViewModel();
+            var index = ListModel.IndexOf(player) + 1;
+            if (ListModel.Count > index)
+                nextPlayer = ListModel[index];
+            else
+                nextPlayer = ListModel.First();
             nextPlayer.IsBeingControllable = true;
+        }
+
+        public override Player GetDataByViewModel(PlayerViewModel model)
+        {
+            var player = GetDataById(model.PlayerId);
+
+            player.AttackMax = model.AttackMax.Value;
+            player.AttackMin = model.AttackMin.Value;
+            player.CharacterTypeId = player.CharacterTypeId;
+            player.InitialX = player.InitialX;
+            player.InitialY = player.InitialY;
+            player.IsBeingControllable = model.IsBeingControllable.Value;
+            player.LastMoviment = model.LastMoviment.Value;
+            player.Life = model.Life.Value;
+            player.PlayerId = player.PlayerId;
+            player.PlayerMode = model.PlayerMode.Value;
+            player.SpeedRun = model.SpeedRun.Value;
+            player.SpeedWalk = model.SpeedWalk.Value;
+            player.X = model.transform.position.x;
+            player.Y = model.transform.position.y;
+
+            return player;
+        }
+
+        public override List<Player> GetDataByViewModel(List<PlayerViewModel> model)
+        {
+            return (from y in model
+                     select new Player() {
+                         AttackMax = y.AttackMax.Value,
+                         AttackMin = y.AttackMin.Value,
+                         CharacterTypeId = y.CharacterTypeId.Value,
+                         InitialX = y.InitialX.Value,
+                         InitialY = y.InitialY.Value,
+                         IsBeingControllable = y.IsBeingControllable.Value,
+                         LastMoviment = y.LastMoviment.Value,
+                         Life = y.Life.Value,
+                         PlayerId = y.PlayerId,
+                         PlayerMode = y.PlayerMode.Value,
+                         SpeedRun = y.SpeedRun.Value,
+                         SpeedWalk = y.SpeedWalk.Value,
+                         X = y.transform.position.x,
+                         Y = y.transform.position.y,
+                     }).ToList();
         }
     }
 }

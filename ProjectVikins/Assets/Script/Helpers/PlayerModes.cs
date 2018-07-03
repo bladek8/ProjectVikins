@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Assets.Script.Helpers
 {
+    [Serializable]
     public enum PlayerModes
     {
         Attack = 1,
@@ -13,6 +14,7 @@ namespace Assets.Script.Helpers
         Follow = 3
     }
 
+    [Serializable]
     public class _PlayerModes
     {
         public PlayerModes Value { get; set; }

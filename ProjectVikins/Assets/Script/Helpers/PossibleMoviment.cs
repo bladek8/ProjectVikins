@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Script.Helpers
 {
+    [Serializable]
     public class Psm
     {
         public PossibleMoviment PossibleMoviment { get; set; }
@@ -15,6 +16,7 @@ namespace Assets.Script.Helpers
             this.Flip = flip;
         }
     }
+    [Serializable]
     public enum PossibleMoviment
     {
         None = 0,

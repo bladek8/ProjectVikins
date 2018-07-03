@@ -6,6 +6,7 @@ using Assets.Script.Models;
 using UnityEngine;
 using Assets.Script.Helpers;
 using System.IO;
+using Assets.Script.BLL;
 
 namespace Assets.Script.Controller
 {
@@ -51,13 +52,13 @@ namespace Assets.Script.Controller
 
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
-            var player = playerFunctions.GetDataById(id);
-            return transform.position + PositionAttack(colSize, player.LastMoviment);
+            var player = playerFunctions.GetModelById(id);
+            return transform.position + PositionAttack(colSize, player.LastMoviment.Value);
         }
 
         public void SetLastMoviment(float inputX, float inputY)
         {
-            var player = playerFunctions.GetDataById(id);
+            var player = playerFunctions.GetModelById(id);
 
             if (inputX > 0 && inputY > 0)
                 player.LastMoviment = Helpers.PossibleMoviment.Up_Right;
@@ -81,14 +82,14 @@ namespace Assets.Script.Controller
 
         public void Walk(Vector2 vector)
         {
-            var player = playerFunctions.GetDataById(id);
-            gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk);
+            var player = playerFunctions.GetModelById(id);
+            gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk.Value);
         }
 
         public override int GetDamage()
         {
-            var player = playerFunctions.GetDataById(id);
-            return rnd.Next(player.AttackMin, player.AttackMax);
+            var player = playerFunctions.GetModelById(id);
+            return rnd.Next(player.AttackMin.Value, player.AttackMax.Value);
         }
 
         public override void UpdateStats(PlayerViewModel model)
@@ -114,7 +115,7 @@ namespace Assets.Script.Controller
             target = controllablePlayer.transform;
             if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
             {
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
                 playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform), PlayerId = id });
             }
@@ -139,7 +140,7 @@ namespace Assets.Script.Controller
                 if (target == null) return;
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
                 {
-                    _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
+                    _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                     fow.TurnView(target);
                     playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform), PlayerId = id });
                     canAttack = false;
@@ -161,12 +162,12 @@ namespace Assets.Script.Controller
 
         public bool GetIsControllable()
         {
-            return playerFunctions.GetDataById(id).IsBeingControllable;
+            return playerFunctions.GetModelById(id).IsBeingControllable.Value;
         }
 
         public bool GetPlayerMode()
         {
-            return playerFunctions.GetDataById(id).IsBeingControllable;
+            return playerFunctions.GetModelById(id).IsBeingControllable.Value;
         }
 
         public void SetFieldOfView(FieldOfView fow)
@@ -176,7 +177,7 @@ namespace Assets.Script.Controller
 
         public Helpers.KeyMove GetInput()
         {
-            var player = playerFunctions.GetDataById(id);
+            var player = playerFunctions.GetModelById(id);
 
             switch (player.LastMoviment)
             {
@@ -242,8 +243,9 @@ namespace Assets.Script.Controller
                 playerFunctions.Create(data);
             }
             id = data.PlayerId;
-            data.Transform = transform;
-            playerFunctions.UpdateStats(playerFunctions.GetDataViewModel(data));
+            var model = playerFunctions.GetDataViewModel(data);
+            model.transform = transform;
+            playerFunctions.SetModel(model);
             return data;
         }
 

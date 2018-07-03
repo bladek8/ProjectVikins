@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using Assets.Script.Helpers;
 using Assets.Script.Models;
+using Assets.Script.BLL;
 
 namespace Assets.Script.Controller
 {
@@ -43,7 +44,7 @@ namespace Assets.Script.Controller
             if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetDataById(id).SpeedWalk * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
                 enemyFunctions.UpdateStats(new Models.EnemyViewModel() { LastMoviment = GetDirection(_transform), EnemyId = id });
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
@@ -88,8 +89,8 @@ namespace Assets.Script.Controller
 
         public override int GetDamage()
         {
-            var player = enemyFunctions.GetDataById(id);
-            return rnd.Next(player.AttackMin, player.AttackMax);
+            var player = enemyFunctions.GetModelById(id);
+            return rnd.Next(player.AttackMin.Value, player.AttackMax.Value);
         }
 
         public override void UpdateStats(EnemyViewModel model)
@@ -127,7 +128,7 @@ namespace Assets.Script.Controller
 
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
-            var player = enemyFunctions.GetDataById(id);
+            var player = enemyFunctions.GetModelById(id);
             return transform.position + PositionAttack(colSize, GetDirection(transform));
         }
 
@@ -138,7 +139,7 @@ namespace Assets.Script.Controller
 
         public Helpers.KeyMove GetInput()
         {
-            var enemy = enemyFunctions.GetDataById(id);
+            var enemy = enemyFunctions.GetModelById(id);
 
             switch (enemy.LastMoviment)
             {
@@ -164,17 +165,19 @@ namespace Assets.Script.Controller
         }
         public DAL.Enemy GetInitialData(Vector3 position)
         {
-            var dal = enemyFunctions.GetDataByInitialPosition(position);
-            if (dal == null)
+            var data = enemyFunctions.GetDataByInitialPosition(position);
+            if (data == null)
             {
-                dal = DAL.MVC_Game2Context.defaultEnemy;
-                dal.InitialX = position.x;
-                dal.InitialY = position.y;
-                enemyFunctions.Create(dal);
+                data = DAL.MVC_Game2Context.defaultEnemy;
+                data.InitialX = position.x;
+                data.InitialY = position.y;
+                enemyFunctions.Create(data);
             }
-            id = dal.EnemyId;
+            id = data.EnemyId;
+            var model = enemyFunctions.GetDataViewModel(data);
+            enemyFunctions.SetModel(model);
 
-            return dal;
+            return data;
         }
     }
 }

@@ -172,12 +172,6 @@ namespace Assets.Script.View
                         PlayerAnimator.SetBool("isWalking", false);
                     }
                 }
-
-                //if (Input.GetButton("getData"))
-                //{
-                //    playerController.SavePlayerData(dal);
-
-                //}
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     playerController.SaveData();

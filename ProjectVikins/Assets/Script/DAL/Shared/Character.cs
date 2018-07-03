@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Script.DAL.Shared
 {
+    [Serializable]
     public class Character
     {
         public int CharacterTypeId { get; set; }
