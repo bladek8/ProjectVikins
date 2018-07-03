@@ -6,6 +6,7 @@ public class RespawnView : MonoBehaviour
 
     private void Awake()
     {
+        InvokeRepeating("Spawn", 0, 1);
     }
     void Spawn()
     {
