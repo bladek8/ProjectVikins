@@ -31,7 +31,7 @@ namespace Assets.Script.View
         Camera mainCamera;
         CameraView cv;
 
-        public DAL.Player data;
+        public Models.PlayerViewModel model;
 
 
         private void Start()
@@ -39,10 +39,10 @@ namespace Assets.Script.View
             mainCamera = Camera.main;
             cv = mainCamera.GetComponent<CameraView>();
             playerController = new PlayerController(this.gameObject);
-            data = playerController.GetInitialData(transform);
+            model = playerController.GetInitialData(transform);
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
-            if(data.IsBeingControllable) mainCamera.SendMessage("UpdatePlayerTranform");
+            if (model.IsBeingControllable) mainCamera.SendMessage("UpdatePlayerTranform");
         }
 
         private void FixedUpdate()
@@ -80,11 +80,19 @@ namespace Assets.Script.View
                     playerController.targetsAttacked.Clear();
 
                     if (attackCountDown.ReturnedToZero)
-                        playerController.Increase(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
+                    {
+                        model.SpeedRun += 2;
+                        model.SpeedWalk += 2;
+                    }
                     if (Input.GetKey(KeyCode.L))
                     {
-                        data.PlayerMode = PlayerModes.Attack;
-                        playerController.Decrease(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
+
+
+                        model.PlayerMode = PlayerModes.Attack;
+                        {
+                            model.SpeedRun -= 2;
+                            model.SpeedWalk -= 2;
+                        }
                         attackCountDown.StartToCount();
                     }
                 }
@@ -94,25 +102,25 @@ namespace Assets.Script.View
                 if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K))
                 {
                     playerController.ChangeControllableCharacter();
-                    
+
                     mainCamera.SendMessage("UpdatePlayerTranform");
                 }
             }
             else
             {
-                if (data.PlayerMode == PlayerModes.Follow)
+                if (model.PlayerMode == PlayerModes.Follow)
                 {
-                    playerController.WalkToPlayer(transform, cv.playerTranform.transform);
+                    playerController.WalkToPlayer(transform, cv.playerTranform.transform, ref model);
                     if (Mathf.Abs(Vector3.Distance(transform.position, cv.playerTranform.transform.position)) > 0.5)
                         PlayerAnimator.SetBool("isWalking", true);
                     else
                         PlayerAnimator.SetBool("isWalking", false);
                 }
-                else if (data.PlayerMode == PlayerModes.Attack)
+                else if (model.PlayerMode == PlayerModes.Attack)
                 {
                     if (playerController.fow.visibleTargets.Count > 0)
                     {
-                        playerController.WalkTowardTo(transform);
+                        playerController.WalkTowardTo(transform, ref model);
                         if (playerController.target != null && Mathf.Abs(Vector3.Distance(transform.position, playerController.target.position)) > 0.5)
                             PlayerAnimator.SetBool("isWalking", true);
                         else
@@ -139,7 +147,10 @@ namespace Assets.Script.View
                         attackCountDown.CoolDown = attackCountDown.Rate;
 
                     if (attackCountDown.ReturnedToZero)
-                        playerController.Increase(new Script.Models.PlayerViewModel() { SpeedWalk = 2, SpeedRun = 2 });
+                    {
+                        model.SpeedRun += 2;
+                        model.SpeedWalk += 2;
+                    }
                 }
                 else if (playerController.canAttack)
                 {
@@ -149,7 +160,7 @@ namespace Assets.Script.View
 
             if (Vector3.Distance(transform.position, cv.playerTranform.transform.position) > 15)
             {
-                data.PlayerMode = PlayerModes.Follow;
+                model.PlayerMode = PlayerModes.Follow;
             }
             //else if (Vector3.Distance(transform.position, cv.player.transform.position) < 2)
             //{
@@ -184,8 +195,8 @@ namespace Assets.Script.View
                 {
                     if (Input.GetKey(playerMode.KeyButton[0]) && Input.GetKey(playerMode.KeyButton[1]))
                     {
-                        data.PlayerMode = playerMode.Value;
-                        if(playerMode.Value == PlayerModes.Wait)
+                        model.PlayerMode = playerMode.Value;
+                        if (playerMode.Value == PlayerModes.Wait)
                             PlayerAnimator.SetBool("isWalking", false);
                     }
                 }

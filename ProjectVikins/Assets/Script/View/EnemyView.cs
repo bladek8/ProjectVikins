@@ -23,12 +23,12 @@ namespace Assets.Script.View
         Controller.EnemyController enemyController;
         [SerializeField] GameObject gObject;
         CountDown attackCountDown = new CountDown(3);
-        public DAL.Enemy dal;
+        public Models.EnemyViewModel model;
         
         void Start()
         {
             enemyController = new Controller.EnemyController();
-            dal = enemyController.GetInitialData(transform.position);
+            model = enemyController.GetInitialData(transform.position);
             enemyController.SetFieldOfView(gObject.GetComponent<FieldOfView>());
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }
@@ -40,7 +40,7 @@ namespace Assets.Script.View
             
             if (enemyController.fow.visibleTargets.Count > 0)
             {
-                enemyController.WalkTowardTo(transform);
+                enemyController.WalkTowardTo(transform, ref model);
                 enemyAnimator.SetBool("isWalking", true);
             }
             else

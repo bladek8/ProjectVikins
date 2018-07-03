@@ -14,6 +14,35 @@ namespace Assets.Script.Controller.Shared
         public System.Random rnd = new System.Random();
         public List<int> targetsAttacked = new List<int>();
         Type className;
+        
+        public Helpers.PossibleMoviment GetDirection(Transform transform, Transform target)
+        {
+            var vectorDirection = target.position - transform.position;
+            var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
+            var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
+
+            switch (position)
+            {
+                case 0:
+                    return Helpers.PossibleMoviment.Right;
+                case 1:
+                    return Helpers.PossibleMoviment.Up_Right;
+                case 2:
+                    return Helpers.PossibleMoviment.Up;
+                case 3:
+                    return Helpers.PossibleMoviment.Up_Left;
+                case 4:
+                    return Helpers.PossibleMoviment.Left;
+                case 5:
+                    return Helpers.PossibleMoviment.Down_Left;
+                case 6:
+                    return Helpers.PossibleMoviment.Down;
+                case 7:
+                    return Helpers.PossibleMoviment.Down_Right;
+                default:
+                    return Helpers.PossibleMoviment.None;
+            }
+        }
 
         public Vector3 PositionAttack(Vector2 colSize, Helpers.PossibleMoviment direction)
         {
@@ -85,9 +114,9 @@ namespace Assets.Script.Controller.Shared
         }
 
         public abstract int GetDamage();
-        public abstract void UpdateStats(TViewModel model);
-        public abstract void Decrease(TViewModel model);
-        public abstract void Increase(TViewModel model);
+        //public abstract void UpdateStats(TViewModel model);
+        //public abstract void Decrease(TViewModel model);
+        //public abstract void Increase(TViewModel model);
         //public abstract void Attack(Transform transform, Vector3 size);
         public abstract Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }

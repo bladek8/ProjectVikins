@@ -94,12 +94,12 @@ namespace Assets.Script.BLL
             if (typeof(PlayerView) == goType)
             {
                 var dal = (PlayerView)goView;
-                return new DalDataStruct() { Dal = dal.data, Id = dal.data.PlayerId };
+                return new DalDataStruct() { Dal = dal.model, Id = dal.model.PlayerId };
             }
             else if (typeof(EnemyView) == goType)
             {
                 var dal = (EnemyView)goView;
-                return new DalDataStruct() { Dal = dal.dal, Id = dal.dal.EnemyId };
+                return new DalDataStruct() { Dal = dal.model, Id = dal.model.EnemyId };
             }
             return new DalDataStruct() { Dal = null, Id = 0 };
         }

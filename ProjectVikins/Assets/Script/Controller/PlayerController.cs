@@ -39,7 +39,8 @@ namespace Assets.Script.Controller
 
                 if (hitCollider.tag == "Enemy")
                 {
-                    if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
+                    var currentLife = hitCollider.gameObject.GetComponent<View.EnemyView>().model.Life -= GetDamage();
+                    if (currentLife <= 0)
                         Destroy(hitCollider.gameObject);
                 }
                 if (hitCollider.tag == "NPC")
@@ -83,46 +84,46 @@ namespace Assets.Script.Controller
         public void Walk(Vector2 vector)
         {
             var player = playerFunctions.GetModelById(id);
-            gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk.Value);
+            gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk);
         }
 
         public override int GetDamage()
         {
             var player = playerFunctions.GetModelById(id);
-            return rnd.Next(player.AttackMin.Value, player.AttackMax.Value);
+            return rnd.Next(player.AttackMin, player.AttackMax);
         }
 
-        public override void UpdateStats(PlayerViewModel model)
-        {
-            model.PlayerId = id;
-            playerFunctions.UpdateStats(model);
-        }
+        //public override void UpdateStats(PlayerViewModel model)
+        //{
+        //    model.PlayerId = id;
+        //    playerFunctions.UpdateStats(model);
+        //}
 
-        public override void Decrease(PlayerViewModel model)
-        {
-            model.PlayerId = id;
-            playerFunctions.Decrease(model);
-        }
+        //public override void Decrease(PlayerViewModel model)
+        //{
+        //    model.PlayerId = id;
+        //    playerFunctions.Decrease(model);
+        //}
 
-        public override void Increase(PlayerViewModel model)
-        {
-            model.PlayerId = id;
-            playerFunctions.Increase(model);
-        }
+        //public override void Increase(PlayerViewModel model)
+        //{
+        //    model.PlayerId = id;
+        //    playerFunctions.Increase(model);
+        //}
 
-        public void WalkToPlayer(Transform _transform, Transform controllablePlayer)
+        public void WalkToPlayer(Transform _transform, Transform controllablePlayer, ref PlayerViewModel model)
         {
             target = controllablePlayer.transform;
             if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
             {
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
-                playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform), PlayerId = id });
+                model.LastMoviment = GetDirection(_transform, target);
             }
         }
 
 
-        public void WalkTowardTo(Transform _transform)
+        public void WalkTowardTo(Transform _transform, ref PlayerViewModel model)
         {
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
@@ -140,9 +141,10 @@ namespace Assets.Script.Controller
                 if (target == null) return;
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
                 {
-                    _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
+                    _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
                     fow.TurnView(target);
-                    playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform), PlayerId = id });
+                    model.LastMoviment = GetDirection(_transform, target);
+                    //playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform, target), PlayerId = id });
                     canAttack = false;
                 }
                 else
@@ -162,12 +164,12 @@ namespace Assets.Script.Controller
 
         public bool GetIsControllable()
         {
-            return playerFunctions.GetModelById(id).IsBeingControllable.Value;
+            return playerFunctions.GetModelById(id).IsBeingControllable;
         }
 
         public bool GetPlayerMode()
         {
-            return playerFunctions.GetModelById(id).IsBeingControllable.Value;
+            return playerFunctions.GetModelById(id).IsBeingControllable;
         }
 
         public void SetFieldOfView(FieldOfView fow)
@@ -203,36 +205,36 @@ namespace Assets.Script.Controller
         }
 
 
-        public Helpers.PossibleMoviment GetDirection(Transform transform)
-        {
-            var vectorDirection = target.transform.position - transform.position;
-            var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
-            var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
+        //public Helpers.PossibleMoviment GetDirection(Transform transform)
+        //{
+        //    var vectorDirection = target.position - transform.position;
+        //    var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
+        //    var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
 
-            switch (position)
-            {
-                case 0:
-                    return Helpers.PossibleMoviment.Right;
-                case 1:
-                    return Helpers.PossibleMoviment.Up_Right;
-                case 2:
-                    return Helpers.PossibleMoviment.Up;
-                case 3:
-                    return Helpers.PossibleMoviment.Up_Left;
-                case 4:
-                    return Helpers.PossibleMoviment.Left;
-                case 5:
-                    return Helpers.PossibleMoviment.Down_Left;
-                case 6:
-                    return Helpers.PossibleMoviment.Down;
-                case 7:
-                    return Helpers.PossibleMoviment.Down_Right;
-                default:
-                    return Helpers.PossibleMoviment.None;
-            }
-        }
+        //    switch (position)
+        //    {
+        //        case 0:
+        //            return Helpers.PossibleMoviment.Right;
+        //        case 1:
+        //            return Helpers.PossibleMoviment.Up_Right;
+        //        case 2:
+        //            return Helpers.PossibleMoviment.Up;
+        //        case 3:
+        //            return Helpers.PossibleMoviment.Up_Left;
+        //        case 4:
+        //            return Helpers.PossibleMoviment.Left;
+        //        case 5:
+        //            return Helpers.PossibleMoviment.Down_Left;
+        //        case 6:
+        //            return Helpers.PossibleMoviment.Down;
+        //        case 7:
+        //            return Helpers.PossibleMoviment.Down_Right;
+        //        default:
+        //            return Helpers.PossibleMoviment.None;
+        //    }
+        //}
 
-        public DAL.Player GetInitialData(Transform transform)
+        public Models.PlayerViewModel GetInitialData(Transform transform)
         {
             var data = playerFunctions.GetDataByInitialPosition(transform.position);
             if (data == null)
@@ -246,7 +248,7 @@ namespace Assets.Script.Controller
             var model = playerFunctions.GetDataViewModel(data);
             model.transform = transform;
             playerFunctions.SetModel(model);
-            return data;
+            return model;
         }
 
         public void SaveData()

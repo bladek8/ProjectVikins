@@ -13,14 +13,14 @@ namespace Assets.Script.Models
         public PossibleMoviment? LastMoviment { get; set; }
         public int PlayerId { get; set; }
         public int? CharacterTypeId { get; set; }
-        public int? Life { get; set; }
-        public int? SpeedWalk { get; set; }
-        public int? SpeedRun { get; set; }
-        public int? AttackMin { get; set; }
-        public int? AttackMax { get; set; }
-        public bool? IsBeingControllable { get; set; }
+        public int Life { get; set; }
+        public int SpeedWalk { get; set; }
+        public int SpeedRun { get; set; }
+        public int AttackMin { get; set; }
+        public int AttackMax { get; set; }
+        public bool IsBeingControllable { get; set; }
         public PlayerModes? PlayerMode { get; set; }
-        public float? InitialX { get; set; }
-        public float? InitialY { get; set; }
+        public float InitialX { get; set; }
+        public float InitialY { get; set; }
     }
 }

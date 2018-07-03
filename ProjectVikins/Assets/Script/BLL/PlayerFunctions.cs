@@ -19,17 +19,17 @@ namespace Assets.Script.BLL
         {
             var player = new DAL.Player()
             {
-                AttackMax = model.AttackMax.Value,
+                AttackMax = model.AttackMax,
                 CharacterTypeId = model.CharacterTypeId.Value,
-                AttackMin = model.AttackMin.Value,
+                AttackMin = model.AttackMin,
                 PlayerId = model.PlayerId,
-                Life = model.Life.Value,
-                SpeedRun = model.SpeedRun.Value,
-                SpeedWalk = model.SpeedWalk.Value,
-                IsBeingControllable = model.IsBeingControllable.Value,
+                Life = model.Life,
+                SpeedRun = model.SpeedRun,
+                SpeedWalk = model.SpeedWalk,
+                IsBeingControllable = model.IsBeingControllable,
                 PlayerMode = model.PlayerMode.Value,
-                InitialX = model.InitialX.Value,
-                InitialY = model.InitialY.Value,
+                InitialX = model.InitialX,
+                InitialY = model.InitialY,
                 LastMoviment = model.LastMoviment.Value
             };
             ListContext.Add(player);
@@ -100,39 +100,39 @@ namespace Assets.Script.BLL
 
         public override void UpdateStats(PlayerViewModel model)
         {
-            var player = this.GetModelById(model.PlayerId);
+            //var player = this.GetModelById(model.PlayerId);
 
-            if (model.LastMoviment.HasValue) player.LastMoviment = model.LastMoviment.Value;
-            if (model.Life.HasValue) player.Life = model.Life.Value;
-            if (model.SpeedRun.HasValue) player.SpeedRun = model.SpeedRun.Value;
-            if (model.SpeedWalk.HasValue) player.SpeedWalk = model.SpeedWalk.Value;
-            if (model.AttackMin.HasValue) player.AttackMin = model.AttackMin.Value;
-            if (model.AttackMax.HasValue) player.AttackMax = model.AttackMax.Value;
-            if (model.IsBeingControllable.HasValue) player.IsBeingControllable = model.IsBeingControllable.Value;
-            if (model.PlayerMode.HasValue) player.PlayerMode = model.PlayerMode.Value;
-            if (model.transform != null) { player.transform = model.transform; }
+            //if (model.LastMoviment.HasValue) player.LastMoviment = model.LastMoviment.Value;
+            //if (model.Life.HasValue) player.Life = model.Life.Value;
+            //if (model.SpeedRun.HasValue) player.SpeedRun = model.SpeedRun.Value;
+            //if (model.SpeedWalk.HasValue) player.SpeedWalk = model.SpeedWalk.Value;
+            //if (model.AttackMin.HasValue) player.AttackMin = model.AttackMin.Value;
+            //if (model.AttackMax.HasValue) player.AttackMax = model.AttackMax.Value;
+            //if (model.IsBeingControllable.HasValue) player.IsBeingControllable = model.IsBeingControllable.Value;
+            //if (model.PlayerMode.HasValue) player.PlayerMode = model.PlayerMode.Value;
+            //if (model.transform != null) { player.transform = model.transform; }
         }
 
         public override void Decrease(PlayerViewModel model)
         {
             var player = this.GetDataById(model.PlayerId);
 
-            if (model.Life.HasValue) player.Life = player.Life - model.Life.Value;
-            if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun - model.SpeedRun.Value;
-            if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk - model.SpeedWalk.Value;
-            if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin - model.AttackMin.Value;
-            if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax - model.AttackMax.Value;
+            //if (model.Life.HasValue) player.Life = player.Life - model.Life.Value;
+            //if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun - model.SpeedRun.Value;
+            //if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk - model.SpeedWalk.Value;
+            //if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin - model.AttackMin.Value;
+            //if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax - model.AttackMax.Value;
         }
 
         public override void Increase(PlayerViewModel model)
         {
             var player = this.GetDataById(model.PlayerId);
 
-            if (model.Life.HasValue) player.Life = player.Life + model.Life.Value;
-            if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun + model.SpeedRun.Value;
-            if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk + model.SpeedWalk.Value;
-            if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin + model.AttackMin.Value;
-            if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax + model.AttackMax.Value;
+            //if (model.Life.HasValue) player.Life = player.Life + model.Life.Value;
+            //if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun + model.SpeedRun.Value;
+            //if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk + model.SpeedWalk.Value;
+            //if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin + model.AttackMin.Value;
+            //if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax + model.AttackMax.Value;
         }
 
         public void ChangeControllableCharacter(int id)
@@ -152,18 +152,18 @@ namespace Assets.Script.BLL
         {
             var player = GetDataById(model.PlayerId);
 
-            player.AttackMax = model.AttackMax.Value;
-            player.AttackMin = model.AttackMin.Value;
+            player.AttackMax = model.AttackMax;
+            player.AttackMin = model.AttackMin;
             player.CharacterTypeId = player.CharacterTypeId;
             player.InitialX = player.InitialX;
             player.InitialY = player.InitialY;
-            player.IsBeingControllable = model.IsBeingControllable.Value;
+            player.IsBeingControllable = model.IsBeingControllable;
             player.LastMoviment = model.LastMoviment.Value;
-            player.Life = model.Life.Value;
+            player.Life = model.Life;
             player.PlayerId = player.PlayerId;
             player.PlayerMode = model.PlayerMode.Value;
-            player.SpeedRun = model.SpeedRun.Value;
-            player.SpeedWalk = model.SpeedWalk.Value;
+            player.SpeedRun = model.SpeedRun;
+            player.SpeedWalk = model.SpeedWalk;
             player.X = model.transform.position.x;
             player.Y = model.transform.position.y;
 
@@ -174,18 +174,18 @@ namespace Assets.Script.BLL
         {
             return (from y in model
                      select new Player() {
-                         AttackMax = y.AttackMax.Value,
-                         AttackMin = y.AttackMin.Value,
+                         AttackMax = y.AttackMax,
+                         AttackMin = y.AttackMin,
                          CharacterTypeId = y.CharacterTypeId.Value,
-                         InitialX = y.InitialX.Value,
-                         InitialY = y.InitialY.Value,
-                         IsBeingControllable = y.IsBeingControllable.Value,
+                         InitialX = y.InitialX,
+                         InitialY = y.InitialY,
+                         IsBeingControllable = y.IsBeingControllable,
                          LastMoviment = y.LastMoviment.Value,
-                         Life = y.Life.Value,
+                         Life = y.Life,
                          PlayerId = y.PlayerId,
                          PlayerMode = y.PlayerMode.Value,
-                         SpeedRun = y.SpeedRun.Value,
-                         SpeedWalk = y.SpeedWalk.Value,
+                         SpeedRun = y.SpeedRun,
+                         SpeedWalk = y.SpeedWalk,
                          X = y.transform.position.x,
                          Y = y.transform.position.y,
                      }).ToList();

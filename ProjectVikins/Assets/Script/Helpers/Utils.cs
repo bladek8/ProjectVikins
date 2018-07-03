@@ -52,15 +52,18 @@ namespace Assets.Script.Helpers
             return players;
         }
 
-
+        //As vezes players vem com tranform nulo depois de matar um enimigo, VERIFICAR
         public Transform NearTargetInView(List<Transform> players, List<Transform> visiblePlayers, Transform transform)
         {
             if (players.Count == 0 || visiblePlayers.Count == 0) return null;
             List<Transform> playersList = ConcatEqualItemList(players, visiblePlayers);
             Transform _player = players[0];
             foreach (var player in playersList)
-                if (Vector3.Distance(transform.position, player.transform.position) < Vector3.Distance(transform.position, _player.transform.position))
+            {
+                if (player == null) continue;
+                if (Vector3.Distance(transform.position, player.transform.position) < Vector3.Distance(transform.position, _player.transform.position) || player == null)
                     _player = player;
+            }
 
             return _player;
         }

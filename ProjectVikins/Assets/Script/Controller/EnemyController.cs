@@ -27,7 +27,7 @@ namespace Assets.Script.Controller
             players = utils.GetTransformInLayer("Player");
         }
 
-        public void WalkTowardTo(Transform _transform)
+        public void WalkTowardTo(Transform _transform, ref EnemyViewModel model)
         {
             if (target != null && followPlayer.CoolDown <= 0 || target == null)
             {
@@ -40,13 +40,14 @@ namespace Assets.Script.Controller
                     fow.TurnView(target);
                 }
             }
-            
+
             if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
-                enemyFunctions.UpdateStats(new Models.EnemyViewModel() { LastMoviment = GetDirection(_transform), EnemyId = id });
+                model.LastMoviment = GetDirection(_transform, target);
+                //enemyFunctions.UpdateStats(new Models.EnemyViewModel() { LastMoviment = GetDirection(_transform, target), EnemyId = id });
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
                     canAttack = true;
                 else canAttack = false;
@@ -58,34 +59,34 @@ namespace Assets.Script.Controller
             }
         }
 
-        public Helpers.PossibleMoviment GetDirection(Transform transform)
-        {
-            var vectorDirection = target.transform.position - transform.position;
-            var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
-            var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
+        //public Helpers.PossibleMoviment GetDirection(Transform transform)
+        //{
+        //    var vectorDirection = target.position - transform.position;
+        //    var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
+        //    var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
 
-            switch (position)
-            {
-                case 0:
-                    return Helpers.PossibleMoviment.Right;
-                case 1:
-                    return Helpers.PossibleMoviment.Up_Right;
-                case 2:
-                    return Helpers.PossibleMoviment.Up;
-                case 3:
-                    return Helpers.PossibleMoviment.Up_Left;
-                case 4:
-                    return Helpers.PossibleMoviment.Left;
-                case 5:
-                    return Helpers.PossibleMoviment.Down_Left;
-                case 6:
-                    return Helpers.PossibleMoviment.Down;
-                case 7:
-                    return Helpers.PossibleMoviment.Down_Right;
-                default:
-                    return Helpers.PossibleMoviment.None;
-            }
-        }
+        //    switch (position)
+        //    {
+        //        case 0:
+        //            return Helpers.PossibleMoviment.Right;
+        //        case 1:
+        //            return Helpers.PossibleMoviment.Up_Right;
+        //        case 2:
+        //            return Helpers.PossibleMoviment.Up;
+        //        case 3:
+        //            return Helpers.PossibleMoviment.Up_Left;
+        //        case 4:
+        //            return Helpers.PossibleMoviment.Left;
+        //        case 5:
+        //            return Helpers.PossibleMoviment.Down_Left;
+        //        case 6:
+        //            return Helpers.PossibleMoviment.Down;
+        //        case 7:
+        //            return Helpers.PossibleMoviment.Down_Right;
+        //        default:
+        //            return Helpers.PossibleMoviment.None;
+        //    }
+        //}
 
         public override int GetDamage()
         {
@@ -93,20 +94,20 @@ namespace Assets.Script.Controller
             return rnd.Next(player.AttackMin.Value, player.AttackMax.Value);
         }
 
-        public override void UpdateStats(EnemyViewModel model)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void UpdateStats(EnemyViewModel model)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override void Decrease(EnemyViewModel model)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void Decrease(EnemyViewModel model)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override void Increase(EnemyViewModel model)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void Increase(EnemyViewModel model)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Attack(Transform transform, Vector3 size, LayerMask targetLayer)
         {
@@ -117,7 +118,9 @@ namespace Assets.Script.Controller
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 
-                if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
+                //if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
+                var currentLife = hitCollider.gameObject.GetComponent<View.PlayerView>().model.Life -= GetDamage();
+                if (currentLife <= 0)
                 {
                     fow.visibleTargets.Remove(hitCollider.transform);
                     players.Remove(hitCollider.transform);
@@ -129,7 +132,7 @@ namespace Assets.Script.Controller
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
             var player = enemyFunctions.GetModelById(id);
-            return transform.position + PositionAttack(colSize, GetDirection(transform));
+            return transform.position + PositionAttack(colSize, GetDirection(transform, target));
         }
 
         public void SetFieldOfView(FieldOfView fow)
@@ -144,9 +147,9 @@ namespace Assets.Script.Controller
             switch (enemy.LastMoviment)
             {
                 case Helpers.PossibleMoviment.Down:
-                    return new Helpers.KeyMove(null,new Vector2(0, -1),false);
+                    return new Helpers.KeyMove(null, new Vector2(0, -1), false);
                 case Helpers.PossibleMoviment.Down_Left:
-                    return new Helpers.KeyMove(null,new Vector2(-1, -1),false);
+                    return new Helpers.KeyMove(null, new Vector2(-1, -1), false);
                 case Helpers.PossibleMoviment.Down_Right:
                     return new Helpers.KeyMove(null, new Vector2(1, -1), true);
                 case Helpers.PossibleMoviment.Left:
@@ -163,7 +166,7 @@ namespace Assets.Script.Controller
                     return new Helpers.KeyMove(null, new Vector2(0, 0), false);
             }
         }
-        public DAL.Enemy GetInitialData(Vector3 position)
+        public Models.EnemyViewModel GetInitialData(Vector3 position)
         {
             var data = enemyFunctions.GetDataByInitialPosition(position);
             if (data == null)
@@ -177,7 +180,7 @@ namespace Assets.Script.Controller
             var model = enemyFunctions.GetDataViewModel(data);
             enemyFunctions.SetModel(model);
 
-            return data;
+            return model;
         }
     }
 }
