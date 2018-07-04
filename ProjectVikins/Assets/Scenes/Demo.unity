@@ -123,8 +123,8 @@ GameObject:
   - component: {fileID: 8253903}
   - component: {fileID: 8253907}
   - component: {fileID: 8253906}
-  - component: {fileID: 8253905}
   - component: {fileID: 8253904}
+  - component: {fileID: 8253905}
   m_Layer: 0
   m_Name: Grama (10)
   m_TagString: Untagged
@@ -142,8 +142,8 @@ Transform:
   m_LocalPosition: {x: -1.78, y: -1.361, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 12
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8253904
 Animator:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8253902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &8253906
@@ -197,7 +197,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &8253907
 SpriteRenderer:
@@ -435,8 +435,8 @@ GameObject:
   - component: {fileID: 108557509}
   - component: {fileID: 108557513}
   - component: {fileID: 108557512}
-  - component: {fileID: 108557511}
   - component: {fileID: 108557510}
+  - component: {fileID: 108557511}
   m_Layer: 0
   m_Name: Grama (11)
   m_TagString: Untagged
@@ -454,8 +454,8 @@ Transform:
   m_LocalPosition: {x: -1.061, y: -1.328, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 13
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &108557510
 Animator:
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 108557508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &108557512
@@ -509,7 +509,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &108557513
 SpriteRenderer:
@@ -664,8 +664,8 @@ GameObject:
   - component: {fileID: 230869366}
   - component: {fileID: 230869370}
   - component: {fileID: 230869369}
-  - component: {fileID: 230869368}
   - component: {fileID: 230869367}
+  - component: {fileID: 230869368}
   m_Layer: 0
   m_Name: Grama (4)
   m_TagString: Untagged
@@ -683,8 +683,8 @@ Transform:
   m_LocalPosition: {x: -2.032, y: -1.368, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 6
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &230869367
 Animator:
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 230869365}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &230869369
@@ -738,7 +738,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &230869370
 SpriteRenderer:
@@ -795,8 +795,8 @@ GameObject:
   - component: {fileID: 306377158}
   - component: {fileID: 306377162}
   - component: {fileID: 306377161}
-  - component: {fileID: 306377160}
   - component: {fileID: 306377159}
+  - component: {fileID: 306377160}
   m_Layer: 0
   m_Name: Grama (6)
   m_TagString: Untagged
@@ -814,8 +814,8 @@ Transform:
   m_LocalPosition: {x: -1.729, y: -1.197, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 8
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &306377159
 Animator:
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 306377157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &306377161
@@ -869,7 +869,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &306377162
 SpriteRenderer:
@@ -926,8 +926,8 @@ GameObject:
   - component: {fileID: 502733820}
   - component: {fileID: 502733823}
   - component: {fileID: 502733822}
-  - component: {fileID: 502733824}
   - component: {fileID: 502733821}
+  - component: {fileID: 502733824}
   m_Layer: 0
   m_Name: Grama (1)
   m_TagString: Untagged
@@ -945,8 +945,8 @@ Transform:
   m_LocalPosition: {x: -1.8537352, y: -1.4551713, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 3
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &502733821
 Animator:
@@ -989,7 +989,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &502733823
 SpriteRenderer:
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 502733819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &815575454
@@ -1057,8 +1057,8 @@ GameObject:
   - component: {fileID: 815575455}
   - component: {fileID: 815575459}
   - component: {fileID: 815575458}
-  - component: {fileID: 815575457}
   - component: {fileID: 815575456}
+  - component: {fileID: 815575457}
   m_Layer: 0
   m_Name: Grama (7)
   m_TagString: Untagged
@@ -1076,8 +1076,8 @@ Transform:
   m_LocalPosition: {x: -1.175, y: -1.197, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 9
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &815575456
 Animator:
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 815575454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &815575458
@@ -1131,7 +1131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &815575459
 SpriteRenderer:
@@ -1188,8 +1188,8 @@ GameObject:
   - component: {fileID: 821500800}
   - component: {fileID: 821500804}
   - component: {fileID: 821500803}
-  - component: {fileID: 821500802}
   - component: {fileID: 821500801}
+  - component: {fileID: 821500802}
   m_Layer: 0
   m_Name: Grama (8)
   m_TagString: Untagged
@@ -1207,8 +1207,8 @@ Transform:
   m_LocalPosition: {x: -1.431, y: -1.22, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 10
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &821500801
 Animator:
@@ -1236,7 +1236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 821500799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &821500803
@@ -1262,7 +1262,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &821500804
 SpriteRenderer:
@@ -1589,7 +1589,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 22.404598, y: 13.144112}
+  m_Size: {x: 54.899754, y: 32.208054}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1601,8 +1601,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1073837436}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.29, y: 0.44, z: 98}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.52, y: -0.87, z: 98}
+  m_LocalScale: {x: 1.0138324, y: 1.0138326, z: 1.0138324}
   m_Children: []
   m_Father: {fileID: 1524440562}
   m_RootOrder: 1
@@ -1667,8 +1667,8 @@ GameObject:
   - component: {fileID: 1261630481}
   - component: {fileID: 1261630485}
   - component: {fileID: 1261630484}
-  - component: {fileID: 1261630483}
   - component: {fileID: 1261630482}
+  - component: {fileID: 1261630483}
   m_Layer: 0
   m_Name: Grama (9)
   m_TagString: Untagged
@@ -1686,8 +1686,8 @@ Transform:
   m_LocalPosition: {x: -1.417, y: -1.4551713, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 11
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1261630482
 Animator:
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261630480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1261630484
@@ -1741,7 +1741,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &1261630485
 SpriteRenderer:
@@ -1816,14 +1816,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 7
-  viewAngle: 118
+  viewAngle: 360
   rotation: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1536
   visibleTargets: []
 --- !u!4 &1300946906
 Transform:
@@ -1837,6 +1837,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 89100175}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1354141546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1354141547}
+  m_Layer: 0
+  m_Name: Gramas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1354141547
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1354141546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 502733820}
+  - {fileID: 1565431567}
+  - {fileID: 1476892947}
+  - {fileID: 230869366}
+  - {fileID: 1496145903}
+  - {fileID: 306377158}
+  - {fileID: 815575455}
+  - {fileID: 821500800}
+  - {fileID: 1261630481}
+  - {fileID: 8253903}
+  - {fileID: 108557509}
+  m_Father: {fileID: 1524440562}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1459452508
 GameObject:
@@ -1863,7 +1902,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1459452508}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.56, y: -1.64, z: 0}
+  m_LocalPosition: {x: -0.53, y: -1.36, z: 0}
   m_LocalScale: {x: 3.1931522, y: 3.1931522, z: 3.1931522}
   m_Children: []
   m_Father: {fileID: 1524440562}
@@ -1926,7 +1965,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.07601764, y: 0.7}
+  m_Offset: {x: -0.24180368, y: 0.7868761}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1937,7 +1976,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.17712836, y: 0.025093794}
+  m_Size: {x: 0.36679596, y: 0.0052263737}
   m_EdgeRadius: 0
 --- !u!114 &1459452512
 MonoBehaviour:
@@ -1960,8 +1999,8 @@ GameObject:
   - component: {fileID: 1476892947}
   - component: {fileID: 1476892951}
   - component: {fileID: 1476892950}
-  - component: {fileID: 1476892949}
   - component: {fileID: 1476892948}
+  - component: {fileID: 1476892949}
   m_Layer: 0
   m_Name: Grama (3)
   m_TagString: Untagged
@@ -1979,8 +2018,8 @@ Transform:
   m_LocalPosition: {x: -1.057, y: -1.4551713, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 5
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1476892948
 Animator:
@@ -2008,7 +2047,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1476892946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1476892950
@@ -2023,7 +2062,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.13463748}
+  m_Offset: {x: -0.008651763, y: -0.13463748}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2034,7 +2073,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &1476892951
 SpriteRenderer:
@@ -2091,8 +2130,8 @@ GameObject:
   - component: {fileID: 1496145903}
   - component: {fileID: 1496145907}
   - component: {fileID: 1496145906}
-  - component: {fileID: 1496145905}
   - component: {fileID: 1496145904}
+  - component: {fileID: 1496145905}
   m_Layer: 0
   m_Name: Grama (5)
   m_TagString: Untagged
@@ -2110,8 +2149,8 @@ Transform:
   m_LocalPosition: {x: -1.486, y: -1.357, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 7
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1496145904
 Animator:
@@ -2139,7 +2178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1496145902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1496145906
@@ -2165,7 +2204,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &1496145907
 SpriteRenderer:
@@ -2240,17 +2279,7 @@ Transform:
   - {fileID: 1775426379}
   - {fileID: 1073837438}
   - {fileID: 1459452509}
-  - {fileID: 502733820}
-  - {fileID: 1565431567}
-  - {fileID: 1476892947}
-  - {fileID: 230869366}
-  - {fileID: 1496145903}
-  - {fileID: 306377158}
-  - {fileID: 815575455}
-  - {fileID: 821500800}
-  - {fileID: 1261630481}
-  - {fileID: 8253903}
-  - {fileID: 108557509}
+  - {fileID: 1354141547}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2264,8 +2293,8 @@ GameObject:
   - component: {fileID: 1565431567}
   - component: {fileID: 1565431571}
   - component: {fileID: 1565431570}
-  - component: {fileID: 1565431569}
   - component: {fileID: 1565431568}
+  - component: {fileID: 1565431569}
   m_Layer: 0
   m_Name: Grama (2)
   m_TagString: Untagged
@@ -2283,8 +2312,8 @@ Transform:
   m_LocalPosition: {x: -1.402, y: -1.561, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1524440562}
-  m_RootOrder: 4
+  m_Father: {fileID: 1354141547}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1565431568
 Animator:
@@ -2312,7 +2341,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1565431566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726f44e82fc9594889112ee8e466feb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7a5d58be6ca9a48a9b4c176f46a9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1565431570
@@ -2338,7 +2367,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.042958975}
+  m_Size: {x: 0.1, y: 0.03}
   m_EdgeRadius: 0
 --- !u!212 &1565431571
 SpriteRenderer:
@@ -2578,7 +2607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 7
-  viewAngle: 143
+  viewAngle: 360
   rotation: 0
   targetMask:
     serializedVersion: 2
