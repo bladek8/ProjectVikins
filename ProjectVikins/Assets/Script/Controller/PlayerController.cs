@@ -113,7 +113,7 @@ namespace Assets.Script.Controller
 
         public void WalkToPlayer(Transform _transform, Transform controllablePlayer, ref PlayerViewModel model)
         {
-            target = controllablePlayer.transform;
+            var target = controllablePlayer.transform;
             if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
             {
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
@@ -125,6 +125,23 @@ namespace Assets.Script.Controller
 
         public void WalkTowardTo(Transform _transform, ref PlayerViewModel model)
         {
+            if (fow.visibleTargets.Contains(target))
+            {
+                if (target == null) return;
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
+                fow.TurnView(target);
+                model.LastMoviment = GetDirection(_transform, target);
+                canAttack = false;
+            }
+            else
+            {
+                canAttack = false;
+                target = null;
+            }
+        }
+
+        public void FindTarget(Transform _transform)
+        {
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
                 followEnemy.StartToCount();
@@ -135,25 +152,6 @@ namespace Assets.Script.Controller
                     target = utils.NearTarget(enemies, _transform, target);
                     fow.TurnView(target);
                 }
-            }
-            else if (fow.visibleTargets.Contains(target))
-            {
-                if (target == null) return;
-                if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
-                {
-                    _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
-                    fow.TurnView(target);
-                    model.LastMoviment = GetDirection(_transform, target);
-                    //playerFunctions.UpdateStats(new Models.PlayerViewModel() { LastMoviment = GetDirection(_transform, target), PlayerId = id });
-                    canAttack = false;
-                }
-                else
-                    canAttack = true;
-            }
-            else
-            {
-                canAttack = false;
-                target = null;
             }
         }
 

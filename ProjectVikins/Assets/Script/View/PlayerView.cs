@@ -49,6 +49,7 @@ namespace Assets.Script.View
         {
             CountDown.DecreaseTime(attackCountDown);
             CountDown.DecreaseTime(changeCharacterCountDown);
+            CountDown.DecreaseTime(playerController.followEnemy);
 
             var tempIsControllable = playerController.GetIsControllable();
 
@@ -86,11 +87,11 @@ namespace Assets.Script.View
                     }
                     if (Input.GetKey(KeyCode.L))
                     {
+                        //colocar todos player em modo de attack
                         model.PlayerMode = PlayerModes.Attack;
-                        {
-                            model.SpeedRun = model.SpeedWalk / 2;
-                            model.SpeedWalk = model.SpeedWalk / 2;
-                        }
+
+                        model.SpeedRun = model.SpeedWalk / 2;
+                        model.SpeedWalk = model.SpeedWalk / 2;
                         attackCountDown.StartToCount();
                     }
                 }
@@ -108,9 +109,11 @@ namespace Assets.Script.View
             {
                 if (model.PlayerMode == PlayerModes.Follow)
                 {
-                    playerController.WalkToPlayer(transform, cv.playerTranform.transform, ref model);
-                    if (Mathf.Abs(Vector3.Distance(transform.position, cv.playerTranform.transform.position)) > 0.5)
+                    if (Mathf.Abs(Vector3.Distance(transform.position, cv.playerTranform.transform.position)) > 2)
+                    {
+                        playerController.WalkToPlayer(transform, cv.playerTranform.transform, ref model);
                         PlayerAnimator.SetBool("isWalking", true);
+                    }
                     else
                         PlayerAnimator.SetBool("isWalking", false);
                 }
@@ -118,9 +121,20 @@ namespace Assets.Script.View
                 {
                     if (playerController.fow.visibleTargets.Count > 0)
                     {
-                        playerController.WalkTowardTo(transform, ref model);
-                        if (playerController.target != null && Mathf.Abs(Vector3.Distance(transform.position, playerController.target.position)) > 0.5)
-                            PlayerAnimator.SetBool("isWalking", true);
+                        playerController.FindTarget(transform);
+
+                        if (playerController.target != null)
+                        {
+                            if(Mathf.Abs(Vector3.Distance(transform.position, playerController.target.position)) > 0.5)
+                            {
+                                playerController.WalkTowardTo(transform, ref model);
+                                PlayerAnimator.SetBool("isWalking", true);
+                            }
+                            else
+                            {
+                                playerController.canAttack = true;
+                            }
+                        }
                         else
                             PlayerAnimator.SetBool("isWalking", false);
                     }
@@ -141,14 +155,19 @@ namespace Assets.Script.View
                 {
                     playerController.targetsAttacked.Clear();
 
-                    if (playerController.canAttack)
-                        attackCountDown.CoolDown = attackCountDown.Rate;
-
                     if (attackCountDown.ReturnedToZero)
                     {
                         model.SpeedRun = model.SpeedWalk * 2;
                         model.SpeedWalk = model.SpeedWalk * 2;
                     }
+
+                    if (playerController.canAttack)
+                    {
+                        model.SpeedRun = model.SpeedWalk / 2;
+                        model.SpeedWalk = model.SpeedWalk / 2;
+                        attackCountDown.StartToCount();
+                    }
+
                 }
                 else if (playerController.canAttack)
                 {

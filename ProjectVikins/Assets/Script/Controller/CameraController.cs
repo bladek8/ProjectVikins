@@ -14,9 +14,9 @@ namespace Assets.Script.Controller
         {
         }
 
-        public Transform UpdatePlayerTranform()
+        public Models.PlayerViewModel UpdatePlayerTranform()
         {
-            return PlayerFunctions.GetModels().Single(x => x.IsBeingControllable).transform;
+            return PlayerFunctions.GetModels().Single(x => x.IsBeingControllable);
         }
     }
 }

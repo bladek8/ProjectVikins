@@ -53,7 +53,9 @@ public class CameraView : MonoBehaviour {
 
     public void UpdatePlayerTranform()
     {
-        playerTranform = cameraController.UpdatePlayerTranform();
+        var player = cameraController.UpdatePlayerTranform();
+        playerTranform = player.transform;
+        speed = player.SpeedRun + 1;
         transform.position = new Vector3(playerTranform.position.x, playerTranform.position.y, transform.position.z);
         cameraMove = transform.position;
     }
