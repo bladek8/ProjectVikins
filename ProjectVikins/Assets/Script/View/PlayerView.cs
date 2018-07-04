@@ -81,17 +81,15 @@ namespace Assets.Script.View
 
                     if (attackCountDown.ReturnedToZero)
                     {
-                        model.SpeedRun += 2;
-                        model.SpeedWalk += 2;
+                        model.SpeedRun = model.SpeedWalk * 2;
+                        model.SpeedWalk = model.SpeedWalk * 2;
                     }
                     if (Input.GetKey(KeyCode.L))
                     {
-
-
                         model.PlayerMode = PlayerModes.Attack;
                         {
-                            model.SpeedRun -= 2;
-                            model.SpeedWalk -= 2;
+                            model.SpeedRun = model.SpeedWalk / 2;
+                            model.SpeedWalk = model.SpeedWalk / 2;
                         }
                         attackCountDown.StartToCount();
                     }
@@ -148,8 +146,8 @@ namespace Assets.Script.View
 
                     if (attackCountDown.ReturnedToZero)
                     {
-                        model.SpeedRun += 2;
-                        model.SpeedWalk += 2;
+                        model.SpeedRun = model.SpeedWalk * 2;
+                        model.SpeedWalk = model.SpeedWalk * 2;
                     }
                 }
                 else if (playerController.canAttack)

@@ -40,7 +40,6 @@ namespace Assets.Script.BLL.Shared
         public TViewModel GetModelById(object id)
         {
             var idProperty = ListModel[0].GetType().GetProperty(entityIdPropertyName);
-            Debug.Log(id + " " + ListModel.GetType().ToString());
             return ListModel.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
         }
 

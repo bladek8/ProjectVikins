@@ -11,8 +11,8 @@ namespace Assets.Script.Models
         public int EnemyId { get; set; }
         public int? CharacterTypeId { get; set; }
         public int? Life { get; set; }
-        public int? SpeedWalk { get; set; }
-        public int? SpeedRun { get; set; }
+        public float? SpeedWalk { get; set; }
+        public float? SpeedRun { get; set; }
         public int? AttackMin { get; set; }
         public int? AttackMax { get; set; }
         public float? InitialX { get; set; }
