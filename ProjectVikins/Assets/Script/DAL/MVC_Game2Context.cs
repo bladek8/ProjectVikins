@@ -25,14 +25,22 @@ namespace Assets.Script.DAL
 
             foreach (var file in files)
             {
-                //if (file.Name == "Enemy.dat")
-                //{
-                //    BinaryFormatter bf = new BinaryFormatter();
-                //    FileStream __file = File.Create(file.FullName);
-                //    var player = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 2, AttackMin = 2, CharacterTypeId = 2, InitialX = 0, InitialY = 0, SpeedWalk = 3 }, new Enemy() { EnemyId = 2, AttackMax = 3, AttackMin = 3, CharacterTypeId = 2, InitialX = 3, InitialY = 3 } };
-                //    bf.Serialize(__file, player);
-                //    __file.Close();
-                //}
+                if (file.Name == "Enemy.dat")
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    FileStream __file = File.Create(file.FullName);
+                    var enemy = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 2, AttackMin = 2, CharacterTypeId = 2, InitialX = 0, InitialY = -2, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, Life = 3, SpeedRun = 2 }, new Enemy() { EnemyId = 2, AttackMax = 2, AttackMin = 2, CharacterTypeId = 2, InitialX = 0, InitialY = -1, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, Life = 3, SpeedRun = 2 } };
+                    bf.Serialize(__file, enemy);
+                    __file.Close();
+                }
+                if (file.Name == "Player.dat")
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    FileStream __file = File.Create(file.FullName);
+                    var player = new List<Player>() { new Player() { PlayerId = 1, AttackMax = 2, AttackMin = 5, CharacterTypeId = 1, InitialX = 0, InitialY = 0, SpeedWalk = 1, SpeedRun = 2, IsBeingControllable = true, LastMoviment = Helpers.PossibleMoviment.None,Life = 3, PlayerMode = Helpers.PlayerModes.Follow, X = 0, Y = 0 }, new Player() { PlayerId = 2, AttackMax = 2, AttackMin = 5, CharacterTypeId = 1, InitialX = 5, InitialY = 3, SpeedWalk = 1, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, Life = 3, PlayerMode = Helpers.PlayerModes.Follow, X = 5, Y = 3   } };
+                    bf.Serialize(__file, player);
+                    __file.Close();
+                }
                 var fileName = file.Name.Split('.');
                 var className = Type.GetType("Assets.Script.DAL." + fileName[0]);
 

@@ -81,6 +81,7 @@ namespace Assets.Script.BLL
         {
             return new EnemyViewModel()
             {
+                EnemyId = data.EnemyId,
                 AttackMax = data.AttackMax,
                 AttackMin = data.AttackMin,
                 CharacterTypeId = data.CharacterTypeId,
@@ -96,11 +97,12 @@ namespace Assets.Script.BLL
         public override List<EnemyViewModel> GetDataViewModel(List<Enemy> data)
         {
             return (from y in data
-                    select new EnemyViewModel() {
+                    select new EnemyViewModel()
+                    {
+                        EnemyId = y.EnemyId,
                         AttackMax = y.AttackMax,
                         AttackMin = y.AttackMin,
                         CharacterTypeId = y.CharacterTypeId,
-                        EnemyId = y.EnemyId,
                         InitialX = y.InitialX,
                         InitialY = y.InitialY,
                         LastMoviment = y.LastMoviment,
@@ -114,6 +116,7 @@ namespace Assets.Script.BLL
         {
             return new Enemy()
             {
+                EnemyId = model.EnemyId,
                 AttackMax = model.AttackMax.Value,
                 AttackMin = model.AttackMin.Value,
                 CharacterTypeId = model.CharacterTypeId.Value,
@@ -131,10 +134,10 @@ namespace Assets.Script.BLL
             return (from y in model
                     select new Enemy()
                     {
+                        EnemyId = y.EnemyId,
                         AttackMax = y.AttackMax.Value,
                         AttackMin = y.AttackMin.Value,
                         CharacterTypeId = y.CharacterTypeId.Value,
-                        EnemyId = y.EnemyId,
                         InitialX = y.InitialX.Value,
                         InitialY = y.InitialY.Value,
                         LastMoviment = y.LastMoviment.Value,
