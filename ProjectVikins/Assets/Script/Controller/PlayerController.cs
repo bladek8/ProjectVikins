@@ -41,7 +41,7 @@ namespace Assets.Script.Controller
                 {
                     var currentLife = hitCollider.gameObject.GetComponent<View.EnemyView>().model.Life -= GetDamage();
                     if (currentLife <= 0)
-                        Destroy(hitCollider.gameObject);
+                        MonoBehaviourAttributes.Destroy(hitCollider.gameObject);
                 }
                 if (hitCollider.tag == "NPC")
                 {
@@ -92,24 +92,6 @@ namespace Assets.Script.Controller
             var player = playerFunctions.GetModelById(id);
             return rnd.Next(player.AttackMin, player.AttackMax);
         }
-
-        //public override void UpdateStats(PlayerViewModel model)
-        //{
-        //    model.PlayerId = id;
-        //    playerFunctions.UpdateStats(model);
-        //}
-
-        //public override void Decrease(PlayerViewModel model)
-        //{
-        //    model.PlayerId = id;
-        //    playerFunctions.Decrease(model);
-        //}
-
-        //public override void Increase(PlayerViewModel model)
-        //{
-        //    model.PlayerId = id;
-        //    playerFunctions.Increase(model);
-        //}
 
         public void WalkToPlayer(Transform _transform, Transform controllablePlayer, ref PlayerViewModel model)
         {
@@ -202,36 +184,6 @@ namespace Assets.Script.Controller
             }
         }
 
-
-        //public Helpers.PossibleMoviment GetDirection(Transform transform)
-        //{
-        //    var vectorDirection = target.position - transform.position;
-        //    var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
-        //    var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
-
-        //    switch (position)
-        //    {
-        //        case 0:
-        //            return Helpers.PossibleMoviment.Right;
-        //        case 1:
-        //            return Helpers.PossibleMoviment.Up_Right;
-        //        case 2:
-        //            return Helpers.PossibleMoviment.Up;
-        //        case 3:
-        //            return Helpers.PossibleMoviment.Up_Left;
-        //        case 4:
-        //            return Helpers.PossibleMoviment.Left;
-        //        case 5:
-        //            return Helpers.PossibleMoviment.Down_Left;
-        //        case 6:
-        //            return Helpers.PossibleMoviment.Down;
-        //        case 7:
-        //            return Helpers.PossibleMoviment.Down_Right;
-        //        default:
-        //            return Helpers.PossibleMoviment.None;
-        //    }
-        //}
-
         public Models.PlayerViewModel GetInitialData(Transform transform)
         {
             var data = playerFunctions.GetDataByInitialPosition(transform.position);
@@ -242,7 +194,9 @@ namespace Assets.Script.Controller
                 data.InitialY = transform.position.y;
                 playerFunctions.Create(data);
             }
+            Debug.Log("asd");
             id = data.PlayerId;
+            Debug.Log(id);
             var model = playerFunctions.GetDataViewModel(data);
             model.transform = transform;
             playerFunctions.SetModel(model);

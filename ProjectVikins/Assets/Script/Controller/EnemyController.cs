@@ -18,7 +18,7 @@ namespace Assets.Script.Controller
         private Utils utils = new Utils();
         public bool canAttack;
         public FieldOfView fow;
-
+        
         public CountDown followPlayer = new CountDown();
         public Transform target;
 
@@ -58,80 +58,33 @@ namespace Assets.Script.Controller
                 target = null;
             }
         }
-
-        //public Helpers.PossibleMoviment GetDirection(Transform transform)
-        //{
-        //    var vectorDirection = target.position - transform.position;
-        //    var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
-        //    var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
-
-        //    switch (position)
-        //    {
-        //        case 0:
-        //            return Helpers.PossibleMoviment.Right;
-        //        case 1:
-        //            return Helpers.PossibleMoviment.Up_Right;
-        //        case 2:
-        //            return Helpers.PossibleMoviment.Up;
-        //        case 3:
-        //            return Helpers.PossibleMoviment.Up_Left;
-        //        case 4:
-        //            return Helpers.PossibleMoviment.Left;
-        //        case 5:
-        //            return Helpers.PossibleMoviment.Down_Left;
-        //        case 6:
-        //            return Helpers.PossibleMoviment.Down;
-        //        case 7:
-        //            return Helpers.PossibleMoviment.Down_Right;
-        //        default:
-        //            return Helpers.PossibleMoviment.None;
-        //    }
-        //}
-
+        
         public override int GetDamage()
         {
             var player = enemyFunctions.GetModelById(id);
             return rnd.Next(player.AttackMin.Value, player.AttackMax.Value);
         }
 
-        //public override void UpdateStats(EnemyViewModel model)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public override void Decrease(EnemyViewModel model)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public override void Increase(EnemyViewModel model)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public void Attack(Transform transform, Vector3 size, LayerMask targetLayer)
         {
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f, targetLayer);
             foreach (var hitCollider in hitColliders)
             {
-
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
-
-                //if (Convert.ToInt32(DecreaseStats(hitCollider.gameObject.gameObject.name, "Life", GetDamage(), hitCollider.gameObject.GetInstanceID())) <= 0)
+                
                 var currentLife = hitCollider.gameObject.GetComponent<View.PlayerView>().model.Life -= GetDamage();
                 if (currentLife <= 0)
                 {
                     fow.visibleTargets.Remove(hitCollider.transform);
                     players.Remove(hitCollider.transform);
-                    Destroy(hitCollider.gameObject);
+                    MonoBehaviourAttributes.Destroy(hitCollider.gameObject);
                 }
             }
         }
 
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
-            var player = enemyFunctions.GetModelById(id);
             return transform.position + PositionAttack(colSize, GetDirection(transform, target));
         }
 

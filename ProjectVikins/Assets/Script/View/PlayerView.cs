@@ -47,6 +47,8 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if(model == null)
+                transform.Translate(Vector2.down * Time.deltaTime * 2);
             CountDown.DecreaseTime(attackCountDown);
             CountDown.DecreaseTime(changeCharacterCountDown);
             CountDown.DecreaseTime(playerController.followEnemy);
@@ -60,6 +62,7 @@ namespace Assets.Script.View
 
             if (isPlayable)
             {
+
                 input.Vector2 = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
                 foreach (var keyMove in utils.moveKeyCode)
@@ -125,15 +128,13 @@ namespace Assets.Script.View
 
                         if (playerController.target != null)
                         {
-                            if(Mathf.Abs(Vector3.Distance(transform.position, playerController.target.position)) > 0.5)
+                            if (Mathf.Abs(Vector3.Distance(transform.position, playerController.target.position)) > 0.5)
                             {
                                 playerController.WalkTowardTo(transform, ref model);
                                 PlayerAnimator.SetBool("isWalking", true);
                             }
                             else
-                            {
                                 playerController.canAttack = true;
-                            }
                         }
                         else
                             PlayerAnimator.SetBool("isWalking", false);

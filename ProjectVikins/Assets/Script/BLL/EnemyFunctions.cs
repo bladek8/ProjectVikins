@@ -44,37 +44,10 @@ namespace Assets.Script.BLL
             ListModel.Add(model);
             return model.EnemyId;
         }
-
-        public override void Decrease(EnemyViewModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Increase(EnemyViewModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetListContext()
-        {
-            this.ListContext = DAL.MVC_Game2Context.enemies;
-        }
-
+        
         public override void SetListModel()
         {
             this.ListModel = DAL.MVC_Game2Context.enemieModels;
-        }
-
-        public override void UpdateStats(EnemyViewModel model)
-        {
-            var enemy = this.GetDataById(model.EnemyId);
-
-            if (model.LastMoviment.HasValue) enemy.LastMoviment = model.LastMoviment.Value;
-            if (model.Life.HasValue) enemy.Life = model.Life.Value;
-            if (model.SpeedRun.HasValue) enemy.SpeedRun = model.SpeedRun.Value;
-            if (model.SpeedWalk.HasValue) enemy.SpeedWalk = model.SpeedWalk.Value;
-            if (model.AttackMin.HasValue) enemy.AttackMin = model.AttackMin.Value;
-            if (model.AttackMax.HasValue) enemy.AttackMax = model.AttackMax.Value;
         }
 
         public override EnemyViewModel GetDataViewModel(Enemy data)
@@ -145,6 +118,11 @@ namespace Assets.Script.BLL
                         SpeedRun = y.SpeedRun.Value,
                         SpeedWalk = y.SpeedWalk.Value,
                     }).ToList();
+        }
+
+        public override void SetListContext()
+        {
+            this.ListContext = MVC_Game2Context.enemies;
         }
     }
 }

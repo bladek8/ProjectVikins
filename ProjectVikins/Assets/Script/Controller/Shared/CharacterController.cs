@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Script.Controller.Shared
 {
-    public abstract class _CharacterController<TViewModel> : MonoBehaviour, ICharacterController<TViewModel>
+    public abstract class _CharacterController<TViewModel> : ICharacterController<TViewModel>
         where TViewModel : class
     {
         public System.Random rnd = new System.Random();

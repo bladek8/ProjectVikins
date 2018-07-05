@@ -98,43 +98,6 @@ namespace Assets.Script.BLL
             this.ListModel = DAL.MVC_Game2Context.playerModels;
         }
 
-        public override void UpdateStats(PlayerViewModel model)
-        {
-            //var player = this.GetModelById(model.PlayerId);
-
-            //if (model.LastMoviment.HasValue) player.LastMoviment = model.LastMoviment.Value;
-            //if (model.Life.HasValue) player.Life = model.Life.Value;
-            //if (model.SpeedRun.HasValue) player.SpeedRun = model.SpeedRun.Value;
-            //if (model.SpeedWalk.HasValue) player.SpeedWalk = model.SpeedWalk.Value;
-            //if (model.AttackMin.HasValue) player.AttackMin = model.AttackMin.Value;
-            //if (model.AttackMax.HasValue) player.AttackMax = model.AttackMax.Value;
-            //if (model.IsBeingControllable.HasValue) player.IsBeingControllable = model.IsBeingControllable.Value;
-            //if (model.PlayerMode.HasValue) player.PlayerMode = model.PlayerMode.Value;
-            //if (model.transform != null) { player.transform = model.transform; }
-        }
-
-        public override void Decrease(PlayerViewModel model)
-        {
-            var player = this.GetDataById(model.PlayerId);
-
-            //if (model.Life.HasValue) player.Life = player.Life - model.Life.Value;
-            //if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun - model.SpeedRun.Value;
-            //if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk - model.SpeedWalk.Value;
-            //if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin - model.AttackMin.Value;
-            //if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax - model.AttackMax.Value;
-        }
-
-        public override void Increase(PlayerViewModel model)
-        {
-            var player = this.GetDataById(model.PlayerId);
-
-            //if (model.Life.HasValue) player.Life = player.Life + model.Life.Value;
-            //if (model.SpeedRun.HasValue) player.SpeedRun = player.SpeedRun + model.SpeedRun.Value;
-            //if (model.SpeedWalk.HasValue) player.SpeedWalk = player.SpeedWalk + model.SpeedWalk.Value;
-            //if (model.AttackMin.HasValue) player.AttackMin = player.AttackMin + model.AttackMin.Value;
-            //if (model.AttackMax.HasValue) player.AttackMax = player.AttackMax + model.AttackMax.Value;
-        }
-
         public void ChangeControllableCharacter(int id)
         {
             var player = this.GetModelById(id);

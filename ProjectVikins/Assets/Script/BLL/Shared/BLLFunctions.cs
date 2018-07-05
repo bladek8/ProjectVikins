@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Script.BLL.Shared
 {
-    public abstract class BLLFunctions<TEntity, TViewModel> : MonoBehaviour, IBLLFunctions<TEntity, TViewModel>
+    public abstract class BLLFunctions<TEntity, TViewModel> : IBLLFunctions<TEntity, TViewModel>
         where TEntity : class
         where TViewModel : class
     {
@@ -155,9 +155,6 @@ namespace Assets.Script.BLL.Shared
         public abstract int Create(TViewModel model);
         public abstract void SetListContext();
         public abstract void SetListModel();
-        public abstract void UpdateStats(TViewModel model);
-        public abstract void Decrease(TViewModel model);
-        public abstract void Increase(TViewModel model);
         public abstract int SetModel(TViewModel model);
         public abstract TViewModel GetDataViewModel(TEntity data);
         public abstract List<TViewModel> GetDataViewModel(List<TEntity> data);
