@@ -46,7 +46,7 @@ namespace Assets.Script.Controller
                 if (target == null) return;
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
-                model.LastMoviment = GetDirection(_transform, target);
+                model.LastMoviment = GetDirection(_transform.position, target.position);
                 //enemyFunctions.UpdateStats(new Models.EnemyViewModel() { LastMoviment = GetDirection(_transform, target), EnemyId = id });
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
                     canAttack = true;
@@ -85,7 +85,7 @@ namespace Assets.Script.Controller
 
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
-            return transform.position + PositionAttack(colSize, GetDirection(transform, target));
+            return transform.position + PositionAttack(colSize, GetDirection(transform.position, target.position));
         }
 
         public void SetFieldOfView(FieldOfView fow)

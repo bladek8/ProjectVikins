@@ -15,13 +15,13 @@ namespace Assets.Script.Controller.Shared
         public List<int> targetsAttacked = new List<int>();
         Type className;
         
-        public Helpers.PossibleMoviment GetDirection(Transform transform, Transform target)
+        public Helpers.PossibleMoviment GetDirection(Vector3 position, Vector3 targetPosition, bool InDegrees = false)
         {
-            var vectorDirection = target.position - transform.position;
+            var vectorDirection = targetPosition - position;
             var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
-            var position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
+            var _position = (int)((Mathf.Round(degrees / 45f) + 8) % 8);
 
-            switch (position)
+            switch (_position)
             {
                 case 0:
                     return Helpers.PossibleMoviment.Right;

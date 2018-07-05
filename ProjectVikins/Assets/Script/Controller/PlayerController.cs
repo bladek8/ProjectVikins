@@ -100,7 +100,7 @@ namespace Assets.Script.Controller
             {
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
-                model.LastMoviment = GetDirection(_transform, target);
+                model.LastMoviment = GetDirection(_transform.position, target.position);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Assets.Script.Controller
                 if (target == null) return;
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
-                model.LastMoviment = GetDirection(_transform, target);
+                model.LastMoviment = GetDirection(_transform.position, target.position);
                 canAttack = false;
             }
             else
@@ -194,9 +194,7 @@ namespace Assets.Script.Controller
                 data.InitialY = transform.position.y;
                 playerFunctions.Create(data);
             }
-            Debug.Log("asd");
             id = data.PlayerId;
-            Debug.Log(id);
             var model = playerFunctions.GetDataViewModel(data);
             model.transform = transform;
             playerFunctions.SetModel(model);
