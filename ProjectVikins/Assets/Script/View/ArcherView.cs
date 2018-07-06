@@ -22,7 +22,7 @@ namespace Assets.Script.View
         //private BoxCollider2D _boxCollider2D;
         //private BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
-
+        [SerializeField] GameObject Arrow;
         BoxCollider2D colliderTransform;
         KeyMove input = new KeyMove(null, new Vector2(), false);
         Vector2 mouseIn;
@@ -55,15 +55,18 @@ namespace Assets.Script.View
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 mouseOut = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-                Debug.Log("mouseIn: " + mouseIn + "/ mouseOut: " + mouseOut);
-                Debug.Log(Vector3.Distance(mouseIn, mouseOut));
+                //Debug.Log("mouseIn: " + mouseIn + "/ mouseOut: " + mouseOut);
+                //Debug.Log(Vector3.Distance(mouseIn, mouseOut));
 
                 var vectorDirection = mouseIn - mouseOut;
-                var degrees = Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg;
-                Debug.Log(degrees);
+                var degrees = (Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg) - 90;
+                if (degrees < 0f) degrees += 360f;
 
+                var arrow = Instantiate(Arrow, new Vector3(transform.position.x, transform.position.y, -80), Quaternion.Euler(0, 0, degrees));
+                var script = arrow.GetComponent<ArrowView>();
+                script.mouseIn = mouseIn;
+                script.mouseOut = mouseOut;
             }
-
         }
     }
 }

@@ -7,6 +7,7 @@ TagManager:
   - NPC
   - Enemy
   - Objeto1
+  - Shottable
   layers:
   - Default
   - TransparentFX
