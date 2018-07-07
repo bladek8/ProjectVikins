@@ -14,13 +14,10 @@ namespace Assets.Script.View.Shared
         public Utils utils = new Utils();
 
         [HideInInspector] public Animator PlayerAnimator;
-        //[HideInInspector] public Animator PlayerAnimator { get { return _playerAnimator ?? (_playerAnimator = GetComponent<Animator>()); } }
 
         [HideInInspector] public SpriteRenderer PlayerSpriteRenderer;
-        //[HideInInspector] public SpriteRenderer PlayerSpriteRenderer { get { return _playerSpriteRenderer ?? (_playerSpriteRenderer = GetComponent<SpriteRenderer>()); } }
 
         [HideInInspector] public BoxCollider2D PlayerBoxCollider2D;
-        //[HideInInspector] public BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
         [HideInInspector] public BoxCollider2D colliderTransform;
         [HideInInspector] public KeyMove input = new KeyMove(null, new Vector2(), false);
@@ -36,12 +33,14 @@ namespace Assets.Script.View.Shared
 
         private void Start()
         {
+            #region GetComponents
             PlayerAnimator = gameObject.GetComponent<Animator>();
             PlayerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             var allBoxColliders = GetComponents<BoxCollider2D>();
             colliderTransform = allBoxColliders.Single(x => x.isTrigger == false);
-
             PlayerBoxCollider2D = allBoxColliders.Single(x => x.isTrigger == true);
+            #endregion
+
             mainCamera = Camera.main;
             cv = mainCamera.GetComponent<CameraView>();
             playerController = new PlayerController(this.gameObject);
