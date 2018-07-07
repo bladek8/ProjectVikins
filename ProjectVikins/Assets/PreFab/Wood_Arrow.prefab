@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 61782259468164494}
   m_Layer: 0
   m_Name: Wood_Arrow
-  m_TagString: Untagged
+  m_TagString: Shottable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,6 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9240032f0020d24181eb0cdd0f015f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseIn: {x: 0, y: 0}
+  holdTime: 0
 --- !u!212 &212172428625179130
 SpriteRenderer:
   m_ObjectHideFlags: 1

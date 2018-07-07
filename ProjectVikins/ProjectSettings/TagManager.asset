@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Objeto1
   - Shottable
+  - Above
   layers:
   - Default
   - TransparentFX
