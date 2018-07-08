@@ -45,15 +45,50 @@ public class ArrowView : MonoBehaviour
         }
 
         transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
+
+        Collider();
+
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Shottable" || collision.gameObject.tag == "Above")
-            return;
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    {
+    //        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Shottable" || collision.gameObject.tag == "Above")
+    //            return;
+    //        else if (collision.gameObject.tag == "Enemy")
+    //        {
+    //            var currentLife = collision.gameObject.GetComponent<Assets.Script.View.EnemyView>().model.Life -= 1;
+    //            if (currentLife <= 0)
+    //                MonoBehaviourAttributes.Destroy(collision.gameObject);
+    //                MonoBehaviourAttributes.Destroy(gameObject);
+    //        }
 
-        if (!stop)
-            Stop();
+    //        if (!stop)
+    //            Stop();
+    //    }
+    //}
+
+    void Collider()
+    {
+        Debug.DrawLine(BoxCollider2D.bounds.min, BoxCollider2D.bounds.max,Color.blue,0.5f);
+        var hit = Physics2D.OverlapArea(BoxCollider2D.bounds.min, BoxCollider2D.bounds.max);
+        if (hit != null)
+        {
+            if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above")
+                return;
+            else if (hit.gameObject.tag == "Enemy")
+            {
+                var currentLife = hit.gameObject.GetComponent<Assets.Script.View.EnemyView>().model.Life -= 1;
+                if (currentLife <= 0)
+                {
+                    MonoBehaviourAttributes.Destroy(hit.gameObject);
+                    MonoBehaviourAttributes.Destroy(gameObject);
+                }
+            }
+
+            if (!stop)
+                Stop();
+        }
     }
 
     void Stop()

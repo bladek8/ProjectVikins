@@ -88,7 +88,7 @@ namespace Assets.Script.View
 
         public void Shoot()
         {
-            mouseIn = new Vector2(playerController.target.position.x, playerController.target.position.y);
+            mouseIn = new Vector2(playerController.target.position.x * UnityEngine.Random.Range(0.5f,2), playerController.target.position.y * UnityEngine.Random.Range(0.5f, 2));
             var vectorDirection = mouseIn - new Vector2(transform.position.x, transform.position.y);
             var degrees = (Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg) - 90;
             if (degrees < 0f) degrees += 360f;

@@ -33,7 +33,6 @@ namespace Assets.Script.Controller
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f);
             foreach (var hitCollider in hitColliders)
             {
-
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 

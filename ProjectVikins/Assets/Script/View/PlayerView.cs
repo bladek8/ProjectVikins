@@ -77,7 +77,7 @@ namespace Assets.Script.View
                         playerController.canAttack = false;
                     }
                 }
-                                                
+
                 if (attackCountDown.CoolDown <= 0)
                 {
                     playerController.targetsAttacked.Clear();
