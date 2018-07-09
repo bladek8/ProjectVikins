@@ -9,6 +9,7 @@ TagManager:
   - Objeto1
   - Shottable
   - Above
+  - Bonfire
   layers:
   - Default
   - TransparentFX

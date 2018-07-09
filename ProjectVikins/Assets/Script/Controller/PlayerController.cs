@@ -42,10 +42,15 @@ namespace Assets.Script.Controller
                     if (currentLife <= 0)
                         MonoBehaviourAttributes.Destroy(hitCollider.gameObject);
                 }
-                if (hitCollider.tag == "NPC")
+                else if (hitCollider.tag == "NPC")
                 {
                     var NPCView = hitCollider.GetComponent(typeof(Component));
                     NPCInteraction(NPCView);
+                }
+                else if (hitCollider.tag == "Bonfire")
+                {
+                    SaveData();
+                    Debug.Log("Save!");
                 }
             }
         }

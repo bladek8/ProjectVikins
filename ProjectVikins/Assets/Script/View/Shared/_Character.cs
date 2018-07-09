@@ -98,11 +98,6 @@ namespace Assets.Script.View.Shared
                 }
 
                 #endregion
-                
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    playerController.SaveData();
-                }
             }
 
             else
