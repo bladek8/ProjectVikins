@@ -47,7 +47,6 @@ namespace Assets.Script.Controller
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
                 model.LastMoviment = GetDirection(_transform.position, target.position);
-                //enemyFunctions.UpdateStats(new Models.EnemyViewModel() { LastMoviment = GetDirection(_transform, target), EnemyId = id });
                 if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
                     canAttack = true;
                 else canAttack = false;
@@ -73,13 +72,9 @@ namespace Assets.Script.Controller
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
                 
-                var currentLife = hitCollider.gameObject.GetComponent<View.PlayerView>().model.Life -= GetDamage();
-                if (currentLife <= 0)
-                {
-                    fow.visibleTargets.Remove(hitCollider.transform);
-                    players.Remove(hitCollider.transform);
-                    MonoBehaviourAttributes.Destroy(hitCollider.gameObject);
-                }
+                var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
+                script.SendMessage("GetDamage", GetDamage());
+                
             }
         }
 

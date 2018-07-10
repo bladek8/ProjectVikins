@@ -70,5 +70,12 @@ namespace Assets.Script.View
         {
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
+
+        public void GetDamage(int damage)
+        {
+            model.Life -= damage;
+            if (model.Life <= 0)
+                Destroy(this.gameObject);
+        }
     }
 }

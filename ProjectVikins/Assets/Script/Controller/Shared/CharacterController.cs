@@ -114,10 +114,6 @@ namespace Assets.Script.Controller.Shared
         }
 
         public abstract int GetDamage();
-        //public abstract void UpdateStats(TViewModel model);
-        //public abstract void Decrease(TViewModel model);
-        //public abstract void Increase(TViewModel model);
-        //public abstract void Attack(Transform transform, Vector3 size);
         public abstract Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }
 }

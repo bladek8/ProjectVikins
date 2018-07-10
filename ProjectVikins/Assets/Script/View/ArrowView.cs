@@ -49,25 +49,7 @@ public class ArrowView : MonoBehaviour
         Collider();
 
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    {
-    //        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Shottable" || collision.gameObject.tag == "Above")
-    //            return;
-    //        else if (collision.gameObject.tag == "Enemy")
-    //        {
-    //            var currentLife = collision.gameObject.GetComponent<Assets.Script.View.EnemyView>().model.Life -= 1;
-    //            if (currentLife <= 0)
-    //                MonoBehaviourAttributes.Destroy(collision.gameObject);
-    //                MonoBehaviourAttributes.Destroy(gameObject);
-    //        }
-
-    //        if (!stop)
-    //            Stop();
-    //    }
-    //}
-
+    
     void Collider()
     {
         Debug.DrawLine(BoxCollider2D.bounds.min, BoxCollider2D.bounds.max,Color.blue,0.5f);

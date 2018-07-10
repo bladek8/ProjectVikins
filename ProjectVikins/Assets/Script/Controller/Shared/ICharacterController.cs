@@ -14,11 +14,7 @@ namespace Assets.Script.Controller.Shared
         object IncreaseStats(string target, string stats, object value, object id);
         void UpdateStats(string target, string stats, object value, object id);
         void UpdateMultipleStats(string target, Dictionary<string, object> datas, object id);
-
-        //void UpdateStats(TViewModel model);
-        //void Decrease(TViewModel model);
-        //void Increase(TViewModel model);
-        //void Attack(Transform transform, Vector3 size);
+        
         Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }
 }

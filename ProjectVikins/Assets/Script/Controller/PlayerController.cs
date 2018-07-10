@@ -38,9 +38,8 @@ namespace Assets.Script.Controller
 
                 if (hitCollider.tag == "Enemy")
                 {
-                    var currentLife = hitCollider.gameObject.GetComponent<View.EnemyView>().model.Life -= GetDamage();
-                    if (currentLife <= 0)
-                        MonoBehaviourAttributes.Destroy(hitCollider.gameObject);
+                    var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
+                    script.SendMessage("GetDamage", GetDamage());
                 }
                 else if (hitCollider.tag == "NPC")
                 {

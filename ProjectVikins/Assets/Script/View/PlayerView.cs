@@ -36,6 +36,7 @@ namespace Assets.Script.View
                     {
                         //colocar todos player em modo de attack
                         model.PlayerMode = PlayerModes.Attack;
+                        //playerController
 
                         model.SpeedRun = model.SpeedWalk / 2;
                         model.SpeedWalk = model.SpeedWalk / 2;

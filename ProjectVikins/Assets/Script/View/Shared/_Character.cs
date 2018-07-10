@@ -125,21 +125,7 @@ namespace Assets.Script.View.Shared
                 PlayerAnimator.SetFloat("speedY", input.Vector2.y);
 
                 #endregion
-
-                #region Change PlayerMode
-
-                foreach (var playerMode in utils.playerModes)
-                {
-                    if (Input.GetKey(playerMode.KeyButton[0]) && Input.GetKey(playerMode.KeyButton[1]))
-                    {
-                        model.PlayerMode = playerMode.Value;
-                        if (playerMode.Value == PlayerModes.Wait)
-                            PlayerAnimator.SetBool("isWalking", false);
-                    }
-                }
-
-                #endregion
-
+                
                 if (Vector3.Distance(transform.position, cv.playerTranform.transform.position) > 15)
                 {
                     model.PlayerMode = PlayerModes.Follow;
@@ -147,6 +133,27 @@ namespace Assets.Script.View.Shared
             }
             
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
+            
+            #region Change PlayerMode
+
+            foreach (var playerMode in utils.playerModes)
+            {
+                if (Input.GetKey(playerMode.KeyButton[0]) && Input.GetKey(playerMode.KeyButton[1]))
+                {
+                    model.PlayerMode = playerMode.Value;
+                    if (playerMode.Value == PlayerModes.Wait)
+                        PlayerAnimator.SetBool("isWalking", false);
+                }
+            }
+
+            #endregion
+        }
+
+        public void GetDamage(int damage)
+        {
+            model.Life -= damage;
+            if (model.Life <= 0)
+                Destroy(this.gameObject);
         }
 
     }
