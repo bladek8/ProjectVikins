@@ -153,5 +153,11 @@ namespace Assets.Script.BLL
                          Y = y.transform.position.y,
                      }).ToList();
         }
+
+        public void AttackMode()
+        {
+            foreach(var y in ListModel)
+                y.PlayerMode = Helpers.PlayerModes.Attack;
+        }
     }
 }

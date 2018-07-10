@@ -17,7 +17,7 @@ namespace Assets.Script.View
         }
         public void Interaction()
         {
-            Debug.Log("asd");
+            Debug.Log("Interacted with NPC!");
         }
 
         private void FixedUpdate()

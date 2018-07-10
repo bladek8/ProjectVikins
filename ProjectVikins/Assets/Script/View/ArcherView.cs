@@ -47,7 +47,6 @@ namespace Assets.Script.View
             {
                 if (model.PlayerMode == PlayerModes.Attack)
                 {
-                    Debug.Log('a');
                     if (playerController.fow.visibleTargets.Count > 0)
                     {
                         playerController.FindTarget(transform);

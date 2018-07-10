@@ -30,6 +30,7 @@ namespace Assets.Script.Controller
 
         public void Attack(Transform transform, Vector3 size)
         {
+            playerFunctions.AttackMode();
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f);
             foreach (var hitCollider in hitColliders)
             {
