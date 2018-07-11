@@ -188,19 +188,19 @@ namespace Assets.Script.Controller
             }
         }
 
-        public Models.PlayerViewModel GetInitialData(Transform transform)
+        public Models.PlayerViewModel GetInitialData(GameObject go)
         {
-            var data = playerFunctions.GetDataByInitialPosition(transform.position);
+            var data = playerFunctions.GetDataByInitialPosition(go.transform.position);
             if (data == null)
             {
                 data = DAL.MVC_Game2Context.defaultPlayer;
-                data.InitialX = transform.position.x;
-                data.InitialY = transform.position.y;
+                data.InitialX = go.transform.position.x;
+                data.InitialY = go.transform.position.y;
                 playerFunctions.Create(data);
             }
             id = data.PlayerId;
             var model = playerFunctions.GetDataViewModel(data);
-            model.transform = transform;
+            model.GameObject = go;
             playerFunctions.SetModel(model);
             return model;
         }

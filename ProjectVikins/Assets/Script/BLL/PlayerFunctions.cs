@@ -127,8 +127,8 @@ namespace Assets.Script.BLL
             player.PlayerMode = model.PlayerMode.Value;
             player.SpeedRun = model.SpeedRun;
             player.SpeedWalk = model.SpeedWalk;
-            player.X = model.transform.position.x;
-            player.Y = model.transform.position.y;
+            player.X = model.GameObject.transform.position.x;
+            player.Y = model.GameObject.transform.position.y;
 
             return player;
         }
@@ -149,8 +149,8 @@ namespace Assets.Script.BLL
                          PlayerMode = y.PlayerMode.Value,
                          SpeedRun = y.SpeedRun,
                          SpeedWalk = y.SpeedWalk,
-                         X = y.transform.position.x,
-                         Y = y.transform.position.y,
+                         X = y.GameObject.transform.position.x,
+                         Y = y.GameObject.transform.position.y,
                      }).ToList();
         }
 
