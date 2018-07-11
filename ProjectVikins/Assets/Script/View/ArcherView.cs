@@ -41,6 +41,7 @@ namespace Assets.Script.View
                     script.mouseIn = mouseIn;
                     script.holdTime = counter.Time;
                     counter.ResetCounter();
+                    cv.InAttack();
                 }
             }
             else

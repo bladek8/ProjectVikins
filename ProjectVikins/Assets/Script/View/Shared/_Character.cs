@@ -24,7 +24,7 @@ namespace Assets.Script.View.Shared
         [HideInInspector] public bool isPlayable;
         public GameObject FieldOfViewObj;
         public float DistanceOfPlayer;
-        [HideInInspector] public Camera mainCamera;
+        [HideInInspector] public GameObject camera;
         [HideInInspector] public CameraView cv;
 
         public Models.PlayerViewModel model;
@@ -40,13 +40,13 @@ namespace Assets.Script.View.Shared
             colliderTransform = allBoxColliders.Single(x => x.isTrigger == false);
             PlayerBoxCollider2D = allBoxColliders.Single(x => x.isTrigger == true);
             #endregion
-
-            mainCamera = Camera.main;
-            cv = mainCamera.GetComponent<CameraView>();
+            
+            camera = GameObject.FindGameObjectWithTag("camera");
+            cv = camera.GetComponent<CameraView>();
             playerController = new PlayerController(this.gameObject);
             model = playerController.GetInitialData(transform);
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
-            if (model.IsBeingControllable) mainCamera.SendMessage("UpdatePlayerTranform");
+            if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
         }
         public void CharacterUpdate()
         {
@@ -94,7 +94,7 @@ namespace Assets.Script.View.Shared
                 {
                     playerController.ChangeControllableCharacter();
 
-                    mainCamera.SendMessage("UpdatePlayerTranform");
+                    camera.SendMessage("UpdatePlayerTranform");
                 }
 
                 #endregion
@@ -143,6 +143,10 @@ namespace Assets.Script.View.Shared
                     model.PlayerMode = playerMode.Value;
                     if (playerMode.Value == PlayerModes.Wait)
                         PlayerAnimator.SetBool("isWalking", false);
+                    if (playerMode.Value == PlayerModes.Attack)
+                        cv.InAttack();
+                    else
+                        cv.OutAttack();
                 }
             }
 
