@@ -12,12 +12,22 @@ public class CameraView : MonoBehaviour
 
     CinemachineStateDrivenCamera cam;
     CinemachineConfiner camConfiner;
+    CinemachineVirtualCamera[] secVirtualCams;
+    CinemachineFramingTransposer[] fTCams;
 
     [SerializeField] BoxCollider2D colliderTrigger;
 
     private void Awake()
     {
         cam = GetComponent<CinemachineStateDrivenCamera>();
+        var secCams = cam.ChildCameras;
+        secVirtualCams = new CinemachineVirtualCamera[secCams.Length];
+        fTCams = new CinemachineFramingTransposer[secCams.Length];
+        for (int i = 0; i < secCams.Length; i++)
+        {
+            secVirtualCams[i] = secCams[i].GetComponent<CinemachineVirtualCamera>();
+            fTCams[i] = secVirtualCams[i].GetCinemachineComponent<CinemachineFramingTransposer>();
+        }
         camConfiner = GetComponent<CinemachineConfiner>();
         cam.Follow = playerGameObj.transform;
         cam.m_AnimatedTarget = playerGameObj.GetComponent<Animator>(); 
@@ -34,5 +44,14 @@ public class CameraView : MonoBehaviour
     public void CamUnconfined()
     {
         camConfiner.m_BoundingShape2D = null;
+    }
+
+    public void ChangeDamping(float value)
+    {
+        foreach (var fTCam in fTCams)
+        {
+            fTCam.m_XDamping = value;
+            fTCam.m_YDamping = value;
+        }
     }
 }

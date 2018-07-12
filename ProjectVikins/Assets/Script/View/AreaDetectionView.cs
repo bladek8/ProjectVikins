@@ -7,17 +7,24 @@ public class AreaDetectionView : MonoBehaviour
 {
     public UnityEvent EnterAreaDetectionTrigger;
     public UnityEvent OutAreaDetectionTrigger;
-    BoxCollider2D boxCollider2D;
+    BoxCollider2D[] boxColliders2D;
     public LayerMask playerMask;
+    bool isInArea = false;
 
     private void Start()
     {
-        boxCollider2D = gameObject.GetComponent<BoxCollider2D>();
+        boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
     }
 
     private void FixedUpdate()
     {
-        if (Physics2D.OverlapBox(transform.position, boxCollider2D.size, 0, playerMask))
+        isInArea = false;
+        foreach (var boxCollider in boxColliders2D)
+        {
+            if (Physics2D.OverlapBox(boxCollider.bounds.center, boxCollider.size, 0, playerMask))
+                isInArea = true;
+        }
+        if (isInArea)
             EnterAreaDetectionTrigger.Invoke();
         else
             OutAreaDetectionTrigger.Invoke();
