@@ -85,10 +85,9 @@ namespace Assets.Script.Controller
                 player.LastMoviment = Helpers.PossibleMoviment.None;
         }
 
-        public void Walk(Vector2 vector)
+        public void Walk(Vector2 vector, float speed)
         {
-            var player = playerFunctions.GetModelById(id);
-            gameObj.transform.Translate(vector * Time.deltaTime * player.SpeedWalk);
+            gameObj.transform.Translate(vector * Time.deltaTime * speed);
         }
 
         public override int GetDamage()

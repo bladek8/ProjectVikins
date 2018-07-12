@@ -27,6 +27,8 @@ namespace Assets.Script.View.Shared
         [HideInInspector] public GameObject camera;
         [HideInInspector] public CameraView cv;
 
+        [HideInInspector] bool forceToWalk = false;
+
         public Models.PlayerViewModel model;
 
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
@@ -70,19 +72,30 @@ namespace Assets.Script.View.Shared
                 {
                     if (Input.GetKey(keyMove.KeyCode.Value))
                     {
-                        PlayerAnimator.SetBool("isWalking", true);
+                        if (Input.GetKey(KeyCode.LeftShift) && !forceToWalk)
+                        {
+                            PlayerAnimator.SetBool("isRunning", true);
+                            PlayerAnimator.SetBool("isWalking", false);
+                            playerController.Walk(keyMove.Vector2, model.SpeedRun);
+                        }
+                        else
+                        {
+                            PlayerAnimator.SetBool("isWalking", true);
+                            PlayerAnimator.SetBool("isRunning", false);
+                            playerController.Walk(keyMove.Vector2, model.SpeedWalk);
+                        }
 
                         playerController.SetLastMoviment(input.Vector2.x, input.Vector2.y);
                         PlayerAnimator.SetFloat("speedX", input.Vector2.x);
                         PlayerAnimator.SetFloat("speedY", input.Vector2.y);
 
-                        playerController.Walk(keyMove.Vector2);
                         if (!keyMove.Flip.HasValue) continue;
                         PlayerSpriteRenderer.flipX = keyMove.Flip.Value;
                     }
                     if (Input.GetKeyUp(keyMove.KeyCode.Value))
                     {
                         PlayerAnimator.SetBool("isWalking", false);
+                        PlayerAnimator.SetBool("isRunning", false);
                     }
                 }
 
@@ -112,7 +125,10 @@ namespace Assets.Script.View.Shared
                         PlayerAnimator.SetBool("isWalking", true);
                     }
                     else
+                    {
                         PlayerAnimator.SetBool("isWalking", false);
+                        PlayerAnimator.SetBool("isRunning", false);
+                    }
                 }
 
                 #endregion
@@ -142,7 +158,10 @@ namespace Assets.Script.View.Shared
                 {
                     model.PlayerMode = playerMode.Value;
                     if (playerMode.Value == PlayerModes.Wait)
+                    {
                         PlayerAnimator.SetBool("isWalking", false);
+                        PlayerAnimator.SetBool("isRunning", false);
+                    }
                 }
             }
 
@@ -154,6 +173,11 @@ namespace Assets.Script.View.Shared
             model.Life -= damage;
             if (model.Life <= 0)
                 Destroy(this.gameObject);
+        }
+
+        public void SetForceToWalk(bool value)
+        {
+            forceToWalk = value;
         }
 
     }

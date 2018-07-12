@@ -11,12 +11,14 @@ public class CameraView : MonoBehaviour
     public GameObject playerGameObj;
 
     CinemachineStateDrivenCamera cam;
-    
+    CinemachineConfiner camConfiner;
 
+    [SerializeField] BoxCollider2D colliderTrigger;
 
     private void Awake()
     {
         cam = GetComponent<CinemachineStateDrivenCamera>();
+        camConfiner = GetComponent<CinemachineConfiner>();
         cam.Follow = playerGameObj.transform;
         cam.m_AnimatedTarget = playerGameObj.GetComponent<Animator>(); 
     }
@@ -27,5 +29,10 @@ public class CameraView : MonoBehaviour
         playerGameObj = player.GameObject;
         cam.Follow = player.GameObject.transform;
         cam.m_AnimatedTarget = player.GameObject.GetComponent<Animator>();
+    }
+
+    public void CamUnconfined()
+    {
+        camConfiner.m_BoundingShape2D = null;
     }
 }

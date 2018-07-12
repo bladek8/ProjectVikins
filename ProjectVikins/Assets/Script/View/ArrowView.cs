@@ -18,6 +18,7 @@ public class ArrowView : MonoBehaviour
     public Vector2 mouseIn;
     CountDown destroyCountDown = new CountDown(5);
     public float holdTime;
+    Vector3 boxColliderBoundMin;
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class ArrowView : MonoBehaviour
 
     void Update()
     {
+        boxColliderBoundMin = BoxCollider2D.bounds.min;
         CountDown.DecreaseTime(destroyCountDown);
 
         if (destroyCountDown.ReturnedToZero)
@@ -38,7 +40,7 @@ public class ArrowView : MonoBehaviour
             if (Vector3.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(startPosition.x, startPosition.y)) < distance * holdTime)
             {
                 Animator.SetBool("Fly", true);
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + direction * (2 * holdTime), 200 * Time.deltaTime * 2 * holdTime);
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + direction * (2 * holdTime), 4);
             }
             else
                 Stop();
@@ -52,8 +54,8 @@ public class ArrowView : MonoBehaviour
     
     void Collider()
     {
-        Debug.DrawLine(BoxCollider2D.bounds.min, BoxCollider2D.bounds.max,Color.blue,0.5f);
-        var hit = Physics2D.OverlapArea(BoxCollider2D.bounds.min, BoxCollider2D.bounds.max);
+        Debug.DrawLine(boxColliderBoundMin, BoxCollider2D.bounds.max,Color.blue,0.5f);
+        var hit = Physics2D.OverlapArea(boxColliderBoundMin, BoxCollider2D.bounds.max);
         if (hit != null)
         {
             if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above")
