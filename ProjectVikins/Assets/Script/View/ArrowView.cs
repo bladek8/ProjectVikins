@@ -48,17 +48,17 @@ public class ArrowView : MonoBehaviour
 
         transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
 
-        Collider();
+        Collider(); 
 
     }
     
     void Collider()
     {
         Debug.DrawLine(boxColliderBoundMin, BoxCollider2D.bounds.max,Color.blue,0.5f);
-        var hit = Physics2D.OverlapArea(boxColliderBoundMin, BoxCollider2D.bounds.max);
+        var hit = Physics2D.OverlapBox(boxColliderBoundMin, BoxCollider2D.bounds.max,0);
         if (hit != null)
         {
-            if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above")
+            if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above" || hit.gameObject.tag == "Below")
                 return;
             else if (hit.gameObject.tag == "Enemy")
             {
@@ -71,6 +71,7 @@ public class ArrowView : MonoBehaviour
                 //}
             }
 
+            print("Bateu em " + hit.name);
             if (!stop)
                 Stop();
         }

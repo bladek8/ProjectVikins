@@ -11,6 +11,7 @@ TagManager:
   - Above
   - Bonfire
   - camera
+  - Below
   layers:
   - Default
   - TransparentFX
