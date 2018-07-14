@@ -62,12 +62,13 @@ public class ArrowView : MonoBehaviour
                 return;
             else if (hit.gameObject.tag == "Enemy")
             {
-                var currentLife = hit.gameObject.GetComponent<Assets.Script.View.EnemyView>().model.Life -= 1;
-                if (currentLife <= 0)
-                {
-                    MonoBehaviourAttributes.Destroy(hit.gameObject);
-                    MonoBehaviourAttributes.Destroy(gameObject);
-                }
+                Debug.Log("Acertou!");
+                //var currentLife = hit.gameObject.GetComponent<Assets.Script.View.EnemyView>().model.Life -= 1;
+                //if (currentLife <= 0)
+                //{
+                //    MonoBehaviourAttributes.Destroy(hit.gameObject);
+                //    MonoBehaviourAttributes.Destroy(gameObject);
+                //}
             }
 
             if (!stop)
