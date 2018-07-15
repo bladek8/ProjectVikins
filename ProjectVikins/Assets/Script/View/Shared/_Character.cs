@@ -33,6 +33,9 @@ namespace Assets.Script.View.Shared
 
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
 
+        public GameObject leftFoot;
+        public GameObject rightFoot;
+
         private void Start()
         {
             #region GetComponents
