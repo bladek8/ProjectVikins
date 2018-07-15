@@ -22,5 +22,7 @@ namespace Assets.Script.Models
         public PlayerModes? PlayerMode { get; set; }
         public float InitialX { get; set; }
         public float InitialY { get; set; }
+        public bool ForceToWalk { get; set; }
+        public bool ForceToStop { get; set; }
     }
 }

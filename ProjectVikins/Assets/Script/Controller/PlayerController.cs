@@ -208,5 +208,21 @@ namespace Assets.Script.Controller
         {
             BLL.SaveFunctions.Save();
         }
+
+        public void SetForceToWalk(bool value)
+        {
+            foreach(var playerModel in playerFunctions.GetModels())
+            {
+                playerModel.ForceToWalk = value;
+            }
+        }
+
+        public void SetForceToStop(bool value)
+        {
+            foreach (var playerModel in playerFunctions.GetModels())
+            {
+                playerModel.ForceToStop = value;
+            }
+        }
     }
 }
