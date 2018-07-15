@@ -8962,8 +8962,11 @@ Transform:
   m_LocalPosition: {x: -7.69, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+<<<<<<< HEAD
   - {fileID: 2140781753}
+=======
   - {fileID: 2138138123}
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
   - {fileID: 1563219642}
   - {fileID: 1775426379}
   - {fileID: 1073837438}
@@ -12690,31 +12693,39 @@ Transform:
   m_Father: {fileID: 1524440562}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &2140781750
+=======
 --- !u!1 &2138138122
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 2140781753}
   - component: {fileID: 2140781752}
   - component: {fileID: 2140781751}
   - component: {fileID: 2140781754}
   m_Layer: 0
   m_Name: oceano
+=======
   - component: {fileID: 2138138123}
   - component: {fileID: 2138138125}
   - component: {fileID: 2138138124}
   m_Layer: 0
   m_Name: oceano final7
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!95 &2140781751
+=======
 --- !u!4 &2138138123
 Transform:
   m_ObjectHideFlags: 0
@@ -12729,19 +12740,23 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2138138124
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 2140781750}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1dcd64a068578334d99ed1b0724bcae5, type: 2}
+=======
   m_GameObject: {fileID: 2138138122}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3eec8f70b84da2a49a6e6c2a6c86a637, type: 2}
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -12750,14 +12765,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+<<<<<<< HEAD
 --- !u!212 &2140781752
+=======
 --- !u!212 &2138138125
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 2140781750}
+=======
   m_GameObject: {fileID: 2138138122}
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -12787,18 +12808,25 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+<<<<<<< HEAD
   m_Sprite: {fileID: 21300000, guid: 25f8870266a8878418217013508e21c9, type: 3}
+=======
   m_Sprite: {fileID: 21300000, guid: 00ccc253b3ed9574489fa78d88b44258, type: 3}
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
+<<<<<<< HEAD
   m_Size: {x: 2.5, y: 32.886715}
+=======
   m_Size: {x: 2.5, y: 33.06308}
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+<<<<<<< HEAD
 --- !u!4 &2140781753
 Transform:
   m_ObjectHideFlags: 0
@@ -12837,3 +12865,5 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5247402, y: 32.906174}
   m_EdgeRadius: 0
+=======
+>>>>>>> 6ea4700af0bd16478d876f8981ca57740b0c9e8d
