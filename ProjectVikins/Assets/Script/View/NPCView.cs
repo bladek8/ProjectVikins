@@ -6,11 +6,15 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Script.Helpers;
+using UnityEngine.Events;
 
 namespace Assets.Script.View
 {
     public class NPCView : MonoBehaviour
     {
+        [SerializeField] UnityEvent startInteraction;
+        [SerializeField] UnityEvent endInteraction;
+
         BoxCollider2D colliderTransform;
         public Image dialogBox;
         public Text npcText;
@@ -26,9 +30,10 @@ namespace Assets.Script.View
 
         public void Interaction()
         {
+
             StartCoroutine(TypeText());
             dialogBox.enabled = true;
-            DAL.Player player = new DAL.Player();
+            startInteraction.Invoke();
         }
 
         private void FixedUpdate()
@@ -38,6 +43,7 @@ namespace Assets.Script.View
             {
                 dialogBox.enabled = false;
                 npcText.text = "";
+                endInteraction.Invoke();
             }
         }
 

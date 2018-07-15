@@ -26,11 +26,9 @@ namespace Assets.Script.View.Shared
         public float DistanceOfPlayer;
         [HideInInspector] public GameObject camera;
         [HideInInspector] public CameraView cv;
-
-        [HideInInspector] bool forceToWalk = false;
-
+        
         public Models.PlayerViewModel model;
-
+        
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
 
         private void Start()
@@ -47,6 +45,8 @@ namespace Assets.Script.View.Shared
             cv = camera.GetComponent<CameraView>();
             playerController = new PlayerController(this.gameObject);
             model = playerController.GetInitialData(gameObject);
+            model.ForceToWalk = false;
+            model.ForceToStop = false;
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
             if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
         }
@@ -66,44 +66,51 @@ namespace Assets.Script.View.Shared
             {
                 #region Mover
 
-                input.Vector2 = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-                foreach (var keyMove in utils.moveKeyCode)
+                if (!model.ForceToStop)
                 {
-                    if (Input.GetKey(keyMove.KeyCode.Value))
+                    input.Vector2 = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+                    foreach (var keyMove in utils.moveKeyCode)
                     {
-                        if (Input.GetKey(KeyCode.LeftShift) && !forceToWalk)
+                        if (Input.GetKey(keyMove.KeyCode.Value))
                         {
-                            PlayerAnimator.SetBool("isRunning", true);
+                            if (Input.GetKey(KeyCode.LeftShift) && !model.ForceToWalk)
+                            {
+                                PlayerAnimator.SetBool("isRunning", true);
+                                PlayerAnimator.SetBool("isWalking", false);
+                                playerController.Walk(keyMove.Vector2, model.SpeedRun);
+                            }
+                            else
+                            {
+                                PlayerAnimator.SetBool("isWalking", true);
+                                PlayerAnimator.SetBool("isRunning", false);
+                                playerController.Walk(keyMove.Vector2, model.SpeedWalk);
+                            }
+
+                            playerController.SetLastMoviment(input.Vector2.x, input.Vector2.y);
+                            PlayerAnimator.SetFloat("speedX", input.Vector2.x);
+                            PlayerAnimator.SetFloat("speedY", input.Vector2.y);
+
+                            if (!keyMove.Flip.HasValue) continue;
+                            PlayerSpriteRenderer.flipX = keyMove.Flip.Value;
+                        }
+                        if (Input.GetKeyUp(keyMove.KeyCode.Value))
+                        {
                             PlayerAnimator.SetBool("isWalking", false);
-                            playerController.Walk(keyMove.Vector2, model.SpeedRun);
-                        }
-                        else
-                        {
-                            PlayerAnimator.SetBool("isWalking", true);
                             PlayerAnimator.SetBool("isRunning", false);
-                            playerController.Walk(keyMove.Vector2, model.SpeedWalk);
                         }
-
-                        playerController.SetLastMoviment(input.Vector2.x, input.Vector2.y);
-                        PlayerAnimator.SetFloat("speedX", input.Vector2.x);
-                        PlayerAnimator.SetFloat("speedY", input.Vector2.y);
-
-                        if (!keyMove.Flip.HasValue) continue;
-                        PlayerSpriteRenderer.flipX = keyMove.Flip.Value;
-                    }
-                    if (Input.GetKeyUp(keyMove.KeyCode.Value))
-                    {
-                        PlayerAnimator.SetBool("isWalking", false);
-                        PlayerAnimator.SetBool("isRunning", false);
                     }
                 }
-
+                if (model.ForceToStop)
+                {
+                    PlayerAnimator.SetBool("isWalking", false);
+                    PlayerAnimator.SetBool("isRunning", false);
+                }
                 #endregion
 
                 #region Change Character
 
-                if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K))
+                if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K) && !model.ForceToStop)
                 {
                     playerController.ChangeControllableCharacter();
 
@@ -177,8 +184,12 @@ namespace Assets.Script.View.Shared
 
         public void SetForceToWalk(bool value)
         {
-            forceToWalk = value;
+            playerController.SetForceToWalk(value);
         }
 
+        public void SetForceToStop(bool value)
+        {
+            playerController.SetForceToStop(value);
+        }
     }
 }
