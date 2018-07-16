@@ -68,11 +68,11 @@ namespace Assets.Script.Helpers
             return _player;
         }
 
-        public Transform NearTarget(List<Transform> players, Transform transform, Transform target)
+        public Transform NearTarget(List<Transform> targets, Transform transform, Transform target)
         {
-            if (players.Count == 0) return null;
+            if (targets.Count == 0) return null;
             Transform _player = target;
-            foreach (var player in players)
+            foreach (var player in targets)
             {
                 var distance = Vector3.Distance(transform.position, player.transform.position);
 

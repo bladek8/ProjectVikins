@@ -72,7 +72,22 @@ namespace Assets.Script.View
                     }
                     else
                     {
-                        PlayerAnimator.SetBool("isWalking", false);
+                        if (Mathf.Abs(Vector3.Distance(transform.position, cv.playerGameObj.transform.position)) > DistanceOfPlayer)
+                        {
+                            playerController.WalkToPlayer(transform, cv.playerGameObj.transform, ref model);
+                            PlayerAnimator.SetBool("isWalking", true);
+                        }
+                        else
+                        {
+                            PlayerAnimator.SetBool("isWalking", false);
+                            PlayerAnimator.SetBool("isRunning", false);
+                        }
+
+                        input = playerController.GetInput();
+                        PlayerSpriteRenderer.flipX = input.Flip.Value;
+                        PlayerAnimator.SetFloat("speedX", input.Vector2.x);
+                        PlayerAnimator.SetFloat("speedY", input.Vector2.y);
+                        
                         playerController.target = null;
                         playerController.canAttack = false;
                     }
@@ -96,7 +111,7 @@ namespace Assets.Script.View
                     }
 
                 }
-                else if (playerController.canAttack)
+                else if (playerController.canAttack && playerController.target != null)
                 {
                     playerController.Attack(transform, PlayerBoxCollider2D.size);
                 }

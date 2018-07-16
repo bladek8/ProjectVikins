@@ -46,7 +46,7 @@ namespace Assets.Script.View.Shared
             
             camera = GameObject.FindGameObjectWithTag("camera");
             cv = camera.GetComponent<CameraView>();
-            playerController = new PlayerController(this.gameObject);
+            playerController = new PlayerController();
             model = playerController.GetInitialData(gameObject);
             model.ForceToWalk = false;
             model.ForceToStop = false;
@@ -182,7 +182,13 @@ namespace Assets.Script.View.Shared
         {
             model.Life -= damage;
             if (model.Life <= 0)
+            {
+                playerController.ChangeControllableCharacter();
+                camera.SendMessage("UpdatePlayerTranform");
+
+                DAL.MVC_Game2Context.playerModels.Remove(model);
                 Destroy(this.gameObject);
+            }
         }
 
         public void SetForceToWalk(bool value)

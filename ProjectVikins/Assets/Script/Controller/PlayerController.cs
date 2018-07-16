@@ -15,19 +15,17 @@ namespace Assets.Script.Controller
         private Helpers.Utils utils = new Helpers.Utils();
         private readonly BLL.PlayerFunctions playerFunctions = new BLL.PlayerFunctions();
         private int id;
-        private readonly GameObject gameObj;
         public FieldOfView fow;
         public bool canAttack;
         public CountDown followEnemy = new CountDown();
-        public Transform target;
-        List<Transform> enemies;
+        public Transform target = null;
+        List<Models.EnemyViewModel> enemies;
 
-        public PlayerController(GameObject gameObj)
+        public PlayerController()
         {
-            this.gameObj = gameObj;
-            enemies = utils.GetTransformInLayer("Enemy");
+            enemies = DAL.MVC_Game2Context.enemieModels;
         }
-
+        
         public void Attack(Transform transform, Vector3 size)
         {
             playerFunctions.AttackMode();
@@ -87,7 +85,7 @@ namespace Assets.Script.Controller
 
         public void Walk(Vector2 vector, float speed)
         {
-            gameObj.transform.Translate(vector * Time.deltaTime * speed);
+            playerFunctions.GetModelById(id).GameObject.transform.Translate(vector * Time.deltaTime * speed);
         }
 
         public override int GetDamage()
@@ -130,12 +128,15 @@ namespace Assets.Script.Controller
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
                 followEnemy.StartToCount();
-                if (target == null)
-                    target = utils.NearTargetInView(enemies, fow.visibleTargets, _transform);
-                else
+                if (enemies.Count > 0)
                 {
-                    target = utils.NearTarget(enemies, _transform, target);
-                    fow.TurnView(target);
+                    if (target == null)
+                        target = utils.NearTargetInView(enemies.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
+                    else
+                    {
+                        target = utils.NearTarget(enemies.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        fow.TurnView(target);
+                    }
                 }
             }
         }

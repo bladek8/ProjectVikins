@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using Assets.Script.Helpers;
@@ -10,21 +10,28 @@ using Assets.Script.BLL;
 
 namespace Assets.Script.Controller
 {
+
+    class _Transform
+    {
+        public Transform Transform { get; set; }
+    }
+
     public class EnemyController : Shared._CharacterController<Models.EnemyViewModel>
     {
         private readonly BLL.EnemyFunctions enemyFunctions = new BLL.EnemyFunctions();
+
         private int id;
-        List<Transform> players;
+        List<Models.PlayerViewModel> players;
         private Utils utils = new Utils();
         public bool canAttack;
         public FieldOfView fow;
-        
+
         public CountDown followPlayer = new CountDown();
         public Transform target;
 
         public EnemyController()
         {
-            players = utils.GetTransformInLayer("Player");
+            players = DAL.MVC_Game2Context.playerModels;
         }
 
         public void WalkTowardTo(Transform _transform, ref EnemyViewModel model)
@@ -33,10 +40,10 @@ namespace Assets.Script.Controller
             {
                 followPlayer.CoolDown = followPlayer.Rate;
                 if (target == null)
-                    target = utils.NearTargetInView(players, fow.visibleTargets, _transform);
+                    target = utils.NearTargetInView(players.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
                 else
                 {
-                    target = utils.NearTarget(players, _transform, target);
+                    target = utils.NearTarget(players.Select(x => x.GameObject.transform).ToList(), _transform, target);
                     fow.TurnView(target);
                 }
             }
@@ -57,7 +64,7 @@ namespace Assets.Script.Controller
                 target = null;
             }
         }
-        
+
         public override int GetDamage()
         {
             var player = enemyFunctions.GetModelById(id);
@@ -71,10 +78,10 @@ namespace Assets.Script.Controller
             {
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
-                
+
                 var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
                 script.SendMessage("GetDamage", GetDamage());
-                
+
             }
         }
 
@@ -114,18 +121,19 @@ namespace Assets.Script.Controller
                     return new Helpers.KeyMove(null, new Vector2(0, 0), false);
             }
         }
-        public Models.EnemyViewModel GetInitialData(Vector3 position)
+        public Models.EnemyViewModel GetInitialData(GameObject go)
         {
-            var data = enemyFunctions.GetDataByInitialPosition(position);
+            var data = enemyFunctions.GetDataByInitialPosition(go.transform.position);
             if (data == null)
             {
                 data = DAL.MVC_Game2Context.defaultEnemy;
-                data.InitialX = position.x;
-                data.InitialY = position.y;
+                data.InitialX = go.transform.position.x;
+                data.InitialY = go.transform.position.y;
                 enemyFunctions.Create(data);
             }
             id = data.EnemyId;
             var model = enemyFunctions.GetDataViewModel(data);
+            model.GameObject = go;
             enemyFunctions.SetModel(model);
 
             return model;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Script.Helpers;
+using Assets.Script.Controller;
+using System.Linq;
 
 public class ArrowView : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class ArrowView : MonoBehaviour
 
     BoxCollider2D _boxCollider2D;
     BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
+
+    public PlayerController playerController;
 
     Vector3 direction;
     float distance;
@@ -45,35 +49,26 @@ public class ArrowView : MonoBehaviour
             else
                 Stop();
         }
+        else
+            Collider();
 
         transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
-
-        Collider(); 
-
     }
-    
+
     void Collider()
     {
-        Debug.DrawLine(boxColliderBoundMin, BoxCollider2D.bounds.max,Color.blue,0.5f);
-        var hit = Physics2D.OverlapBox(boxColliderBoundMin, BoxCollider2D.bounds.max,0);
+        Debug.DrawLine(boxColliderBoundMin, BoxCollider2D.bounds.max, Color.blue, 0.5f);
+        var hit = Physics2D.OverlapBox(boxColliderBoundMin, BoxCollider2D.bounds.max, 0);
+
         if (hit != null)
         {
-            if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above" || hit.gameObject.tag == "Below")
-                return;
-            else if (hit.gameObject.tag == "Enemy")
+            if (hit.tag == "Enemy")
             {
-                Debug.Log("Acertou!");
-                //var currentLife = hit.gameObject.GetComponent<Assets.Script.View.EnemyView>().model.Life -= 1;
-                //if (currentLife <= 0)
-                //{
-                //    MonoBehaviourAttributes.Destroy(hit.gameObject);
-                //    MonoBehaviourAttributes.Destroy(gameObject);
-                //}
+                var script = hit.gameObject.GetComponent<MonoBehaviour>();
+                script.SendMessage("GetDamage", 1);
             }
-
-            print("Bateu em " + hit.name);
-            if (!stop)
-                Stop();
+            else if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above" || hit.gameObject.tag == "Below")
+                return;
         }
     }
 

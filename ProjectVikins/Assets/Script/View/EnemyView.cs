@@ -28,7 +28,7 @@ namespace Assets.Script.View
         void Start()
         {
             enemyController = new Controller.EnemyController();
-            model = enemyController.GetInitialData(transform.position);
+            model = enemyController.GetInitialData(gameObject);
             enemyController.SetFieldOfView(gObject.GetComponent<FieldOfView>());
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }
@@ -75,7 +75,10 @@ namespace Assets.Script.View
         {
             model.Life -= damage;
             if (model.Life <= 0)
+            {
+                DAL.MVC_Game2Context.enemieModels.Remove(model);
                 Destroy(this.gameObject);
+            }
         }
     }
 }

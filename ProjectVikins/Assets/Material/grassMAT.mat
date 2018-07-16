@@ -94,10 +94,10 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _SwayFreq: 0.09
+    - _SwayFreq: 0.2
     - _TintMapIntensity: 0.83
     - _UVSec: 0
-    - _WindDir: -0.77
+    - _WindDir: -1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
