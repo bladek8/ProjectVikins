@@ -13,15 +13,17 @@ public class ArrowView : MonoBehaviour
     BoxCollider2D _boxCollider2D;
     BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
-    public PlayerController playerController;
+
+    [SerializeField] LayerMask target;
+    [SerializeField] LayerMask NotCollideble;
 
     Vector3 direction;
     float distance;
     Vector3 startPosition;
     bool stop = false;
-    public Vector2 mouseIn;
+    [HideInInspector] public Vector2 mouseIn;
     CountDown destroyCountDown = new CountDown(5);
-    public float holdTime;
+    [HideInInspector] public float holdTime;
     Vector3 boxColliderBoundMin;
 
     void Start()
@@ -48,9 +50,9 @@ public class ArrowView : MonoBehaviour
             }
             else
                 Stop();
-        }
-        else
+
             Collider();
+        }
 
         transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
     }
@@ -58,17 +60,14 @@ public class ArrowView : MonoBehaviour
     void Collider()
     {
         Debug.DrawLine(boxColliderBoundMin, BoxCollider2D.bounds.max, Color.blue, 0.5f);
-        var hit = Physics2D.OverlapBox(boxColliderBoundMin, BoxCollider2D.bounds.max, 0);
+        var hit = Physics2D.OverlapBox(boxColliderBoundMin, BoxCollider2D.bounds.max, 0, target);
 
         if (hit != null)
         {
-            if (hit.tag == "Enemy")
-            {
-                var script = hit.gameObject.GetComponent<MonoBehaviour>();
-                script.SendMessage("GetDamage", 1);
-            }
-            else if (hit.gameObject.tag == "Player" || hit.gameObject.tag == "Shottable" || hit.gameObject.tag == "Above" || hit.gameObject.tag == "Below")
-                return;
+            print("Acertou!");
+            var script = hit.gameObject.GetComponent<MonoBehaviour>();
+            script.SendMessage("GetDamage", 1);
+            Stop();
         }
     }
 

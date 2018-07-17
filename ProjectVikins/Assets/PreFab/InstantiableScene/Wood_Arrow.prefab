@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114681850825268388}
   - component: {fileID: 50053942863853850}
   - component: {fileID: 61782259468164494}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wood_Arrow
   m_TagString: Shottable
   m_Icon: {fileID: 0}
@@ -118,6 +118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9240032f0020d24181eb0cdd0f015f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target:
+    serializedVersion: 2
+    m_Bits: 1024
+  NotCollideble:
+    serializedVersion: 2
+    m_Bits: 14592
   mouseIn: {x: 0, y: 0}
   holdTime: 0
 --- !u!212 &212172428625179130

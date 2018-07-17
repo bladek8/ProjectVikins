@@ -36,32 +36,36 @@ namespace Assets.Script.Controller
 
         public void WalkTowardTo(Transform _transform, ref EnemyViewModel model)
         {
-            if (target != null && followPlayer.CoolDown <= 0 || target == null)
-            {
-                followPlayer.CoolDown = followPlayer.Rate;
-                if (target == null)
-                    target = utils.NearTargetInView(players.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
-                else
-                {
-                    target = utils.NearTarget(players.Select(x => x.GameObject.transform).ToList(), _transform, target);
-                    fow.TurnView(target);
-                }
-            }
-
             if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
                 _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
                 model.LastMoviment = GetDirection(_transform.position, target.position);
-                if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) < 1f)
-                    canAttack = true;
-                else canAttack = false;
+                canAttack = false;
             }
             else
             {
                 canAttack = false;
                 target = null;
+            }
+        }
+
+        public void FindTarget(Transform _transform)
+        {
+            if (target != null && followPlayer.CoolDown <= 0 || target == null)
+            {
+                followPlayer.StartToCount();
+                if (players.Count > 0)
+                {
+                    if (target == null)
+                        target = utils.NearTargetInView(players.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
+                    else
+                    {
+                        target = utils.NearTarget(players.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        fow.TurnView(target);
+                    }
+                }
             }
         }
 

@@ -141,7 +141,6 @@ namespace Assets.Script.View
             var script = arrow.GetComponent<ArrowView>();
             script.mouseIn = mouseIn;
             script.holdTime = 1;
-            script.playerController = playerController;
         }
 
         public void SetMinManRange(float value, string range)
