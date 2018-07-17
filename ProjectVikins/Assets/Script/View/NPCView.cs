@@ -19,19 +19,17 @@ namespace Assets.Script.View
         public Image dialogBox;
         public Text npcText;
         public float letterPause = 0.2f;
-        string message;
+        public static bool canInteract = true;
+        Coroutine textCoroutine;
 
         private void Start()
         {
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
-            message = npcText.text;
-            
         }
 
         public void Interaction()
         {
-
-            StartCoroutine(TypeText());
+            textCoroutine = StartCoroutine(TypeText());
             dialogBox.enabled = true;
             startInteraction.Invoke();
         }
@@ -41,9 +39,11 @@ namespace Assets.Script.View
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
             if (Input.GetButtonDown("Interaction"))
             {
+                canInteract = true;
                 dialogBox.enabled = false;
                 npcText.text = "";
                 endInteraction.Invoke();
+                StopCoroutine(textCoroutine);
             }
         }
 
