@@ -30,6 +30,7 @@ namespace Assets.Script.View.Shared
         public Models.PlayerViewModel model;
         
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
+        public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
 
         public GameObject leftFoot;
         public GameObject rightFoot;
@@ -121,7 +122,15 @@ namespace Assets.Script.View.Shared
                 }
 
                 #endregion
-            }
+
+                #region Interact
+
+                if (Input.GetKey(KeyCode.J))
+                {
+                    playerController.Interact(transform, PlayerBoxCollider2D.size);
+                }
+                    #endregion
+                }
 
             else
             {
@@ -197,6 +206,13 @@ namespace Assets.Script.View.Shared
                 //Destroy(this.gameObject);
             }
         }
+        public void StartSavePlayer()
+        {
+            if (!model.IsDead) return;
+
+            savePlayerCountDown.StartToCount();
+            StartCoroutine("SavingPlayer");
+        }
 
         public void SetForceToWalk(bool value)
         {
@@ -206,6 +222,25 @@ namespace Assets.Script.View.Shared
         public void SetForceToStop(bool value)
         {
             playerController.SetForceToStop(value);
+        }
+
+        public void SavingPlayer()
+        {
+            bool save = true;
+            while (!savePlayerCountDown.ReturnedToZero)
+            {
+                if (!Input.GetKey(KeyCode.J))
+                {
+                    save = false;
+                    break;
+                }
+            }
+            if (save)
+            {
+                print("salvou!");
+                model.IsDead = false;
+            }else
+                print("não salvou!");
         }
     }
 }

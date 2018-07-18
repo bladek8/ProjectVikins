@@ -39,7 +39,15 @@ namespace Assets.Script.Controller
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
                     script.SendMessage("GetDamage", GetDamage());
                 }
-                else if (hitCollider.tag == "NPC" && View.NPCView.canInteract)
+            }
+        }
+
+        public void Interact(Transform transform, Vector3 size)
+        {
+            var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.tag == "NPC" && View.NPCView.canInteract)
                 {
                     View.NPCView.canInteract = false;
                     var NPCView = hitCollider.GetComponent(typeof(Component));
@@ -49,6 +57,11 @@ namespace Assets.Script.Controller
                 {
                     SaveData();
                     Debug.Log("Save!");
+                }
+                else if (hitCollider.tag == "Player")
+                {
+                    var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
+                    script.SendMessage("StartSavePlayer");
                 }
             }
         }
