@@ -31,7 +31,7 @@ namespace Assets.Script.Controller
 
         public EnemyController()
         {
-            players = DAL.MVC_Game2Context.playerModels;
+            players = DAL.MVC_Game2Context.alivePlayerModels;
         }
 
         public void WalkTowardTo(Transform _transform, ref EnemyViewModel model)
@@ -63,6 +63,7 @@ namespace Assets.Script.Controller
                     else
                     {
                         target = utils.NearTarget(players.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        if (target == null) return;
                         fow.TurnView(target);
                     }
                 }

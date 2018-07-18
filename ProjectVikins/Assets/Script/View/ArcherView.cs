@@ -62,6 +62,7 @@ namespace Assets.Script.View
                     script.mouseIn = mouseIn;
                     script.holdTime = counter.Time;
                     counter.ResetCounter();
+                    playerController.AttackMode();
                 }
             }
             else

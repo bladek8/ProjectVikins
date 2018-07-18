@@ -15,6 +15,9 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if (model.IsDead)
+                return;
+
             CharacterUpdate();
 
             CountDown.DecreaseTime(attackCountDown);
@@ -34,7 +37,6 @@ namespace Assets.Script.View
                     }
                     if (Input.GetKey(KeyCode.L))
                     {
-                        //colocar todos player em modo de attack
                         model.PlayerMode = PlayerModes.Attack;
 
                         model.SpeedRun = model.SpeedWalk / 2;
@@ -87,7 +89,7 @@ namespace Assets.Script.View
                         PlayerSpriteRenderer.flipX = input.Flip.Value;
                         PlayerAnimator.SetFloat("speedX", input.Vector2.x);
                         PlayerAnimator.SetFloat("speedY", input.Vector2.y);
-                        
+
                         playerController.target = null;
                         playerController.canAttack = false;
                     }
@@ -113,6 +115,7 @@ namespace Assets.Script.View
                 }
                 else if (playerController.canAttack && playerController.target != null)
                 {
+                    playerController.AttackMode();
                     playerController.Attack(transform, PlayerBoxCollider2D.size);
                 }
 

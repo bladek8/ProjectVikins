@@ -54,8 +54,11 @@ namespace Assets.Script.View
             model.Life -= damage;
             if (model.Life <= 0)
             {
-                DAL.MVC_Game2Context.enemieModels.Remove(model);
-                Destroy(this.gameObject);
+                model.IsDead = true;
+                DAL.MVC_Game2Context.aliveEnemieModels.Remove(model);
+                GetComponents<BoxCollider2D>().ToList().ForEach(x => x.enabled = false);
+                EnemyAnimator.SetBool("isWalking", false);
+                //Destroy(this.gameObject);
             }
         }
     }

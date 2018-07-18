@@ -24,6 +24,6 @@ namespace Assets.Script.Models
         public float InitialY { get; set; }
         public bool ForceToWalk { get; set; }
         public bool ForceToStop { get; set; }
-         
+        public bool IsDead { get; set; }
     }
 }

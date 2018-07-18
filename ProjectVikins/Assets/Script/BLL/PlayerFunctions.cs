@@ -39,6 +39,7 @@ namespace Assets.Script.BLL
         public override int SetModel(Models.PlayerViewModel model)
         {
             ListModel.Add(model);
+            MVC_Game2Context.UpdateAliveLists();
             return model.PlayerId;
         }
 

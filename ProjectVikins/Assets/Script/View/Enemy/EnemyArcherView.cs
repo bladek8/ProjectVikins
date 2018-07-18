@@ -24,13 +24,17 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if (model.IsDead)
+                return;
+
             if (oldTarget != enemyController.target)
             {
                 YRange = startYRange;
                 XRange = startXRange;
             }
 
-            oldTarget = enemyController.target;
+            if (enemyController.target != null)
+                oldTarget = enemyController.target;
 
             EnemyUpdate();
 

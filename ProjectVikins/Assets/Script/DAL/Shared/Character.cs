@@ -14,5 +14,6 @@ namespace Assets.Script.DAL.Shared
         public float SpeedRun { get; set; }
         public int AttackMin { get; set; }
         public int AttackMax { get; set; }
+        public bool IsDead { get; set; }
     }
 }

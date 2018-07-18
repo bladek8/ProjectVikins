@@ -19,5 +19,6 @@ namespace Assets.Script.Models
         public float? InitialX { get; set; }
         public float? InitialY { get; set; }
         public GameObject GameObject { get; set; }
+        public bool IsDead { get; set; }
     }
 }

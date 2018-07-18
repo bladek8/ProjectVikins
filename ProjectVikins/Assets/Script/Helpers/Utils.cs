@@ -53,11 +53,12 @@ namespace Assets.Script.Helpers
         }
 
         //As vezes players vem com tranform nulo depois de matar um enimigo, VERIFICAR
-        public Transform NearTargetInView(List<Transform> players, List<Transform> visiblePlayers, Transform transform)
+        public Transform NearTargetInView(List<Transform> targets, List<Transform> visibleTargets, Transform transform)
         {
-            if (players.Count == 0 || visiblePlayers.Count == 0) return null;
-            List<Transform> playersList = ConcatEqualItemList(players, visiblePlayers);
-            Transform _player = players[0];
+            if (targets.Count == 0 || visibleTargets.Count == 0) return null;
+            List<Transform> playersList = ConcatEqualItemList(targets, visibleTargets);
+            if (playersList.Count == 0) return null;
+            Transform _player = targets[0];
             foreach (var player in playersList)
             {
                 if (player == null) continue;
@@ -70,7 +71,7 @@ namespace Assets.Script.Helpers
 
         public Transform NearTarget(List<Transform> targets, Transform transform, Transform target)
         {
-            if (targets.Count == 0) return null;
+            if (targets.Count == 0 || !targets.Contains(target)) return null;
             Transform _player = target;
             foreach (var player in targets)
             {

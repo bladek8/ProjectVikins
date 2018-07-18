@@ -180,14 +180,21 @@ namespace Assets.Script.View.Shared
 
         public void GetDamage(int damage)
         {
+            playerController.AttackMode();
             model.Life -= damage;
             if (model.Life <= 0)
             {
-                playerController.ChangeControllableCharacter();
-                camera.SendMessage("UpdatePlayerTranform");
-
-                DAL.MVC_Game2Context.playerModels.Remove(model);
-                Destroy(this.gameObject);
+                if (model.IsBeingControllable)
+                {
+                    playerController.ChangeControllableCharacter();
+                    camera.SendMessage("UpdatePlayerTranform");
+                }
+                model.IsDead = true;
+                DAL.MVC_Game2Context.alivePlayerModels.Remove(model);
+                PlayerAnimator.SetBool("isWalking", false);
+                PlayerAnimator.SetBool("isRunning", false);
+                GetComponents<BoxCollider2D>().ToList().ForEach(x => x.enabled = false);
+                //Destroy(this.gameObject);
             }
         }
 

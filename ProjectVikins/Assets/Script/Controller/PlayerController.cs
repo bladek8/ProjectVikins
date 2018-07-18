@@ -23,12 +23,11 @@ namespace Assets.Script.Controller
 
         public PlayerController()
         {
-            enemies = DAL.MVC_Game2Context.enemieModels;
+            enemies = DAL.MVC_Game2Context.aliveEnemieModels;
         }
-        
+
         public void Attack(Transform transform, Vector3 size)
         {
-            playerFunctions.AttackMode();
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f);
             foreach (var hitCollider in hitColliders)
             {
@@ -40,8 +39,9 @@ namespace Assets.Script.Controller
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
                     script.SendMessage("GetDamage", GetDamage());
                 }
-                else if (hitCollider.tag == "NPC")
+                else if (hitCollider.tag == "NPC" && View.NPCView.canInteract)
                 {
+                    View.NPCView.canInteract = false;
                     var NPCView = hitCollider.GetComponent(typeof(Component));
                     NPCInteraction(NPCView);
                 }
@@ -135,6 +135,7 @@ namespace Assets.Script.Controller
                     else
                     {
                         target = utils.NearTarget(enemies.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        if (target == null) return;
                         fow.TurnView(target);
                     }
                 }
@@ -212,7 +213,7 @@ namespace Assets.Script.Controller
 
         public void SetForceToWalk(bool value)
         {
-            foreach(var playerModel in playerFunctions.GetModels())
+            foreach (var playerModel in playerFunctions.GetModels())
             {
                 playerModel.ForceToWalk = value;
             }
@@ -224,6 +225,11 @@ namespace Assets.Script.Controller
             {
                 playerModel.ForceToStop = value;
             }
+        }
+
+        public void AttackMode()
+        {
+            playerFunctions.AttackMode();
         }
     }
 }

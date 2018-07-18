@@ -11,12 +11,15 @@ namespace Assets.Script.View
     {
         private void FixedUpdate()
         {
+            if (model.IsDead)
+                return;
+
             EnemyUpdate();
 
             if (enemyController.fow.visibleTargets.Count > 0)
             {
                 enemyController.FindTarget(transform);
-                
+
                 if (enemyController.target != null)
                 {
                     if (Vector2.Distance(transform.position, enemyController.target.position) > 0.5f)
@@ -43,7 +46,7 @@ namespace Assets.Script.View
             }
 
 
-            if(attackCountDown.CoolDown <= 0)
+            if (attackCountDown.CoolDown <= 0)
             {
                 enemyController.targetsAttacked.Clear();
                 if (enemyController.canAttack)
