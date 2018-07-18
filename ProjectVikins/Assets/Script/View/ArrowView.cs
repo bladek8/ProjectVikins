@@ -64,7 +64,6 @@ public class ArrowView : MonoBehaviour
 
         if (hit != null)
         {
-            print("Acertou!");
             var script = hit.gameObject.GetComponent<MonoBehaviour>();
             script.SendMessage("GetDamage", 1);
             Stop();

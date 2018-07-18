@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using Assets.Script.Controller;
+﻿using UnityEngine;
 using Assets.Script.Helpers;
 using Assets.Script.View.Shared;
 
@@ -11,7 +6,7 @@ namespace Assets.Script.View
 {
     public class PlayerView : _Character
     {
-        Helpers.CountDown attackCountDown = new Helpers.CountDown(1.5);
+        CountDown attackCountDown = new CountDown(1.5);
 
         private void FixedUpdate()
         {
@@ -37,7 +32,7 @@ namespace Assets.Script.View
                     }
                     if (Input.GetKey(KeyCode.L))
                     {
-                        model.PlayerMode = PlayerModes.Attack;
+                        playerController.AttackMode();
 
                         model.SpeedRun = model.SpeedWalk / 2;
                         model.SpeedWalk = model.SpeedWalk / 2;
@@ -115,7 +110,6 @@ namespace Assets.Script.View
                 }
                 else if (playerController.canAttack && playerController.target != null)
                 {
-                    playerController.AttackMode();
                     playerController.Attack(transform, PlayerBoxCollider2D.size);
                 }
 

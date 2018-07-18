@@ -23,7 +23,6 @@ namespace Assets.Script.Controller
 
         public PlayerController()
         {
-            enemies = DAL.MVC_Game2Context.aliveEnemieModels;
         }
 
         public void Attack(Transform transform, Vector3 size)
@@ -33,6 +32,8 @@ namespace Assets.Script.Controller
             {
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
+
+                if (hitCollider.transform == transform) continue;
 
                 if (hitCollider.tag == "Enemy")
                 {
@@ -47,6 +48,8 @@ namespace Assets.Script.Controller
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f);
             foreach (var hitCollider in hitColliders)
             {
+                if (hitCollider.transform == transform) continue;
+
                 if (hitCollider.tag == "NPC" && View.NPCView.canInteract)
                 {
                     View.NPCView.canInteract = false;
@@ -141,13 +144,13 @@ namespace Assets.Script.Controller
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
                 followEnemy.StartToCount();
-                if (enemies.Count > 0)
+                if (DAL.MVC_Game2Context.aliveEnemies.Count > 0)
                 {
                     if (target == null)
-                        target = utils.NearTargetInView(enemies.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
+                        target = utils.NearTargetInView(DAL.MVC_Game2Context.aliveEnemies.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
                     else
                     {
-                        target = utils.NearTarget(enemies.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        target = utils.NearTarget(DAL.MVC_Game2Context.aliveEnemies.Select(x => x.transform).ToList(), _transform, target);
                         if (target == null) return;
                         fow.TurnView(target);
                     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Linq;
+using UnityEngine;
 
 namespace Assets.Script.DAL
 {
@@ -61,16 +63,16 @@ namespace Assets.Script.DAL
 
         public static void UpdateAliveLists()
         {
-            aliveEnemieModels = enemieModels;
-            alivePlayerModels = playerModels;
-    }
+            aliveEnemies = enemieModels.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
+            alivePlayers = playerModels.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
+        }
 
         public static List<CharacterType> CharactersType;
 
         public static List<Models.EnemyViewModel> enemieModels = new List<Models.EnemyViewModel>();
-        public static List<Models.EnemyViewModel> aliveEnemieModels = new List<Models.EnemyViewModel>();
+        public static List<GameObject> aliveEnemies = new List<GameObject>();
         public static List<Models.PlayerViewModel> playerModels = new List<Models.PlayerViewModel>();
-        public static List<Models.PlayerViewModel> alivePlayerModels = new List<Models.PlayerViewModel>();
+        public static List<GameObject> alivePlayers = new List<GameObject>();
 
         public static List<Enemy> enemies = new List<Enemy>();
         public static List<Player> players = new List<Player>();

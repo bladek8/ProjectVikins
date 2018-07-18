@@ -55,10 +55,9 @@ namespace Assets.Script.View
             if (model.Life <= 0)
             {
                 model.IsDead = true;
-                DAL.MVC_Game2Context.aliveEnemieModels.Remove(model);
-                GetComponents<BoxCollider2D>().ToList().ForEach(x => x.enabled = false);
+                DAL.MVC_Game2Context.aliveEnemies.Remove(model.GameObject);
+                GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
                 EnemyAnimator.SetBool("isWalking", false);
-                //Destroy(this.gameObject);
             }
         }
     }

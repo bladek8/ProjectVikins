@@ -32,6 +32,9 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if (model.IsDead)
+                return;
+
             if (oldTarget != playerController.target)
             {
                 YRange = startYRange;
@@ -161,6 +164,5 @@ namespace Assets.Script.View
                     XRange.x = value;
             }
         }
-
     }
 }

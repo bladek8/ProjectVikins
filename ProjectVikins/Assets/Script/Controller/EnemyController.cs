@@ -21,7 +21,6 @@ namespace Assets.Script.Controller
         private readonly BLL.EnemyFunctions enemyFunctions = new BLL.EnemyFunctions();
 
         private int id;
-        List<Models.PlayerViewModel> players;
         private Utils utils = new Utils();
         public bool canAttack;
         public FieldOfView fow;
@@ -31,7 +30,6 @@ namespace Assets.Script.Controller
 
         public EnemyController()
         {
-            players = DAL.MVC_Game2Context.alivePlayerModels;
         }
 
         public void WalkTowardTo(Transform _transform, ref EnemyViewModel model)
@@ -56,13 +54,13 @@ namespace Assets.Script.Controller
             if (target != null && followPlayer.CoolDown <= 0 || target == null)
             {
                 followPlayer.StartToCount();
-                if (players.Count > 0)
+                if (DAL.MVC_Game2Context.alivePlayers.Count > 0)
                 {
                     if (target == null)
-                        target = utils.NearTargetInView(players.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
+                        target = utils.NearTargetInView(DAL.MVC_Game2Context.alivePlayers.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
                     else
                     {
-                        target = utils.NearTarget(players.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        target = utils.NearTarget(DAL.MVC_Game2Context.alivePlayers.Select(x => x.transform).ToList(), _transform, target);
                         if (target == null) return;
                         fow.TurnView(target);
                     }
@@ -92,7 +90,8 @@ namespace Assets.Script.Controller
 
         public override Vector3 PositionCenterAttack(Vector3 colSize, Transform transform)
         {
-            return transform.position + PositionAttack(colSize, GetDirection(transform.position, target.position));
+            if (target == null) return new Vector3();
+                return transform.position + PositionAttack(colSize, GetDirection(transform.position, target.position));
         }
 
         public void SetFieldOfView(FieldOfView fow)
