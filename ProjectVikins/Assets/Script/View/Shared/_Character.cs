@@ -243,6 +243,7 @@ namespace Assets.Script.View.Shared
                 {
                     print("salvou!");
                     model.IsDead = false;
+                    DAL.MVC_Game2Context.alivePlayers.Add(model.GameObject);
                     break;
                 }
             }

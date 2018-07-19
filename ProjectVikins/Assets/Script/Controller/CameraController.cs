@@ -16,7 +16,7 @@ namespace Assets.Script.Controller
 
         public Models.PlayerViewModel UpdatePlayerTranform()
         {
-            return PlayerFunctions.GetModels().Single(x => x.IsBeingControllable);
+            return PlayerFunctions.GetModels().Single(x => x.IsBeingControllable && !x.IsDead);
         }
     }
 }

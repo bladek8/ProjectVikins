@@ -17,8 +17,8 @@ namespace Assets.Script.View
         Vector2 mouseIn;
         Counter counter = new Counter();
 
-        Vector2 startYRange = new Vector2(0.5f, 2);
-        Vector2 startXRange = new Vector2(0.5f, 2);
+        Vector2 startYRange = new Vector2(-1, 1);
+        Vector2 startXRange = new Vector2(-1, 1);
         Vector2 YRange;
         Vector2 XRange;
 
@@ -136,7 +136,7 @@ namespace Assets.Script.View
             SetMinManRange(randomX, "X");
             SetMinManRange(randomY, "Y");
 
-            mouseIn = new Vector2(playerController.target.position.x * randomX, playerController.target.position.y * randomY);
+            mouseIn = new Vector2(playerController.target.position.x + randomX, playerController.target.position.y + randomY);
             var vectorDirection = mouseIn - new Vector2(transform.position.x, transform.position.y);
             var degrees = (Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg) - 90;
             if (degrees < 0f) degrees += 360f;
@@ -151,16 +151,16 @@ namespace Assets.Script.View
         {
             if (range == "Y")
             {
-                if (value > 1 && value < YRange.y)
+                if (value > 0 && value < YRange.y)
                     YRange.y = value;
-                if (value < 1 && value > YRange.x)
+                if (value < 0 && value > YRange.x)
                     YRange.x = value;
             }
             if (range == "X")
             {
-                if (value > 1 && value < XRange.y)
+                if (value > 0 && value < XRange.y)
                     XRange.y = value;
-                if (value < 1 && value > XRange.x)
+                if (value < 0 && value > XRange.x)
                     XRange.x = value;
             }
         }

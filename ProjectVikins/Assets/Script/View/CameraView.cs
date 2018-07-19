@@ -36,6 +36,7 @@ public class CameraView : MonoBehaviour
     public void UpdatePlayerTranform()
     {
         var player = cameraController.UpdatePlayerTranform();
+        if (player == null) return;
         playerGameObj = player.GameObject;
         cam.Follow = player.GameObject.transform;
         cam.m_AnimatedTarget = player.GameObject.GetComponent<Animator>();
