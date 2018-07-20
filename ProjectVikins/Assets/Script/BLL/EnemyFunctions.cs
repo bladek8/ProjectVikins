@@ -42,13 +42,13 @@ namespace Assets.Script.BLL
         public override int SetModel(Models.EnemyViewModel model)
         {
             ListModel.Add(model);
-            MVC_Game2Context.UpdateAliveLists();
+            ProjectVikingsContext.UpdateAliveLists();
             return model.EnemyId;
         }
         
         public override void SetListModel()
         {
-            this.ListModel = DAL.MVC_Game2Context.enemieModels;
+            this.ListModel = DAL.ProjectVikingsContext.enemieModels;
         }
 
         public override EnemyViewModel GetDataViewModel(Enemy data)
@@ -123,7 +123,7 @@ namespace Assets.Script.BLL
 
         public override void SetListContext()
         {
-            this.ListContext = MVC_Game2Context.enemies;
+            this.ListContext = ProjectVikingsContext.enemies;
         }
     }
 }

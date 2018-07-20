@@ -39,7 +39,7 @@ namespace Assets.Script.BLL
         public override int SetModel(Models.PlayerViewModel model)
         {
             ListModel.Add(model);
-            MVC_Game2Context.UpdateAliveLists();
+            ProjectVikingsContext.UpdateAliveLists();
             return model.PlayerId;
         }
 
@@ -91,12 +91,12 @@ namespace Assets.Script.BLL
 
         public override void SetListContext()
         {
-            this.ListContext = DAL.MVC_Game2Context.players;
+            this.ListContext = DAL.ProjectVikingsContext.players;
         }
 
         public override void SetListModel()
         {
-            this.ListModel = DAL.MVC_Game2Context.playerModels;
+            this.ListModel = DAL.ProjectVikingsContext.playerModels;
         }
 
         public void ChangeControllableCharacter(int id)

@@ -22,8 +22,8 @@ public class FieldOfView : MonoBehaviour
 
     void Start()
     {
-        _alivePlayers = Assets.Script.DAL.MVC_Game2Context.alivePlayers;
-        _aliveEnemies = Assets.Script.DAL.MVC_Game2Context.aliveEnemies;
+        _alivePlayers = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
+        _aliveEnemies = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
         visibleTargets = new List<Transform>();
         transform.rotation = Quaternion.Euler(0, 0, rotation);
         StartCoroutine("FindTargetWithDelay", 0.2f);
@@ -40,8 +40,8 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        _alivePlayers = Assets.Script.DAL.MVC_Game2Context.alivePlayers;
-        _aliveEnemies = Assets.Script.DAL.MVC_Game2Context.aliveEnemies;
+        _alivePlayers = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
+        _aliveEnemies = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
 
         visibleTargets.Clear();
                 

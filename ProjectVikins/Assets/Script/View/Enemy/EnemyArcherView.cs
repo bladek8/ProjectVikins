@@ -13,6 +13,7 @@ namespace Assets.Script.View
         Vector2 startXRange = new Vector2(-1, 1);
         Vector2 YRange;
         Vector2 XRange;
+        List<EnemyArcherView> a = new List<EnemyArcherView>();
 
         Transform oldTarget = null;
 
@@ -20,6 +21,7 @@ namespace Assets.Script.View
         {
             YRange = startYRange;
             XRange = startXRange;
+            SystemManagement.SystemManagement.EnemyArcherView.Add(this);
         }
 
         private void FixedUpdate()

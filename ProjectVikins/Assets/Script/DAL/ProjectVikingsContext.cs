@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Script.DAL
 {
-    public class MVC_Game2Context
+    public class ProjectVikingsContext
     {
         public static void GetSave()
         {

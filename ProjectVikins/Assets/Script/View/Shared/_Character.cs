@@ -188,7 +188,7 @@ namespace Assets.Script.View.Shared
             #endregion
         }
 
-        public void GetDamage(int damage)
+        public bool GetDamage(int damage)
         {
             playerController.AttackMode();
             model.Life -= damage;
@@ -200,11 +200,13 @@ namespace Assets.Script.View.Shared
                     camera.SendMessage("UpdatePlayerTranform");
                 }
                 model.IsDead = true;
-                DAL.MVC_Game2Context.alivePlayers.Remove(model.GameObject);
+                DAL.ProjectVikingsContext.alivePlayers.Remove(model.GameObject);
                 PlayerAnimator.SetBool("isWalking", false);
                 PlayerAnimator.SetBool("isRunning", false);
                 GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
+                return true;
             }
+            return false;
         }
         public void StartSavePlayer()
         {
@@ -243,7 +245,7 @@ namespace Assets.Script.View.Shared
                 {
                     print("salvou!");
                     model.IsDead = false;
-                    DAL.MVC_Game2Context.alivePlayers.Add(model.GameObject);
+                    DAL.ProjectVikingsContext.alivePlayers.Add(model.GameObject);
                     break;
                 }
             }

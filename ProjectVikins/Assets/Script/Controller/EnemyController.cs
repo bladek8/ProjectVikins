@@ -54,13 +54,13 @@ namespace Assets.Script.Controller
             if (target != null && followPlayer.CoolDown <= 0 || target == null)
             {
                 followPlayer.StartToCount();
-                if (DAL.MVC_Game2Context.alivePlayers.Count > 0)
+                if (DAL.ProjectVikingsContext.alivePlayers.Count > 0)
                 {
                     if (target == null)
-                        target = utils.NearTargetInView(DAL.MVC_Game2Context.alivePlayers.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
+                        target = utils.NearTargetInView(DAL.ProjectVikingsContext.alivePlayers.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
                     else
                     {
-                        target = utils.NearTarget(DAL.MVC_Game2Context.alivePlayers.Select(x => x.transform).ToList(), _transform, target);
+                        target = utils.NearTarget(DAL.ProjectVikingsContext.alivePlayers.Select(x => x.transform).ToList(), _transform, target);
                         if (target == null) return;
                         fow.TurnView(target);
                     }
@@ -84,7 +84,6 @@ namespace Assets.Script.Controller
 
                 var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
                 script.SendMessage("GetDamage", GetDamage());
-
             }
         }
 
@@ -130,7 +129,7 @@ namespace Assets.Script.Controller
             var data = enemyFunctions.GetDataByInitialPosition(go.transform.position);
             if (data == null)
             {
-                data = DAL.MVC_Game2Context.defaultEnemy;
+                data = DAL.ProjectVikingsContext.defaultEnemy;
                 data.InitialX = go.transform.position.x;
                 data.InitialY = go.transform.position.y;
                 enemyFunctions.Create(data);

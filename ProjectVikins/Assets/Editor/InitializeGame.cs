@@ -11,7 +11,7 @@ namespace Assets.Editor
     {
         static InitializeGame()
         {
-            Assets.Script.DAL.MVC_Game2Context.GetSave();
+            Assets.Script.DAL.ProjectVikingsContext.GetSave();
         }
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine;
 using Assets.Script.Helpers;
 using System.IO;
 using Assets.Script.BLL;
+using Assets.Script.SystemManagement;
 
 namespace Assets.Script.Controller
 {
@@ -38,7 +39,15 @@ namespace Assets.Script.Controller
                 if (hitCollider.tag == "Enemy")
                 {
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                    script.SendMessage("GetDamage", GetDamage());
+                        var killed = SystemManagement.SystemManagement.CallMethod(script, "GetDamage", GetDamage());
+                        if(killed != null)
+                        {
+                            if ((bool)killed)
+                            {
+                                target = null;
+                                FindTarget(transform);
+                            }
+                        }
                 }
             }
         }
@@ -144,13 +153,13 @@ namespace Assets.Script.Controller
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
                 followEnemy.StartToCount();
-                if (DAL.MVC_Game2Context.aliveEnemies.Count > 0)
+                if (DAL.ProjectVikingsContext.aliveEnemies.Count > 0)
                 {
                     if (target == null)
-                        target = utils.NearTargetInView(DAL.MVC_Game2Context.aliveEnemies.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
+                        target = utils.NearTargetInView(DAL.ProjectVikingsContext.aliveEnemies.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
                     else
                     {
-                        target = utils.NearTarget(DAL.MVC_Game2Context.aliveEnemies.Select(x => x.transform).ToList(), _transform, target);
+                        target = utils.NearTarget(DAL.ProjectVikingsContext.aliveEnemies.Select(x => x.transform).ToList(), _transform, target);
                         if (target == null) return;
                         fow.TurnView(target);
                     }
@@ -210,7 +219,7 @@ namespace Assets.Script.Controller
             var data = playerFunctions.GetDataByInitialPosition(go.transform.position);
             if (data == null)
             {
-                data = DAL.MVC_Game2Context.defaultPlayer;
+                data = DAL.ProjectVikingsContext.defaultPlayer;
                 data.InitialX = go.transform.position.x;
                 data.InitialY = go.transform.position.y;
                 playerFunctions.Create(data);
