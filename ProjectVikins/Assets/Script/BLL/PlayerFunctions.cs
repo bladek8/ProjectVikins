@@ -23,7 +23,8 @@ namespace Assets.Script.BLL
                 CharacterTypeId = model.CharacterTypeId.Value,
                 AttackMin = model.AttackMin,
                 PlayerId = model.PlayerId,
-                Life = model.Life,
+                CurrentLife = model.CurrentLife,
+                MaxLife = model.MaxLife,
                 SpeedRun = model.SpeedRun,
                 SpeedWalk = model.SpeedWalk,
                 IsBeingControllable = model.IsBeingControllable,
@@ -60,7 +61,8 @@ namespace Assets.Script.BLL
                 InitialY = data.InitialY,
                 IsBeingControllable = data.IsBeingControllable,
                 LastMoviment = data.LastMoviment,
-                Life = data.Life,
+                CurrentLife = data.CurrentLife,
+                MaxLife = data.MaxLife,
                 PlayerId = data.PlayerId,
                 PlayerMode = data.PlayerMode,
                 SpeedRun = data.SpeedRun,
@@ -80,7 +82,8 @@ namespace Assets.Script.BLL
                          InitialY = y.InitialY,
                          IsBeingControllable = y.IsBeingControllable,
                          LastMoviment = y.LastMoviment,
-                         Life = y.Life,
+                         CurrentLife = y.CurrentLife,
+                         MaxLife = y.MaxLife,
                          PlayerId = y.PlayerId,
                          PlayerMode = y.PlayerMode,
                          SpeedRun = y.SpeedRun,
@@ -123,7 +126,8 @@ namespace Assets.Script.BLL
             player.InitialY = player.InitialY;
             player.IsBeingControllable = model.IsBeingControllable;
             player.LastMoviment = model.LastMoviment.Value;
-            player.Life = model.Life;
+            player.CurrentLife = model.CurrentLife;
+            player.MaxLife = model.MaxLife;
             player.PlayerId = player.PlayerId;
             player.PlayerMode = model.PlayerMode.Value;
             player.SpeedRun = model.SpeedRun;
@@ -145,7 +149,8 @@ namespace Assets.Script.BLL
                          InitialY = y.InitialY,
                          IsBeingControllable = y.IsBeingControllable,
                          LastMoviment = y.LastMoviment.Value,
-                         Life = y.Life,
+                         CurrentLife = y.CurrentLife,
+                         MaxLife = y.MaxLife,
                          PlayerId = y.PlayerId,
                          PlayerMode = y.PlayerMode.Value,
                          SpeedRun = y.SpeedRun,

@@ -23,7 +23,7 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    enemy = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -2, SpeedWalk = 1.5f, LastMoviment = Helpers.PossibleMoviment.None, Life = 1, SpeedRun = 2, IsDead = false }, new Enemy() { EnemyId = 2, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -1, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, Life = 1, SpeedRun = 2, IsDead = false } };
+                    enemy = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -2, SpeedWalk = 1.5f, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false }, new Enemy() { EnemyId = 2, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -1, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false } };
                     bf.Serialize(__file, enemy);
                     __file.Close();
                 }
@@ -31,7 +31,7 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    player = new List<Player>() { new Player() { PlayerId = 1, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = -27, InitialY = 0, SpeedWalk = 1.5f, SpeedRun = 2, IsBeingControllable = true, LastMoviment = Helpers.PossibleMoviment.None, Life = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -27, Y = 0, IsDead = false }, new Player() { PlayerId = 2, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = 1.15f, InitialY = -25, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, Life = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 3, IsDead = false }, new Player() { PlayerId = 3, AttackMax = 2, AttackMin = 1, CharacterTypeId = 1, InitialX = -25, InitialY = 0, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, Life = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 0, IsDead = false } };
+                    player = new List<Player>() { new Player() { PlayerId = 1, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = -27, InitialY = 0, SpeedWalk = 1.5f, SpeedRun = 2, IsBeingControllable = true, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -27, Y = 0, IsDead = false }, new Player() { PlayerId = 2, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = 1.15f, InitialY = -25, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 3, IsDead = false }, new Player() { PlayerId = 3, AttackMax = 2, AttackMin = 1, CharacterTypeId = 1, InitialX = -25, InitialY = 0, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 0, IsDead = false } };
                     bf.Serialize(__file, player);
                     __file.Close();
                 }
@@ -75,7 +75,7 @@ namespace Assets.Script.DAL
         public static List<Enemy> enemies = new List<Enemy>();
         public static List<Player> players = new List<Player>();
 
-        public static readonly Player defaultPlayer = new Player() { PlayerId = players.Count, PlayerMode = Helpers.PlayerModes.Follow, IsBeingControllable = false, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, Life = 3, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
-        public static readonly Enemy defaultEnemy = new Enemy() { EnemyId = enemies.Count, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, Life = 1, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
+        public static readonly Player defaultPlayer = new Player() { PlayerId = players.Count, PlayerMode = Helpers.PlayerModes.Follow, IsBeingControllable = false, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 3, MaxLife = 3, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
+        public static readonly Enemy defaultEnemy = new Enemy() { EnemyId = enemies.Count, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 1, MaxLife = 1, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
     }
 }

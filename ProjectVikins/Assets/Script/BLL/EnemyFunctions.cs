@@ -25,7 +25,8 @@ namespace Assets.Script.BLL
                 CharacterTypeId = model.CharacterTypeId.Value,
                 AttackMin = model.AttackMin.Value,
                 EnemyId = model.EnemyId,
-                Life = model.Life.Value,
+                CurrentLife = model.CurrentLife.Value,
+                MaxLife = model.MaxLife.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value
             };
@@ -62,7 +63,8 @@ namespace Assets.Script.BLL
                 InitialX = data.InitialX,
                 InitialY = data.InitialY,
                 LastMoviment = data.LastMoviment,
-                Life = data.Life,
+                CurrentLife = data.CurrentLife,
+                MaxLife = data.MaxLife,
                 SpeedRun = data.SpeedRun,
                 SpeedWalk = data.SpeedWalk
             };
@@ -80,7 +82,8 @@ namespace Assets.Script.BLL
                         InitialX = y.InitialX,
                         InitialY = y.InitialY,
                         LastMoviment = y.LastMoviment,
-                        Life = y.Life,
+                        CurrentLife = y.CurrentLife,
+                        MaxLife = y.MaxLife,
                         SpeedRun = y.SpeedRun,
                         SpeedWalk = y.SpeedWalk
                     }).ToList();
@@ -97,7 +100,8 @@ namespace Assets.Script.BLL
                 InitialX = model.InitialX.Value,
                 InitialY = model.InitialY.Value,
                 LastMoviment = model.LastMoviment.Value,
-                Life = model.Life.Value,
+                CurrentLife = model.CurrentLife.Value,
+                MaxLife = model.MaxLife.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value,
             };
@@ -115,7 +119,8 @@ namespace Assets.Script.BLL
                         InitialX = y.InitialX.Value,
                         InitialY = y.InitialY.Value,
                         LastMoviment = y.LastMoviment.Value,
-                        Life = y.Life.Value,
+                        CurrentLife = y.CurrentLife.Value,
+                        MaxLife = y.MaxLife.Value,
                         SpeedRun = y.SpeedRun.Value,
                         SpeedWalk = y.SpeedWalk.Value,
                     }).ToList();

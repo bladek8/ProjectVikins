@@ -13,7 +13,8 @@ namespace Assets.Script.Models
         public PossibleMoviment? LastMoviment { get; set; }
         public int PlayerId { get; set; }
         public int? CharacterTypeId { get; set; }
-        public int Life { get; set; }
+        public float CurrentLife { get; set; }
+        public float MaxLife { get; set; }
         public float SpeedWalk { get; set; }
         public float SpeedRun { get; set; }
         public int AttackMin { get; set; }

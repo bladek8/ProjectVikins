@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Script.View.Shared
 {
@@ -32,8 +33,9 @@ namespace Assets.Script.View.Shared
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
         public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
 
-        public GameObject leftFoot;
-        public GameObject rightFoot;
+        //public GameObject leftFoot;
+        //public GameObject rightFoot;
+        public Slider LifeBar;
 
         private void Start()
         {
@@ -51,6 +53,7 @@ namespace Assets.Script.View.Shared
             model = playerController.GetInitialData(gameObject);
             model.ForceToWalk = false;
             model.ForceToStop = false;
+            LifeBar.value = CalculateLife();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
             if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
         }
@@ -190,8 +193,10 @@ namespace Assets.Script.View.Shared
         public void GetDamage(int damage)
         {
             playerController.AttackMode();
-            model.Life -= damage;
-            if (model.Life <= 0)
+            model.CurrentLife -= damage;
+            LifeBar.value = CalculateLife();
+
+            if (model.CurrentLife <= 0)
             {
                 if (model.IsBeingControllable)
                 {
@@ -241,6 +246,11 @@ namespace Assets.Script.View.Shared
                 model.IsDead = false;
             }else
                 print("não salvou!");
+        }
+
+        float CalculateLife()
+        {
+            return model.CurrentLife / model.MaxLife;
         }
     }
 }

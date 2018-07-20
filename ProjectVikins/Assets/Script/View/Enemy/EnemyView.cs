@@ -51,8 +51,8 @@ namespace Assets.Script.View
 
         public void GetDamage(int damage)
         {
-            model.Life -= damage;
-            if (model.Life <= 0)
+            model.CurrentLife -= damage;
+            if (model.CurrentLife <= 0)
             {
                 model.IsDead = true;
                 DAL.MVC_Game2Context.aliveEnemieModels.Remove(model);

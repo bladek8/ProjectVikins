@@ -54,10 +54,10 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Fire2
+    m_Name: teste
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: o
     positiveButton: left alt
     altNegativeButton: 
     altPositiveButton: mouse 1
