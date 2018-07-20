@@ -9,6 +9,11 @@ namespace Assets.Script.View
 {
     public class EnemyWarriorView : EnemyView
     {
+        private void Awake()
+        {
+            SystemManagement.SystemManagement.EnemyWarriorView.Add(this);
+        }
+
         private void FixedUpdate()
         {
             if (model.IsDead)

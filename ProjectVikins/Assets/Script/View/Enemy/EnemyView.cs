@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +17,9 @@ namespace Assets.Script.View
         BoxCollider2D colliderTransform;
         [HideInInspector] public Controller.EnemyController enemyController;
         [SerializeField] GameObject FieldOfViewGameObj;
-        [HideInInspector]  public CountDown attackCountDown = new CountDown(3);
+        [HideInInspector] public CountDown attackCountDown = new CountDown(3);
         [HideInInspector] public Models.EnemyViewModel model;
-        
+
         void Start()
         {
             #region GetComponent
@@ -38,7 +38,7 @@ namespace Assets.Script.View
         {
             CountDown.DecreaseTime(enemyController.followPlayer);
             CountDown.DecreaseTime(attackCountDown);
-            
+
             var input = enemyController.GetInput();
             EnemySpriteRenderer.flipX = input.Flip.Value;
             EnemyAnimator.SetFloat("speedX", input.Vector2.x);
@@ -49,17 +49,18 @@ namespace Assets.Script.View
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
 
-        public void GetDamage(int damage)
+        public bool GetDamage(int damage)
         {
             model.CurrentLife -= damage;
             if (model.CurrentLife <= 0)
             {
                 model.IsDead = true;
-                DAL.MVC_Game2Context.aliveEnemieModels.Remove(model);
-                GetComponents<BoxCollider2D>().ToList().ForEach(x => x.enabled = false);
+                DAL.ProjectVikingsContext.aliveEnemies.Remove(model.GameObject);
+                GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
                 EnemyAnimator.SetBool("isWalking", false);
-                //Destroy(this.gameObject);
+                return true;
             }
+            return false;
         }
     }
 }

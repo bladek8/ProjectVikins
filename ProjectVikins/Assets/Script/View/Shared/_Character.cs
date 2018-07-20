@@ -1,6 +1,7 @@
 ﻿using Assets.Script.Controller;
 using Assets.Script.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,9 @@ namespace Assets.Script.View.Shared
         public float DistanceOfPlayer;
         [HideInInspector] public GameObject camera;
         [HideInInspector] public CameraView cv;
-        
+
         public Models.PlayerViewModel model;
-        
+
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
         public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
 
@@ -46,7 +47,7 @@ namespace Assets.Script.View.Shared
             colliderTransform = allBoxColliders.Single(x => x.isTrigger == false);
             PlayerBoxCollider2D = allBoxColliders.Single(x => x.isTrigger == true);
             #endregion
-            
+
             camera = GameObject.FindGameObjectWithTag("camera");
             cv = camera.GetComponent<CameraView>();
             playerController = new PlayerController();
@@ -132,8 +133,8 @@ namespace Assets.Script.View.Shared
                 {
                     playerController.Interact(transform, PlayerBoxCollider2D.size);
                 }
-                    #endregion
-                }
+                #endregion
+            }
 
             else
             {
@@ -163,15 +164,15 @@ namespace Assets.Script.View.Shared
                 PlayerAnimator.SetFloat("speedY", input.Vector2.y);
 
                 #endregion
-                
+
                 if (Vector3.Distance(transform.position, cv.playerGameObj.transform.position) > 15)
                 {
                     model.PlayerMode = PlayerModes.Follow;
                 }
             }
-            
+
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
-            
+
             #region Change PlayerMode
 
             foreach (var playerMode in utils.playerModes)
@@ -190,7 +191,7 @@ namespace Assets.Script.View.Shared
             #endregion
         }
 
-        public void GetDamage(int damage)
+        public bool GetDamage(int damage)
         {
             playerController.AttackMode();
             model.CurrentLife -= damage;
@@ -204,18 +205,18 @@ namespace Assets.Script.View.Shared
                     camera.SendMessage("UpdatePlayerTranform");
                 }
                 model.IsDead = true;
-                DAL.MVC_Game2Context.alivePlayerModels.Remove(model);
+                DAL.ProjectVikingsContext.alivePlayers.Remove(model.GameObject);
                 PlayerAnimator.SetBool("isWalking", false);
                 PlayerAnimator.SetBool("isRunning", false);
-                GetComponents<BoxCollider2D>().ToList().ForEach(x => x.enabled = false);
-                //Destroy(this.gameObject);
+                GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
+                return true;
             }
+            return false;
         }
         public void StartSavePlayer()
         {
-            if (!model.IsDead) return;
-
-            savePlayerCountDown.StartToCount();
+            if (!model.IsDead || model.ForceToStop) return;
+            SetForceToStop(true);
             StartCoroutine("SavingPlayer");
         }
 
@@ -229,23 +230,31 @@ namespace Assets.Script.View.Shared
             playerController.SetForceToStop(value);
         }
 
-        public void SavingPlayer()
+        IEnumerator SavingPlayer()
         {
-            bool save = true;
-            while (!savePlayerCountDown.ReturnedToZero)
+            savePlayerCountDown.StartToCount();
+            while (true)
             {
-                if (!Input.GetKey(KeyCode.J))
+                if (Input.GetKey(KeyCode.J))
                 {
-                    save = false;
+                    CountDown.DecreaseTime(savePlayerCountDown);
+                    yield return new WaitForSeconds(Time.deltaTime);
+                }
+                else
+                {
+                    print("não salvou!");
+                    savePlayerCountDown.CoolDown = 0;
+                    break;
+                }
+                if (savePlayerCountDown.ReturnedToZero)
+                {
+                    print("salvou!");
+                    model.IsDead = false;
+                    DAL.ProjectVikingsContext.alivePlayers.Add(model.GameObject);
                     break;
                 }
             }
-            if (save)
-            {
-                print("salvou!");
-                model.IsDead = false;
-            }else
-                print("não salvou!");
+            SetForceToStop(false);
         }
 
         float CalculateLife()

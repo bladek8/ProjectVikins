@@ -7,6 +7,7 @@ using UnityEngine;
 using Assets.Script.Helpers;
 using System.IO;
 using Assets.Script.BLL;
+using Assets.Script.SystemManagement;
 
 namespace Assets.Script.Controller
 {
@@ -23,7 +24,6 @@ namespace Assets.Script.Controller
 
         public PlayerController()
         {
-            enemies = DAL.MVC_Game2Context.aliveEnemieModels;
         }
 
         public void Attack(Transform transform, Vector3 size)
@@ -34,10 +34,20 @@ namespace Assets.Script.Controller
                 if (targetsAttacked.Contains(hitCollider.gameObject.GetInstanceID())) continue;
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 
+                if (hitCollider.transform == transform) continue;
+
                 if (hitCollider.tag == "Enemy")
                 {
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                    script.SendMessage("GetDamage", GetDamage());
+                        var killed = SystemManagement.SystemManagement.CallMethod(script, "GetDamage", GetDamage());
+                        if(killed != null)
+                        {
+                            if ((bool)killed)
+                            {
+                                target = null;
+                                FindTarget(transform);
+                            }
+                        }
                 }
             }
         }
@@ -47,6 +57,8 @@ namespace Assets.Script.Controller
             var hitColliders = Physics2D.OverlapBoxAll(PositionCenterAttack(size, transform), size, 90f);
             foreach (var hitCollider in hitColliders)
             {
+                if (hitCollider.transform == transform) continue;
+
                 if (hitCollider.tag == "NPC" && View.NPCView.canInteract)
                 {
                     View.NPCView.canInteract = false;
@@ -141,13 +153,13 @@ namespace Assets.Script.Controller
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
                 followEnemy.StartToCount();
-                if (enemies.Count > 0)
+                if (DAL.ProjectVikingsContext.aliveEnemies.Count > 0)
                 {
                     if (target == null)
-                        target = utils.NearTargetInView(enemies.Select(x => x.GameObject.transform).ToList(), fow.visibleTargets, _transform);
+                        target = utils.NearTargetInView(DAL.ProjectVikingsContext.aliveEnemies.Select(x => x.transform).ToList(), fow.visibleTargets, _transform);
                     else
                     {
-                        target = utils.NearTarget(enemies.Select(x => x.GameObject.transform).ToList(), _transform, target);
+                        target = utils.NearTarget(DAL.ProjectVikingsContext.aliveEnemies.Select(x => x.transform).ToList(), _transform, target);
                         if (target == null) return;
                         fow.TurnView(target);
                     }
@@ -207,7 +219,7 @@ namespace Assets.Script.Controller
             var data = playerFunctions.GetDataByInitialPosition(go.transform.position);
             if (data == null)
             {
-                data = DAL.MVC_Game2Context.defaultPlayer;
+                data = DAL.ProjectVikingsContext.defaultPlayer;
                 data.InitialX = go.transform.position.x;
                 data.InitialY = go.transform.position.y;
                 playerFunctions.Create(data);

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Script;
+using System.Linq;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -12,12 +14,16 @@ public class FieldOfView : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
+    List<GameObject> _aliveEnemies;
+    List<GameObject> _alivePlayers;
 
     [HideInInspector]
     public List<Transform> visibleTargets;
 
     void Start()
     {
+        _alivePlayers = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
+        _aliveEnemies = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
         visibleTargets = new List<Transform>();
         transform.rotation = Quaternion.Euler(0, 0, rotation);
         StartCoroutine("FindTargetWithDelay", 0.2f);
@@ -34,12 +40,17 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        visibleTargets.Clear();
+        _alivePlayers = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
+        _aliveEnemies = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
 
+        visibleTargets.Clear();
+                
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
+            if (!_alivePlayers.Contains(targetsInViewRadius[i].gameObject) && !_aliveEnemies.Contains(targetsInViewRadius[i].gameObject)) continue;
+
             Transform target = targetsInViewRadius[i].transform;
             Vector2 dirToTarget = (target.position - transform.position).normalized;
             if (Vector2.Angle(transform.up, dirToTarget) < viewAngle / 2)

@@ -40,7 +40,7 @@ namespace Assets.Script.BLL
         public override int SetModel(Models.PlayerViewModel model)
         {
             ListModel.Add(model);
-            MVC_Game2Context.UpdateAliveLists();
+            ProjectVikingsContext.UpdateAliveLists();
             return model.PlayerId;
         }
 
@@ -94,25 +94,27 @@ namespace Assets.Script.BLL
 
         public override void SetListContext()
         {
-            this.ListContext = DAL.MVC_Game2Context.players;
+            this.ListContext = DAL.ProjectVikingsContext.players;
         }
 
         public override void SetListModel()
         {
-            this.ListModel = DAL.MVC_Game2Context.playerModels;
+            this.ListModel = DAL.ProjectVikingsContext.playerModels;
         }
 
         public void ChangeControllableCharacter(int id)
         {
             var player = this.GetModelById(id);
-            player.IsBeingControllable = false;
-            var nextPlayer = new Models.PlayerViewModel();
-            var index = ListModel.IndexOf(player) + 1;
-            if (ListModel.Count > index)
-                nextPlayer = ListModel[index];
-            else
-                nextPlayer = ListModel.First();
-            nextPlayer.IsBeingControllable = true;
+            Models.PlayerViewModel nextPlayer = null;
+            foreach (var model in ListModel)
+                if (model != player && !model.IsDead)
+                    nextPlayer = model;
+
+            if (nextPlayer != null)
+            {
+                nextPlayer.IsBeingControllable = true;
+                player.IsBeingControllable = false;
+            }            
         }
 
         public override Player GetDataByViewModel(PlayerViewModel model)

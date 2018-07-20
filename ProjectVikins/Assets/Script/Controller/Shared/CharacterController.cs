@@ -112,7 +112,7 @@ namespace Assets.Script.Controller.Shared
             MethodInfo m = className.GetMethod("UpdateMultipleStats");
             m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
         }
-
+        
         public abstract int GetDamage();
         public abstract Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }

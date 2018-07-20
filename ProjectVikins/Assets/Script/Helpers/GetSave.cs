@@ -10,7 +10,7 @@ namespace Assets.Script.Helpers
     {
         private void Awake()
         {
-            DAL.MVC_Game2Context.GetSave();
+            DAL.ProjectVikingsContext.GetSave();
         }
     }
 }

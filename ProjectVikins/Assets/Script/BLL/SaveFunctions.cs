@@ -18,8 +18,8 @@ namespace Assets.Script.BLL
             PlayerFunctions playerFunctions = new PlayerFunctions();
             EnemyFunctions enemyFunctions = new EnemyFunctions();
 
-            MVC_Game2Context.players = playerFunctions.GetDataByViewModel(MVC_Game2Context.playerModels);
-            MVC_Game2Context.enemies = enemyFunctions.GetDataByViewModel(MVC_Game2Context.enemieModels);
+            ProjectVikingsContext.players = playerFunctions.GetDataByViewModel(ProjectVikingsContext.playerModels);
+            ProjectVikingsContext.enemies = enemyFunctions.GetDataByViewModel(ProjectVikingsContext.enemieModels);
 
             var currentDirectory = Directory.GetCurrentDirectory();
             var dataDirectory = Path.Combine(currentDirectory, "Save");
@@ -34,9 +34,9 @@ namespace Assets.Script.BLL
                 FileStream __file = File.Create(file.FullName);
 
                 if (className == typeof(Player))
-                    bf.Serialize(__file, MVC_Game2Context.players);
+                    bf.Serialize(__file, ProjectVikingsContext.players);
                 if (className == typeof(Enemy))
-                    bf.Serialize(__file, MVC_Game2Context.enemies);
+                    bf.Serialize(__file, ProjectVikingsContext.enemies);
                 
                 __file.Close();
             }
