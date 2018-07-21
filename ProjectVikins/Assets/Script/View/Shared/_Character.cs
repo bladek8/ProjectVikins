@@ -72,6 +72,22 @@ namespace Assets.Script.View.Shared
 
             if (isPlayable)
             {
+                if (LifeBar.name == "Slider")
+                {
+                    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
+                    LifeBar.transform.localPosition = new Vector2(-274, 112);
+                }
+                else if (LifeBar.name == "Slider (1)")
+                {
+                    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
+                    LifeBar.transform.localPosition = new Vector2(-274, 81.69998f);
+                }
+                else if (LifeBar.name == "Slider (2)")
+                {
+                    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
+                    LifeBar.transform.localPosition = new Vector2(-274, 51.47721f);
+                }
+
                 #region Mover
 
                 if (!model.ForceToStop)
@@ -138,6 +154,22 @@ namespace Assets.Script.View.Shared
 
             else
             {
+                if (LifeBar.name == "Slider")
+                {
+                    LifeBar.transform.localScale = new Vector2(1, 1);
+                    LifeBar.transform.localPosition = new Vector2(-287, 112);
+                }
+                else if (LifeBar.name == "Slider (1)")
+                {
+                    LifeBar.transform.localScale = new Vector2(1, 1);
+                    LifeBar.transform.localPosition = new Vector2(-287, 81.69998f);
+                }
+                else if (LifeBar.name == "Slider (2)")
+                {
+                    LifeBar.transform.localScale = new Vector2(1, 1);
+                    LifeBar.transform.localPosition = new Vector2(-287, 51.47721f);
+                }
+
                 #region Follow
 
                 if (model.PlayerMode == PlayerModes.Follow)
