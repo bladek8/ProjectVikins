@@ -105,16 +105,24 @@ namespace Assets.Script.BLL
         public void ChangeControllableCharacter(int id)
         {
             var player = this.GetModelById(id);
-            Models.PlayerViewModel nextPlayer = null;
-            foreach (var model in ListModel)
-                if (model != player && !model.IsDead)
-                    nextPlayer = model;
+            PlayerViewModel nextPlayer = null;
+            var index = ListModel.IndexOf(player) + 1;
+            for (int i = 0; i < ListModel.Count; i++)
+            {
+                if (index == ListModel.Count) index = 0;
+                if (!ListModel[index].IsDead)
+                {
+                    nextPlayer = ListModel[index];
+                    break;
+                }
+                index++;
+            }
 
             if (nextPlayer != null)
             {
                 nextPlayer.IsBeingControllable = true;
                 player.IsBeingControllable = false;
-            }            
+            }
         }
 
         public override Player GetDataByViewModel(PlayerViewModel model)
@@ -143,28 +151,29 @@ namespace Assets.Script.BLL
         public override List<Player> GetDataByViewModel(List<PlayerViewModel> model)
         {
             return (from y in model
-                     select new Player() {
-                         AttackMax = y.AttackMax,
-                         AttackMin = y.AttackMin,
-                         CharacterTypeId = y.CharacterTypeId.Value,
-                         InitialX = y.InitialX,
-                         InitialY = y.InitialY,
-                         IsBeingControllable = y.IsBeingControllable,
-                         LastMoviment = y.LastMoviment.Value,
-                         CurrentLife = y.CurrentLife,
-                         MaxLife = y.MaxLife,
-                         PlayerId = y.PlayerId,
-                         PlayerMode = y.PlayerMode.Value,
-                         SpeedRun = y.SpeedRun,
-                         SpeedWalk = y.SpeedWalk,
-                         X = y.GameObject.transform.position.x,
-                         Y = y.GameObject.transform.position.y,
-                     }).ToList();
+                    select new Player()
+                    {
+                        AttackMax = y.AttackMax,
+                        AttackMin = y.AttackMin,
+                        CharacterTypeId = y.CharacterTypeId.Value,
+                        InitialX = y.InitialX,
+                        InitialY = y.InitialY,
+                        IsBeingControllable = y.IsBeingControllable,
+                        LastMoviment = y.LastMoviment.Value,
+                        CurrentLife = y.CurrentLife,
+                        MaxLife = y.MaxLife,
+                        PlayerId = y.PlayerId,
+                        PlayerMode = y.PlayerMode.Value,
+                        SpeedRun = y.SpeedRun,
+                        SpeedWalk = y.SpeedWalk,
+                        X = y.GameObject.transform.position.x,
+                        Y = y.GameObject.transform.position.y,
+                    }).ToList();
         }
 
         public void AttackMode()
         {
-            foreach(var y in ListModel)
+            foreach (var y in ListModel)
                 y.PlayerMode = Helpers.PlayerModes.Attack;
         }
     }
