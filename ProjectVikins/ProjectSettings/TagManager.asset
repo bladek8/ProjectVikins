@@ -12,6 +12,7 @@ TagManager:
   - Bonfire
   - camera
   - Below
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Shottable
   - Above
   - Below
-  - 
+  - Collectable
   - 
   - 
   - 

@@ -34,8 +34,13 @@ namespace Assets.Script.View.Shared
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
         public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
 
+
         //public GameObject leftFoot;
         //public GameObject rightFoot;
+
+        
+        public Canvas canvas;
+
         public Slider LifeBar;
         Transform oldTarget = null;
 
