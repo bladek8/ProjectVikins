@@ -19,7 +19,6 @@ namespace Assets.Script.Controller
         private readonly BLL.PlayerFunctions playerFunctions = new BLL.PlayerFunctions();
         private readonly BLL.EnemyFunctions enemyFunctions = new BLL.EnemyFunctions();
 
-        private readonly PlayerFunctions playerFunctions = new PlayerFunctions();
         private readonly InventoryItemFunctions inventoryItemFunctions = new InventoryItemFunctions();
 
         private int id;

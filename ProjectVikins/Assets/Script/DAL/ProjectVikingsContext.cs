@@ -114,7 +114,7 @@ namespace Assets.Script.DAL
 
         #region [DefaultValues]
         public static readonly Player defaultPlayer = new Player() { PlayerId = players.Count, PlayerMode = Helpers.PlayerModes.Follow, IsBeingControllable = false, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 3, MaxLife = 3, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
-        public static readonly Enemy defaultEnemy = new Enemy() { EnemyId = enemies.Count, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 1, MaxLife = 1, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
+        public static readonly Enemy defaultEnemy = new Enemy() { EnemyId = enemies.Count, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 10, MaxLife = 10, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
         public static readonly HealthItem defaultHealthItem = new HealthItem() { ItemId = HealthItens.Count, ItemTypeId = (int)ItemTypes.HealthItem, Health = 2, Amount = 1, Name = "Coconut" };
         #endregion
     }
