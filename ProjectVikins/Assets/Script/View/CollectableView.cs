@@ -20,7 +20,6 @@ namespace Assets.Script.View
         public DAL.HealthItem GetItemModel()
         {
             Destroy(gameObject);
-            print("Pegou");
             return data;
         }
     }

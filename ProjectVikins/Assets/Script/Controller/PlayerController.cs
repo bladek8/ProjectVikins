@@ -82,7 +82,6 @@ namespace Assets.Script.Controller
                     var itemModel = SystemManagement.SystemManagement.CallMethod(script, "GetItemModel");
                     if (itemModel != null)
                         inventoryItemFunctions.Create(itemModel);
-                    Debug.Log(inventoryItemFunctions.GetData().Count);
 
                 }
             }
