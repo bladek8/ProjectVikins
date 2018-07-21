@@ -36,8 +36,8 @@ namespace Assets.Script.View.Shared
 
         //public GameObject leftFoot;
         //public GameObject rightFoot;
-        public Canvas canvas;
         public Slider LifeBar;
+        Transform oldTarget = null;
 
         private void Start()
         {
@@ -88,6 +88,13 @@ namespace Assets.Script.View.Shared
                 //    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
                 //    LifeBar.transform.localPosition = new Vector2(-274, 51.47721f);
                 //}
+
+                if (playerController.target != oldTarget)
+                {
+                    oldTarget = playerController.target;
+                    if (playerController.target != null)
+                        PlayerController.GetSliderEnemy(playerController.target);
+                }
 
                 #region Mover
 

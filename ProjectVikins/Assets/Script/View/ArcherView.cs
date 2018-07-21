@@ -22,7 +22,7 @@ namespace Assets.Script.View
         Vector2 YRange;
         Vector2 XRange;
 
-        Transform oldTarget = null;
+        Transform _oldTarget = null;
 
         private void Awake()
         {
@@ -35,13 +35,13 @@ namespace Assets.Script.View
             if (model.IsDead)
                 return;
 
-            if (oldTarget != playerController.target)
+            if (_oldTarget != playerController.target)
             {
                 YRange = startYRange;
                 XRange = startXRange;
             }
 
-            oldTarget = playerController.target;
+            _oldTarget = playerController.target;
 
             CharacterUpdate();
 

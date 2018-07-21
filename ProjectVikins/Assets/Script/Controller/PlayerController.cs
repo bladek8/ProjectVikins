@@ -8,6 +8,7 @@ using Assets.Script.Helpers;
 using System.IO;
 using Assets.Script.BLL;
 using Assets.Script.SystemManagement;
+using Assets.Script.DAL;
 
 namespace Assets.Script.Controller
 {
@@ -15,6 +16,7 @@ namespace Assets.Script.Controller
     {
         private Helpers.Utils utils = new Helpers.Utils();
         private readonly BLL.PlayerFunctions playerFunctions = new BLL.PlayerFunctions();
+        private readonly BLL.EnemyFunctions enemyFunctions = new BLL.EnemyFunctions();
         private int id;
         public FieldOfView fow;
         public bool canAttack;
@@ -38,16 +40,18 @@ namespace Assets.Script.Controller
 
                 if (hitCollider.tag == "Enemy")
                 {
+                    target = hitCollider.transform;
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                        var killed = SystemManagement.SystemManagement.CallMethod(script, "GetDamage", GetDamage());
-                        if(killed != null)
+                    var killed = SystemManagement.SystemManagement.CallMethod(script, "GetDamage", GetDamage());
+                    if (killed != null)
+                    {
+                        if ((bool)killed)
                         {
-                            if ((bool)killed)
-                            {
-                                target = null;
+                            target = null;
+                            if (!playerFunctions.GetDataById(id).IsBeingControllable)
                                 FindTarget(transform);
-                            }
                         }
+                    }
                 }
             }
         }
@@ -255,6 +259,15 @@ namespace Assets.Script.Controller
         public void AttackMode()
         {
             playerFunctions.AttackMode();
+        }
+
+        public static void GetSliderEnemy(Transform target)
+        {
+            var enemy = ProjectVikingsContext.enemieModels.Where(x => x.GameObject.transform == target).ToList();
+            if (enemy.Count() == 0)
+                return;
+            else
+                SliderView.model = enemy.First();
         }
     }
 }

@@ -64,6 +64,7 @@ public class ArrowView : MonoBehaviour
 
         if (hit != null)
         {
+            PlayerController.GetSliderEnemy(hit.transform);
             var script = hit.gameObject.GetComponent<MonoBehaviour>();
             script.SendMessage("GetDamage", 1);
             Stop();
