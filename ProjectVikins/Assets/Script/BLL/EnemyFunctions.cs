@@ -70,7 +70,7 @@ namespace Assets.Script.BLL
             };
         }
 
-        public override List<EnemyViewModel> GetDataViewModel(List<Enemy> data)
+        public override List<EnemyViewModel> GetDataViewModel(IEnumerable<Enemy> data)
         {
             return (from y in data
                     select new EnemyViewModel()
@@ -107,7 +107,7 @@ namespace Assets.Script.BLL
             };
         }
 
-        public override List<Enemy> GetDataByViewModel(List<EnemyViewModel> model)
+        public override List<Enemy> GetDataByViewModel(IEnumerable<EnemyViewModel> model)
         {
             return (from y in model
                     select new Enemy()

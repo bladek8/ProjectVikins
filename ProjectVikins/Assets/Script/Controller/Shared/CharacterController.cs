@@ -73,46 +73,7 @@ namespace Assets.Script.Controller.Shared
         {
             NPCView.SendMessage("Interaction");
         }
-
-        public object DecreaseStats(string target, string stats, object value, object id)
-        {
-            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
-            MethodInfo m = className.GetMethod("DecreaseStats");
-            return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
-        }
-        public object IncreaseStats(string target, string stats, object value, object id)
-        {
-            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
-            MethodInfo m = className.GetMethod("IncreaseStats");
-            return m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
-        }
-
-
-        public void DecreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
-        {
-            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
-            MethodInfo m = className.GetMethod("DecreaseMultipleStats");
-            m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
-        }
-        public void IncreaseMultipleStats(string target, Dictionary<string, object> datas, object id)
-        {
-            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
-            MethodInfo m = className.GetMethod("IncreaseMultipleStats");
-            m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
-        }
-        public void UpdateStats(string target, string stats, object value, object id)
-        {
-            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
-            MethodInfo m = className.GetMethod("UpdateStats");
-            m.Invoke(Activator.CreateInstance(className), new object[] { stats, value, id });
-        }
-        public void UpdateMultipleStats(string target, Dictionary<string, object> datas, object id)
-        {
-            className = Type.GetType("Assets.Script.BLL." + Regex.Replace(target, @"[0-9-]", string.Empty) + "Functions");
-            MethodInfo m = className.GetMethod("UpdateMultipleStats");
-            m.Invoke(Activator.CreateInstance(className), new object[] { datas, id });
-        }
-        
+                
         public abstract int GetDamage();
         public abstract Vector3 PositionCenterAttack(Vector3 colSize, Transform transform);
     }

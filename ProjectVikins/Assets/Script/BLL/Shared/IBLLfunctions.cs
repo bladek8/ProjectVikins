@@ -14,14 +14,10 @@ namespace Assets.Script.BLL.Shared
         int SetModel(TViewModel model);
         TViewModel GetModelById(object id);
         TViewModel GetDataViewModel(TEntity data);
-        List<TViewModel> GetDataViewModel(List<TEntity> data);
+        List<TViewModel> GetDataViewModel(IEnumerable<TEntity> data);
         TEntity GetDataByViewModel(TViewModel model);
-        List<TEntity> GetDataByViewModel(List<TViewModel> model);
+        List<TEntity> GetDataByViewModel(IEnumerable<TViewModel> model);
         int Create(TViewModel model);
-        void UpdateStats(string stats, object value, int id);
-        object DecreaseStats(string stats, object value, int id);
-        object IncreaseStats(string stats, object value, int id);
-        void UpdateMultipleStats(Dictionary<string, object> datas, int id);
         void SetListContext();
         void SetListModel();
     }

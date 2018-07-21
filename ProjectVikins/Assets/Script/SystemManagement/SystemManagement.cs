@@ -25,13 +25,14 @@ namespace Assets.Script.SystemManagement
             Class1 = EnemyWarriorView,
             Class2 = EnemyArcherView
         };
-
-
-        public static object CallMethod(object _class, string methodName, object value)
+        
+        public static object CallMethod(object _class, string methodName, object value = null)
         {
             try
             {
-                object[] obj = new object[] { value };
+                object[] obj = null;
+                if (value != null)
+                    obj = new object[] { value };
                 if (_class == null) return null;
 
                 Type classType = _class.GetType();

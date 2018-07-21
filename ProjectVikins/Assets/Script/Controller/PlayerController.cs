@@ -14,7 +14,8 @@ namespace Assets.Script.Controller
     public class PlayerController : Shared._CharacterController<Models.PlayerViewModel>
     {
         private Helpers.Utils utils = new Helpers.Utils();
-        private readonly BLL.PlayerFunctions playerFunctions = new BLL.PlayerFunctions();
+        private readonly PlayerFunctions playerFunctions = new PlayerFunctions();
+        private readonly InventoryItemFunctions inventoryItemFunctions = new InventoryItemFunctions();
         private int id;
         public FieldOfView fow;
         public bool canAttack;
@@ -74,6 +75,15 @@ namespace Assets.Script.Controller
                 {
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
                     script.SendMessage("StartSavePlayer");
+                }
+                else if (hitCollider.tag == "Collectable")
+                {
+                    var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
+                    var itemModel = SystemManagement.SystemManagement.CallMethod(script, "GetItemModel");
+                    if (itemModel != null)
+                        inventoryItemFunctions.Create(itemModel);
+                    Debug.Log(inventoryItemFunctions.GetData().Count);
+
                 }
             }
         }

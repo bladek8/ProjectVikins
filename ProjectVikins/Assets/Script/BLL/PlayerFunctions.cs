@@ -70,7 +70,7 @@ namespace Assets.Script.BLL
             };
         }
 
-        public override List<PlayerViewModel> GetDataViewModel(List<Player> data)
+        public override List<PlayerViewModel> GetDataViewModel(IEnumerable<Player> data)
         {
             var r = (from y in data.ToList()
                      select new PlayerViewModel()
@@ -148,7 +148,7 @@ namespace Assets.Script.BLL
             return player;
         }
 
-        public override List<Player> GetDataByViewModel(List<PlayerViewModel> model)
+        public override List<Player> GetDataByViewModel(IEnumerable<PlayerViewModel> model)
         {
             return (from y in model
                     select new Player()
