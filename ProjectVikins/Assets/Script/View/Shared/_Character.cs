@@ -239,6 +239,9 @@ namespace Assets.Script.View.Shared
             model.CurrentLife -= damage;
             LifeBar.value = CalculateLife();
 
+            StopCoroutine("SavingPlayer");
+            SetForceToStop(false);
+
             if (model.CurrentLife <= 0)
             {
                 if (model.IsBeingControllable)
@@ -292,7 +295,10 @@ namespace Assets.Script.View.Shared
                 {
                     print("salvou!");
                     model.IsDead = false;
+                    model.CurrentLife = 3;
                     DAL.ProjectVikingsContext.alivePlayers.Add(model.GameObject);
+                    GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = true);
+                    LifeBar.value = CalculateLife();
                     break;
                 }
             }

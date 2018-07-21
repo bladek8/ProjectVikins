@@ -21,6 +21,7 @@ public class ArrowView : MonoBehaviour
     float distance;
     Vector3 startPosition;
     bool stop = false;
+    public bool showSliderEnemy = false;
     [HideInInspector] public Vector2 mouseIn;
     CountDown destroyCountDown = new CountDown(5);
     [HideInInspector] public float holdTime;
@@ -64,7 +65,8 @@ public class ArrowView : MonoBehaviour
 
         if (hit != null)
         {
-            PlayerController.GetSliderEnemy(hit.transform);
+            if(showSliderEnemy)
+                PlayerController.GetSliderEnemy(hit.transform);
             var script = hit.gameObject.GetComponent<MonoBehaviour>();
             script.SendMessage("GetDamage", 1);
             Stop();

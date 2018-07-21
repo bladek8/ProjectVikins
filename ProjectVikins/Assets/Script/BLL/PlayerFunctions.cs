@@ -107,7 +107,7 @@ namespace Assets.Script.BLL
             var player = this.GetModelById(id);
             PlayerViewModel nextPlayer = null;
             var index = ListModel.IndexOf(player) + 1;
-            for (int i = 0; i < ListModel.Count; i++)
+            for (int i = 0; i < ListModel.Count - 1; i++)
             {
                 if (index == ListModel.Count) index = 0;
                 if (!ListModel[index].IsDead)

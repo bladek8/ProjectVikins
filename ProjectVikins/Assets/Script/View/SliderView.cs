@@ -17,7 +17,6 @@ public class SliderView : MonoBehaviour
         }
         else
         {
-            print(model.GameObject);
             LifeBar.GetComponentsInChildren<Image>().ToList().ForEach(x => x.enabled = true);
             LifeBar.value = (float)CalculateLife();
         }

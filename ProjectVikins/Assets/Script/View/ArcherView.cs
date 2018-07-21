@@ -64,6 +64,7 @@ namespace Assets.Script.View
                     var script = arrow.GetComponent<ArrowView>();
                     script.mouseIn = mouseIn;
                     script.holdTime = counter.Time;
+                    script.showSliderEnemy = true;
                     counter.ResetCounter();
                     playerController.AttackMode();
                 }
@@ -145,6 +146,7 @@ namespace Assets.Script.View
             var script = arrow.GetComponent<ArrowView>();
             script.mouseIn = mouseIn;
             script.holdTime = 1;
+            script.showSliderEnemy = false;
         }
 
         public void SetMinManRange(float value, string range)
