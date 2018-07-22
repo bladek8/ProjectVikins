@@ -16,5 +16,6 @@ namespace Assets.Script.DAL.Shared
         public int AttackMin { get; set; }
         public int AttackMax { get; set; }
         public bool IsDead { get; set; }
+        public bool PrefToBeAttacked { get; set; }
     }
 }

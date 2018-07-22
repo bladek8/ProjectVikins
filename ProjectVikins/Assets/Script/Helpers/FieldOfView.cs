@@ -14,16 +14,28 @@ public class FieldOfView : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
-    List<GameObject> _aliveEnemies;
-    List<GameObject> _alivePlayers;
+    public bool IsPlayer;
+    List<GameObject> _aliveTargets;
+    List<GameObject> _alivePrefTargets;
 
     [HideInInspector]
     public List<Transform> visibleTargets;
 
     void Start()
     {
-        _alivePlayers = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
-        _aliveEnemies = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
+        #region  [GetTargets]
+        if (IsPlayer)
+        {
+            _aliveTargets = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
+            _alivePrefTargets = Assets.Script.DAL.ProjectVikingsContext.alivePrefEnemies;
+        }
+        else
+        {
+            _aliveTargets = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
+            _alivePrefTargets = Assets.Script.DAL.ProjectVikingsContext.alivePrefPlayers;
+        }
+        #endregion
+
         visibleTargets = new List<Transform>();
         transform.rotation = Quaternion.Euler(0, 0, rotation);
         StartCoroutine("FindTargetWithDelay", 0.2f);
@@ -40,18 +52,38 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        _alivePlayers = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
-        _aliveEnemies = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
+        #region  [GetTargets]
+        if (IsPlayer)
+        {
+            _aliveTargets = Assets.Script.DAL.ProjectVikingsContext.aliveEnemies;
+            _alivePrefTargets = Assets.Script.DAL.ProjectVikingsContext.alivePrefEnemies;
+        }
+        else
+        {
+            _aliveTargets = Assets.Script.DAL.ProjectVikingsContext.alivePlayers;
+            _alivePrefTargets = Assets.Script.DAL.ProjectVikingsContext.alivePrefPlayers;
+        }
+        #endregion
 
         visibleTargets.Clear();
-                
+
+        if (IsPlayer)
+            print('a');
+
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
+        var _targetsInViewRadius = targetsInViewRadius.Select(x => x.gameObject).ToList();
+        var PreferenceTargets = _targetsInViewRadius.Intersect(_alivePrefTargets);
 
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        if (PreferenceTargets.Count() > 0)
+            _targetsInViewRadius = PreferenceTargets.ToList();
+
+        for (int i = 0; i < _targetsInViewRadius.Count; i++)
         {
-            if (!_alivePlayers.Contains(targetsInViewRadius[i].gameObject) && !_aliveEnemies.Contains(targetsInViewRadius[i].gameObject)) continue;
+            if (!_aliveTargets.Contains(_targetsInViewRadius[i])) continue;
 
-            Transform target = targetsInViewRadius[i].transform;
+            print(_targetsInViewRadius[i]);
+
+            Transform target = _targetsInViewRadius[i].transform;
             Vector2 dirToTarget = (target.position - transform.position).normalized;
             if (Vector2.Angle(transform.up, dirToTarget) < viewAngle / 2)
             {

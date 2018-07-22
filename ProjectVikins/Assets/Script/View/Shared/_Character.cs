@@ -26,7 +26,7 @@ namespace Assets.Script.View.Shared
         [HideInInspector] public bool isPlayable;
         public GameObject FieldOfViewObj;
         public float DistanceOfPlayer;
-        [HideInInspector] public GameObject camera;
+        [HideInInspector] public new GameObject camera;
         [HideInInspector] public CameraView cv;
 
         public Models.PlayerViewModel model;
@@ -254,6 +254,8 @@ namespace Assets.Script.View.Shared
                 PlayerAnimator.SetBool("isWalking", false);
                 PlayerAnimator.SetBool("isRunning", false);
                 GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
+                if (model.PrefToBeAttacked)
+                    DAL.ProjectVikingsContext.alivePrefPlayers.Remove(model.GameObject);
                 return true;
             }
             return false;
@@ -299,6 +301,8 @@ namespace Assets.Script.View.Shared
                     DAL.ProjectVikingsContext.alivePlayers.Add(model.GameObject);
                     GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = true);
                     LifeBar.value = CalculateLife();
+                    if(model.PrefToBeAttacked)
+                        DAL.ProjectVikingsContext.alivePrefPlayers.Add(model.GameObject);
                     break;
                 }
             }

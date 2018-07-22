@@ -26,5 +26,6 @@ namespace Assets.Script.Models
         public bool ForceToWalk { get; set; }
         public bool ForceToStop { get; set; }
         public bool IsDead { get; set; }
+        public bool PrefToBeAttacked { get; set; }
     }
 }

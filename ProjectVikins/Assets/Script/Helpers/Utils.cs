@@ -56,17 +56,17 @@ namespace Assets.Script.Helpers
         public Transform NearTargetInView(List<Transform> targets, List<Transform> visibleTargets, Transform transform)
         {
             if (targets.Count == 0 || visibleTargets.Count == 0) return null;
-            List<Transform> playersList = ConcatEqualItemList(targets, visibleTargets);
-            if (playersList.Count == 0) return null;
-            Transform _player = targets[0];
-            foreach (var player in playersList)
+            List<Transform> targetsList = ConcatEqualItemList(targets, visibleTargets);
+            if (targetsList.Count == 0) return null;
+            Transform _target = targetsList[0];
+            foreach (var target in targetsList)
             {
-                if (player == null) continue;
-                if (Vector3.Distance(transform.position, player.transform.position) < Vector3.Distance(transform.position, _player.transform.position) || player == null)
-                    _player = player;
+                if (target == null) continue;
+                if (Vector3.Distance(transform.position, target.transform.position) < Vector3.Distance(transform.position, _target.transform.position) || target == null)
+                    _target = target;
             }
 
-            return _player;
+            return _target;
         }
 
         public Transform NearTarget(List<Transform> targets, Transform transform, Transform target)

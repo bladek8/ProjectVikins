@@ -28,7 +28,8 @@ namespace Assets.Script.BLL
                 CurrentLife = model.CurrentLife.Value,
                 MaxLife = model.MaxLife.Value,
                 SpeedRun = model.SpeedRun.Value,
-                SpeedWalk = model.SpeedWalk.Value
+                SpeedWalk = model.SpeedWalk.Value,
+                PrefToBeAttacked = model.PrefToBeAttacked
             };
             ListContext.Add(enemy);
             return enemy.EnemyId;
@@ -66,7 +67,8 @@ namespace Assets.Script.BLL
                 CurrentLife = data.CurrentLife,
                 MaxLife = data.MaxLife,
                 SpeedRun = data.SpeedRun,
-                SpeedWalk = data.SpeedWalk
+                SpeedWalk = data.SpeedWalk,
+                PrefToBeAttacked = data.PrefToBeAttacked
             };
         }
 
@@ -85,7 +87,8 @@ namespace Assets.Script.BLL
                         CurrentLife = y.CurrentLife,
                         MaxLife = y.MaxLife,
                         SpeedRun = y.SpeedRun,
-                        SpeedWalk = y.SpeedWalk
+                        SpeedWalk = y.SpeedWalk,
+                        PrefToBeAttacked = y.PrefToBeAttacked
                     }).ToList();
         }
 
@@ -104,6 +107,7 @@ namespace Assets.Script.BLL
                 MaxLife = model.MaxLife.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value,
+                PrefToBeAttacked = model.PrefToBeAttacked
             };
         }
 
@@ -123,6 +127,7 @@ namespace Assets.Script.BLL
                         MaxLife = y.MaxLife.Value,
                         SpeedRun = y.SpeedRun.Value,
                         SpeedWalk = y.SpeedWalk.Value,
+                        PrefToBeAttacked = y.PrefToBeAttacked
                     }).ToList();
         }
 
