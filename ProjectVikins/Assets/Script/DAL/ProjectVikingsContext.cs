@@ -27,7 +27,7 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    enemy = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -2, SpeedWalk = 1.5f, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false }, new Enemy() { EnemyId = 2, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -1, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false } };
+                    enemy = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -2, SpeedWalk = 1.5f, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false }, new Enemy() { EnemyId = 2, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = -23, InitialY = -4, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false, PrefToBeAttacked = true } };
                     bf.Serialize(__file, enemy);
                     __file.Close();
                 }
@@ -35,7 +35,7 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    player = new List<Player>() { new Player() { PlayerId = 1, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = -27, InitialY = 0, SpeedWalk = 1.5f, SpeedRun = 2, IsBeingControllable = true, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 50, MaxLife = 50, PlayerMode = Helpers.PlayerModes.Follow, X = -27, Y = 0, IsDead = false }, new Player() { PlayerId = 2, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = 1.15f, InitialY = -25, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 3, IsDead = false }, new Player() { PlayerId = 3, AttackMax = 2, AttackMin = 1, CharacterTypeId = 1, InitialX = -25, InitialY = 0, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 0, IsDead = false } };
+                    player = new List<Player>() { new Player() { PlayerId = 1, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = -27, InitialY = 0, SpeedWalk = 1.5f, SpeedRun = 2, IsBeingControllable = true, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 10, MaxLife = 10, PlayerMode = Helpers.PlayerModes.Follow, X = -27, Y = 0, IsDead = false, PrefToBeAttacked = true }, new Player() { PlayerId = 2, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = 1.15f, InitialY = -25, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 3, IsDead = false }, new Player() { PlayerId = 3, AttackMax = 2, AttackMin = 1, CharacterTypeId = 1, InitialX = -25, InitialY = 0, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 0, IsDead = false } };
                     bf.Serialize(__file, player);
                     __file.Close();
                 }
@@ -93,6 +93,8 @@ namespace Assets.Script.DAL
         {
             aliveEnemies = enemieModels.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
             alivePlayers = playerModels.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
+            alivePrefPlayers = playerModels.Where(x => !x.IsDead && x.PrefToBeAttacked).Select(x => x.GameObject).ToList();
+            alivePrefEnemies = enemieModels.Where(x => !x.IsDead && x.PrefToBeAttacked).Select(x => x.GameObject).ToList();
         }
 
         #region [Players/Enemies]
@@ -100,9 +102,11 @@ namespace Assets.Script.DAL
 
         public static List<Models.EnemyViewModel> enemieModels = new List<Models.EnemyViewModel>();
         public static List<GameObject> aliveEnemies = new List<GameObject>();
+        public static List<GameObject> alivePrefEnemies = new List<GameObject>();
         public static List<Models.PlayerViewModel> playerModels = new List<Models.PlayerViewModel>();
         public static List<GameObject> alivePlayers = new List<GameObject>();
-        
+        public static List<GameObject> alivePrefPlayers = new List<GameObject>();
+
         public static List<Enemy> enemies = new List<Enemy>();
         public static List<Player> players = new List<Player>();
         #endregion

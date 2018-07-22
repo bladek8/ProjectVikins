@@ -56,15 +56,7 @@ namespace Assets.Script.View
                 }
                 if (Input.GetKeyUp(KeyCode.Mouse0))
                 {
-                    var vectorDirection = mouseIn - new Vector2(transform.position.x, transform.position.y);
-                    var degrees = (Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg) - 90;
-                    if (degrees < 0f) degrees += 360f;
-
-                    var arrow = Instantiate(Arrow, new Vector3(transform.position.x, transform.position.y, -80), Quaternion.Euler(0, 0, degrees));
-                    var script = arrow.GetComponent<ArrowView>();
-                    script.mouseIn = mouseIn;
-                    script.holdTime = counter.Time;
-                    script.showSliderEnemy = true;
+                    Shoot(counter.Time, true);
                     counter.ResetCounter();
                     playerController.AttackMode();
                 }
@@ -122,22 +114,24 @@ namespace Assets.Script.View
                         attackCountDown.StartToCount();
 
                         if (playerController.target != null)
-                            Shoot();
+                        {
+                            var randomX = UnityEngine.Random.Range(XRange.x, XRange.y);
+                            var randomY = UnityEngine.Random.Range(YRange.x, YRange.y);
+                            SetMinManRange(randomX, "X");
+                            SetMinManRange(randomY, "Y");
+                            mouseIn = new Vector2(playerController.target.position.x + randomX, playerController.target.position.y + randomY);
+
+                            Shoot(1);
+                        }
                         playerController.canAttack = false;
                     }
                 }
             }
         }
 
-        public void Shoot()
+        public void Shoot(float holdTime, bool showSliderEnemy = false)
         {
-            var randomX = UnityEngine.Random.Range(XRange.x, XRange.y);
-            var randomY = UnityEngine.Random.Range(YRange.x, YRange.y);
 
-            SetMinManRange(randomX, "X");
-            SetMinManRange(randomY, "Y");
-
-            mouseIn = new Vector2(playerController.target.position.x + randomX, playerController.target.position.y + randomY);
             var vectorDirection = mouseIn - new Vector2(transform.position.x, transform.position.y);
             var degrees = (Mathf.Atan2(vectorDirection.y, vectorDirection.x) * Mathf.Rad2Deg) - 90;
             if (degrees < 0f) degrees += 360f;
@@ -145,8 +139,8 @@ namespace Assets.Script.View
             var arrow = Instantiate(Arrow, new Vector3(transform.position.x, transform.position.y, -80), Quaternion.Euler(0, 0, degrees));
             var script = arrow.GetComponent<ArrowView>();
             script.mouseIn = mouseIn;
-            script.holdTime = 1;
-            script.showSliderEnemy = false;
+            script.holdTime = holdTime;
+            script.showSliderEnemy = showSliderEnemy;
         }
 
         public void SetMinManRange(float value, string range)

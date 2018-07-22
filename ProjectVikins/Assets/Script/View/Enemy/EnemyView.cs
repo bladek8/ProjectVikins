@@ -58,6 +58,8 @@ namespace Assets.Script.View
                 DAL.ProjectVikingsContext.aliveEnemies.Remove(model.GameObject);
                 GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
                 EnemyAnimator.SetBool("isWalking", false);
+                if(model.PrefToBeAttacked)
+                    DAL.ProjectVikingsContext.alivePrefEnemies.Remove(model.GameObject);
                 return true;
             }
             return false;

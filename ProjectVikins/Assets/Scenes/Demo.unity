@@ -1657,7 +1657,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 163982690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.069397, y: 0.01856178, z: -10}
+  m_LocalPosition: {x: -27, y: 0.000000059604645, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 241417037}
@@ -3375,7 +3375,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 414652116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.07, y: -4.02, z: -1}
+  m_LocalPosition: {x: -23, y: -4, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2072477011}
@@ -5748,6 +5748,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 0
   visibleTargets: []
 --- !u!4 &905082706
 Transform:
@@ -7094,6 +7095,7 @@ GameObject:
   - component: {fileID: 1020088950}
   - component: {fileID: 1020088949}
   - component: {fileID: 1020088952}
+  - component: {fileID: 1020088953}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -7214,7 +7216,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -7229,6 +7231,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.37, y: 0.72}
+  m_EdgeRadius: 0
+--- !u!61 &1020088953
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1020088948}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.29453856}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.37, y: 0.72}
+    newSize: {x: 0.37, y: 0.72}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.37, y: 0.13092291}
   m_EdgeRadius: 0
 --- !u!4 &1050248426 stripped
 Transform:
@@ -8264,6 +8291,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 0
   visibleTargets: []
 --- !u!4 &1142788762
 Transform:
@@ -8319,6 +8347,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 0
   visibleTargets: []
 --- !u!4 &1206160182
 Transform:
@@ -8382,6 +8411,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 1
   visibleTargets: []
 --- !u!1 &1228595525
 GameObject:
@@ -8771,6 +8801,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 1
   visibleTargets: []
 --- !u!4 &1300946906
 Transform:
@@ -11997,7 +12028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 315.92, y: -34.92}
+  m_AnchoredPosition: {x: 315.92188, y: -34.919983}
   m_SizeDelta: {x: 111.25, y: 44.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1690760087
@@ -12939,6 +12970,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 1
   visibleTargets: []
 --- !u!4 &1844886882
 Transform:
@@ -14912,7 +14944,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2059586525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1089692, y: 1.4428407, z: 0}
+  m_LocalPosition: {x: -2.1089692, y: 1.4428407, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14954,6 +14986,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  IsPlayer: 0
   visibleTargets: []
 --- !u!4 &2072477011
 Transform:

@@ -31,7 +31,8 @@ namespace Assets.Script.BLL
                 PlayerMode = model.PlayerMode.Value,
                 InitialX = model.InitialX,
                 InitialY = model.InitialY,
-                LastMoviment = model.LastMoviment.Value
+                LastMoviment = model.LastMoviment.Value,
+                PrefToBeAttacked = model.PrefToBeAttacked
             };
             ListContext.Add(player);
             return player.PlayerId;
@@ -66,7 +67,8 @@ namespace Assets.Script.BLL
                 PlayerId = data.PlayerId,
                 PlayerMode = data.PlayerMode,
                 SpeedRun = data.SpeedRun,
-                SpeedWalk = data.SpeedWalk
+                SpeedWalk = data.SpeedWalk,
+                PrefToBeAttacked = data.PrefToBeAttacked
             };
         }
 
@@ -87,7 +89,8 @@ namespace Assets.Script.BLL
                          PlayerId = y.PlayerId,
                          PlayerMode = y.PlayerMode,
                          SpeedRun = y.SpeedRun,
-                         SpeedWalk = y.SpeedWalk
+                         SpeedWalk = y.SpeedWalk,
+                         PrefToBeAttacked = y.PrefToBeAttacked
                      }).ToList();
             return r;
         }
@@ -144,6 +147,7 @@ namespace Assets.Script.BLL
             player.SpeedWalk = model.SpeedWalk;
             player.X = model.GameObject.transform.position.x;
             player.Y = model.GameObject.transform.position.y;
+            player.PrefToBeAttacked = model.PrefToBeAttacked;
 
             return player;
         }
@@ -168,6 +172,7 @@ namespace Assets.Script.BLL
                         SpeedWalk = y.SpeedWalk,
                         X = y.GameObject.transform.position.x,
                         Y = y.GameObject.transform.position.y,
+                        PrefToBeAttacked = y.PrefToBeAttacked
                     }).ToList();
         }
 
