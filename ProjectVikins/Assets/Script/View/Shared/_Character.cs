@@ -246,6 +246,21 @@ namespace Assets.Script.View.Shared
             {
                 if (model.IsBeingControllable)
                 {
+                    if (LifeBar.name == "Slider")
+                    {
+                        SliderView.rect1.localScale = new Vector2(1, 1);
+                        SliderView.rect1.anchoredPosition = new Vector2(113, -28);
+                    }
+                    else if (LifeBar.name == "Slider (1)")
+                    {
+                        SliderView.rect2.localScale = new Vector2(1, 1);
+                        SliderView.rect2.anchoredPosition = new Vector2(113, -58.30002f);
+                    }
+                    else if (LifeBar.name == "Slider (2)")
+                    {
+                        SliderView.rect3.localScale = new Vector2(1, 1);
+                        SliderView.rect3.anchoredPosition = new Vector2(113, -88.5228f);
+                    }
                     playerController.ChangeControllableCharacter();
                     camera.SendMessage("UpdatePlayerTranform");
                 }
