@@ -75,21 +75,21 @@ namespace Assets.Script.View.Shared
 
             if (isPlayable)
             {
-                //if (LifeBar.name == "Slider")
-                //{
-                //    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
-                //    LifeBar.transform.localPosition = new Vector2(-274, 112);
-                //}
-                //else if (LifeBar.name == "Slider (1)")
-                //{
-                //    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
-                //    LifeBar.transform.localPosition = new Vector2(-274, 81.69998f);
-                //}
-                //else if (LifeBar.name == "Slider (2)")
-                //{
-                //    LifeBar.transform.localScale = new Vector2(1.29f, 1.52f);
-                //    LifeBar.transform.localPosition = new Vector2(-274, 51.47721f);
-                //}
+                if (LifeBar.name == "Slider")
+                {
+                    SliderView.rect1.localScale = new Vector2(1.29f, 1.52f);
+                    SliderView.rect1.anchoredPosition = new Vector2(126, -28);
+                }
+                else if (LifeBar.name == "Slider (1)")
+                {
+                    SliderView.rect2.localScale = new Vector2(1.29f, 1.52f);
+                    SliderView.rect2.anchoredPosition = new Vector2(126, -58.30002f);
+                }
+                else if (LifeBar.name == "Slider (2)")
+                {
+                    SliderView.rect3.localScale = new Vector2(1.29f, 1.52f);
+                    SliderView.rect3.anchoredPosition = new Vector2(126, -88.5228f);
+                }
 
                 if (playerController.target != oldTarget)
                 {
@@ -164,21 +164,21 @@ namespace Assets.Script.View.Shared
 
             else
             {
-                //if (LifeBar.name == "Slider")
-                //{
-                //    LifeBar.transform.localScale = new Vector2(1, 1);
-                //    LifeBar.transform.localPosition = new Vector2(-287, 112);
-                //}
-                //else if (LifeBar.name == "Slider (1)")
-                //{
-                //    LifeBar.transform.localScale = new Vector2(1, 1);
-                //    LifeBar.transform.localPosition = new Vector2(-287, 81.69998f);
-                //}
-                //else if (LifeBar.name == "Slider (2)")
-                //{
-                //    LifeBar.transform.localScale = new Vector2(1, 1);
-                //    LifeBar.transform.localPosition = new Vector2(-287, 51.47721f);
-                //}
+                if (LifeBar.name == "Slider")
+                {
+                    SliderView.rect1.localScale = new Vector2(1, 1);
+                    SliderView.rect1.anchoredPosition = new Vector2(113, -28);
+                }
+                else if (LifeBar.name == "Slider (1)")
+                {
+                    SliderView.rect2.localScale = new Vector2(1, 1);
+                    SliderView.rect2.anchoredPosition = new Vector2(113, -58.30002f);
+                }
+                else if (LifeBar.name == "Slider (2)")
+                {
+                    SliderView.rect3.localScale = new Vector2(1, 1);
+                    SliderView.rect3.anchoredPosition = new Vector2(113, -88.5228f);
+                }
 
                 #region Follow
 

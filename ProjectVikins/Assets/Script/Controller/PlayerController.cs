@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Script.Models;
+using Assets.Script.View;
 using UnityEngine;
 using Assets.Script.Helpers;
 using System.IO;
