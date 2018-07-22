@@ -167,7 +167,6 @@ namespace Assets.Script.Controller
 
         public void FindTarget(Transform _transform)
         {
-            Debug.Log(_transform.gameObject);
             if (target != null && followEnemy.CoolDown <= 0 || target == null)
             {
                 followEnemy.StartToCount();

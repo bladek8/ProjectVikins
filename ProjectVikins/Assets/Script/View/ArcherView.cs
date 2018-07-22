@@ -22,6 +22,7 @@ namespace Assets.Script.View
         Vector2 YRange;
         Vector2 XRange;
 
+        bool hadVelocityDecrease = false;
         Transform _oldTarget = null;
 
         private void Awake()
@@ -46,23 +47,42 @@ namespace Assets.Script.View
             CharacterUpdate();
 
             CountDown.DecreaseTime(attackCountDown);
-
+            
             if (isPlayable)
             {
-                if (Input.GetKey(KeyCode.Mouse0))
+                if (attackCountDown.CoolDown <= 0)
                 {
-                    mouseIn = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-                    Counter.Count(counter);
-                }
-                if (Input.GetKeyUp(KeyCode.Mouse0))
-                {
-                    Shoot(counter.Time, true);
-                    counter.ResetCounter();
-                    playerController.AttackMode();
+                    if (Input.GetKey(KeyCode.Mouse0))
+                    {
+                        if (!hadVelocityDecrease)
+                        {
+                            model.SpeedRun = model.SpeedRun / 2;
+                            model.SpeedWalk = model.SpeedWalk / 2;
+                            hadVelocityDecrease = true;
+                        }
+                        Counter.Count(counter);
+                    }
+                    if (Input.GetKeyUp(KeyCode.Mouse0))
+                    {
+                        mouseIn = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+                        Shoot(counter.Time, true);
+                        counter.ResetCounter();
+                        playerController.AttackMode();
+                        model.SpeedRun = model.SpeedRun * 2;
+                        model.SpeedWalk = model.SpeedWalk * 2;
+                        attackCountDown.StartToCount();
+                            hadVelocityDecrease = false;
+                    }
                 }
             }
             else
             {
+                if (attackCountDown.ReturnedToZero)
+                {
+                    model.SpeedRun = model.SpeedRun * 2;
+                    model.SpeedWalk = model.SpeedWalk * 2;
+                }
+
                 if (model.PlayerMode == PlayerModes.Attack)
                 {
                     if (playerController.fow.visibleTargets.Count > 0)
@@ -101,28 +121,20 @@ namespace Assets.Script.View
                 {
                     playerController.targetsAttacked.Clear();
 
-                    if (attackCountDown.ReturnedToZero)
-                    {
-                        model.SpeedRun = model.SpeedRun * 2;
-                        model.SpeedWalk = model.SpeedWalk * 2;
-                    }
-
-                    if (playerController.canAttack)
+                    if (playerController.canAttack && playerController.target != null)
                     {
                         model.SpeedRun = model.SpeedRun / 2;
                         model.SpeedWalk = model.SpeedWalk / 2;
+
                         attackCountDown.StartToCount();
 
-                        if (playerController.target != null)
-                        {
-                            var randomX = UnityEngine.Random.Range(XRange.x, XRange.y);
-                            var randomY = UnityEngine.Random.Range(YRange.x, YRange.y);
-                            SetMinManRange(randomX, "X");
-                            SetMinManRange(randomY, "Y");
-                            mouseIn = new Vector2(playerController.target.position.x + randomX, playerController.target.position.y + randomY);
+                        var randomX = UnityEngine.Random.Range(XRange.x, XRange.y);
+                        var randomY = UnityEngine.Random.Range(YRange.x, YRange.y);
+                        SetMinManRange(randomX, "X");
+                        SetMinManRange(randomY, "Y");
+                        mouseIn = new Vector2(playerController.target.position.x + randomX, playerController.target.position.y + randomY);
 
-                            Shoot(1);
-                        }
+                        Shoot(1);
                         playerController.canAttack = false;
                     }
                 }

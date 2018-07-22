@@ -67,9 +67,6 @@ public class FieldOfView : MonoBehaviour
 
         visibleTargets.Clear();
 
-        if (IsPlayer)
-            print('a');
-
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
         var _targetsInViewRadius = targetsInViewRadius.Select(x => x.gameObject).ToList();
         var PreferenceTargets = _targetsInViewRadius.Intersect(_alivePrefTargets);
@@ -80,9 +77,7 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < _targetsInViewRadius.Count; i++)
         {
             if (!_aliveTargets.Contains(_targetsInViewRadius[i])) continue;
-
-            print(_targetsInViewRadius[i]);
-
+            
             Transform target = _targetsInViewRadius[i].transform;
             Vector2 dirToTarget = (target.position - transform.position).normalized;
             if (Vector2.Angle(transform.up, dirToTarget) < viewAngle / 2)

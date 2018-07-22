@@ -1,4 +1,5 @@
 ﻿using Assets.Script.View;
+using Assets.Script.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,14 +132,6 @@ namespace Assets.Script.SystemManagement
     where TClass1 : class
     {
         public TClass1 Class;
-
-        public static TClass _GetClass<TClass>(List<TClass> _classes, TClass _class)
-        where TClass : class
-        {
-            foreach (var _class1 in _classes)
-                if (_class1 == _class)
-                    return _class1;
-            return null;
-        }
+        
     }
 }

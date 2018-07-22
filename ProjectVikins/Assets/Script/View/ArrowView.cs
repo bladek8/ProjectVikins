@@ -61,13 +61,13 @@ public class ArrowView : MonoBehaviour
     void Collider()
     {
         Debug.DrawLine(boxColliderBoundMin, BoxCollider2D.bounds.max, Color.blue, 0.5f);
-        var hit = Physics2D.OverlapBox(boxColliderBoundMin, BoxCollider2D.bounds.max, 0, target);
-
-        if (hit != null)
+        var hit = Physics2D.Linecast(boxColliderBoundMin, BoxCollider2D.bounds.max, target);
+        
+        if (hit.transform != null)
         {
             if(showSliderEnemy)
                 PlayerController.GetSliderEnemy(hit.transform);
-            var script = hit.gameObject.GetComponent<MonoBehaviour>();
+            var script = hit.transform.gameObject.GetComponent<MonoBehaviour>();
             script.SendMessage("GetDamage", 1);
             Stop();
         }

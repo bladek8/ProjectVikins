@@ -33,12 +33,9 @@ namespace Assets.Script.View.Shared
 
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
         public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
-
-
-        //public GameObject leftFoot;
-        //public GameObject rightFoot;
-
+        
         public Slider LifeBar;
+        RectTransform rectT;
         Transform oldTarget = null;
 
         private void Start()
@@ -51,6 +48,7 @@ namespace Assets.Script.View.Shared
             PlayerBoxCollider2D = allBoxColliders.Single(x => x.isTrigger == true);
             #endregion
 
+            rectT = LifeBar.GetComponent<RectTransform>();
             camera = GameObject.FindGameObjectWithTag("camera");
             cv = camera.GetComponent<CameraView>();
             playerController = new PlayerController();
@@ -60,9 +58,11 @@ namespace Assets.Script.View.Shared
             LifeBar.value = CalculateLife();
             playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
             if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
+            SetSlideSizes();
         }
         public void CharacterUpdate()
         {
+            //SetSlideSizes();
             CountDown.DecreaseTime(changeCharacterCountDown);
             CountDown.DecreaseTime(playerController.followEnemy);
 
@@ -71,26 +71,13 @@ namespace Assets.Script.View.Shared
             if (isPlayable != tempIsControllable)
                 changeCharacterCountDown.StartToCount();
 
+            if (isPlayable != tempIsControllable)
+                SetSlideSizes();
+
             isPlayable = tempIsControllable;
 
             if (isPlayable)
             {
-                if (LifeBar.name == "Slider")
-                {
-                    SliderView.rect1.localScale = new Vector2(1.29f, 1.52f);
-                    SliderView.rect1.anchoredPosition = new Vector2(126, -28);
-                }
-                else if (LifeBar.name == "Slider (1)")
-                {
-                    SliderView.rect2.localScale = new Vector2(1.29f, 1.52f);
-                    SliderView.rect2.anchoredPosition = new Vector2(126, -58.30002f);
-                }
-                else if (LifeBar.name == "Slider (2)")
-                {
-                    SliderView.rect3.localScale = new Vector2(1.29f, 1.52f);
-                    SliderView.rect3.anchoredPosition = new Vector2(126, -88.5228f);
-                }
-
                 if (playerController.target != oldTarget)
                 {
                     oldTarget = playerController.target;
@@ -147,8 +134,8 @@ namespace Assets.Script.View.Shared
                 if (changeCharacterCountDown.CoolDown <= 0 && Input.GetKeyDown(KeyCode.K) && !model.ForceToStop)
                 {
                     playerController.ChangeControllableCharacter();
-
                     camera.SendMessage("UpdatePlayerTranform");
+                    SetSlideSizes();
                 }
 
                 #endregion
@@ -164,22 +151,6 @@ namespace Assets.Script.View.Shared
 
             else
             {
-                if (LifeBar.name == "Slider")
-                {
-                    SliderView.rect1.localScale = new Vector2(1, 1);
-                    SliderView.rect1.anchoredPosition = new Vector2(113, -28);
-                }
-                else if (LifeBar.name == "Slider (1)")
-                {
-                    SliderView.rect2.localScale = new Vector2(1, 1);
-                    SliderView.rect2.anchoredPosition = new Vector2(113, -58.30002f);
-                }
-                else if (LifeBar.name == "Slider (2)")
-                {
-                    SliderView.rect3.localScale = new Vector2(1, 1);
-                    SliderView.rect3.anchoredPosition = new Vector2(113, -88.5228f);
-                }
-
                 #region Follow
 
                 if (model.PlayerMode == PlayerModes.Follow)
@@ -248,6 +219,7 @@ namespace Assets.Script.View.Shared
                 {
                     playerController.ChangeControllableCharacter();
                     camera.SendMessage("UpdatePlayerTranform");
+                    SetSlideSizes();
                 }
                 model.IsDead = true;
                 DAL.ProjectVikingsContext.alivePlayers.Remove(model.GameObject);
@@ -277,7 +249,7 @@ namespace Assets.Script.View.Shared
             playerController.SetForceToStop(value);
         }
 
-        IEnumerator SavingPlayer()
+        private IEnumerator SavingPlayer()
         {
             savePlayerCountDown.StartToCount();
             while (true)
@@ -309,9 +281,24 @@ namespace Assets.Script.View.Shared
             SetForceToStop(false);
         }
 
-        float CalculateLife()
+        private float CalculateLife()
         {
             return model.CurrentLife / model.MaxLife;
         }
+
+        private void SetSlideSizes()
+        {
+            if (model.IsBeingControllable)
+            {
+                rectT.localScale = new Vector2(1.29f, 1.52f);
+                rectT.anchoredPosition = new Vector2(126, rectT.anchoredPosition.y);
+            }
+            else
+            {
+                rectT.localScale = new Vector2(1f, 1f);
+                rectT.anchoredPosition = new Vector2(113, rectT.anchoredPosition.y);
+            }
+        }
+
     }
 }
