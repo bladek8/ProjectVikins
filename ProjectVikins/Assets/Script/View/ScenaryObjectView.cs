@@ -12,7 +12,7 @@ namespace Assets.Script.View
         private BoxCollider2D _boxCollider2D;
         private BoxCollider2D BoxCollider2D { get { return _boxCollider2D ?? (_boxCollider2D = GetComponent<BoxCollider2D>()); } }
 
-        private void Update()
+        private void Awake()
         {
             transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
         }

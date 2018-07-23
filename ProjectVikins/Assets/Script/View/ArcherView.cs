@@ -33,6 +33,9 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            foreach (var a in DAL.ProjectVikingsContext.InventoryItens)
+                print("Id: " + a.ItemId + ", Qtd.: " + a.Amount);
+
             if (model.IsDead)
                 return;
 

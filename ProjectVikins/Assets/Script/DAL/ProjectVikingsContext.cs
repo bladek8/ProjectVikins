@@ -51,7 +51,8 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    InventoryItem = new List<InventoryItem>() { new InventoryItem() {InventoryItemId = 1,  ItemId = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem } };
+                    //InventoryItem = new List<InventoryItem>() { new InventoryItem() {InventoryItemId = 1,  ItemId = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem } };
+                    InventoryItem = new List<InventoryItem>();
                     bf.Serialize(__file, InventoryItem);
                     __file.Close();
                 }
