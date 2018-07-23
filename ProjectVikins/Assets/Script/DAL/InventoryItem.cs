@@ -12,6 +12,5 @@ namespace Assets.Script.DAL
         public int ItemTypeId { get; set; }
         public int ItemId { get; set; }
         public int Amount { get; set; }
-
     }
 }
