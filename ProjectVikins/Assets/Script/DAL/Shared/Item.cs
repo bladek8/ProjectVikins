@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Script.DAL.Shared
 {
+    [Serializable]
     public class Item
     {
         public int ItemId { get; set; }
