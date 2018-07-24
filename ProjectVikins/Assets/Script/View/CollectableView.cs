@@ -18,6 +18,11 @@ namespace Assets.Script.View
         {
             itensController = new Controller.ItensController();
             model = itensController.HealthGetInitialData(transform.position);
+            if (model == null)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
             model.Prefab = Prefab;
             BoxCollider2D = GetComponent<BoxCollider2D>();
             transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);

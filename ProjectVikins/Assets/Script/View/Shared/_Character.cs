@@ -16,24 +16,19 @@ namespace Assets.Script.View.Shared
         public Utils utils = new Utils();
 
         [HideInInspector] public Animator PlayerAnimator;
-
         [HideInInspector] public SpriteRenderer PlayerSpriteRenderer;
-
-        [HideInInspector] public BoxCollider2D PlayerBoxCollider2D;
-
+        [HideInInspector] public CapsuleCollider2D PlayerCollider2D;
         [HideInInspector] public BoxCollider2D colliderTransform;
         [HideInInspector] public KeyMove input = new KeyMove(null, new Vector2(), false);
         [HideInInspector] public bool isPlayable;
-        public GameObject FieldOfViewObj;
-        public float DistanceOfPlayer;
         [HideInInspector] public new GameObject camera;
         [HideInInspector] public CameraView cv;
 
+        public float DistanceOfPlayer;
         public Models.PlayerViewModel model;
-        public Models.HealthItemViewModel itemModel;
 
-        public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
-        public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
+        public CountDown changeCharacterCountDown = new CountDown();
+        public CountDown savePlayerCountDown = new CountDown(3);
 
         public Slider LifeBar;
         RectTransform rectT;
@@ -41,29 +36,38 @@ namespace Assets.Script.View.Shared
 
         private void Start()
         {
+            playerController = new PlayerController();
+
             #region GetComponents
             PlayerAnimator = gameObject.GetComponent<Animator>();
             PlayerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            var allBoxColliders = GetComponents<BoxCollider2D>();
-            colliderTransform = allBoxColliders.Single(x => x.isTrigger == false);
-            PlayerBoxCollider2D = allBoxColliders.Single(x => x.isTrigger == true);
+            colliderTransform = GetComponent<BoxCollider2D>();
+            PlayerCollider2D = gameObject.GetComponent<CapsuleCollider2D>();
             #endregion
-
-            rectT = LifeBar.GetComponent<RectTransform>();
+            
+            #region [Camera]
             camera = GameObject.FindGameObjectWithTag("camera");
             cv = camera.GetComponent<CameraView>();
-            playerController = new PlayerController();
+            playerController.SetFieldOfView(gameObject.GetComponentInChildren<FieldOfView>());
+            #endregion
+
+            #region [Model]
             model = playerController.GetInitialData(gameObject);
             model.ForceToWalk = false;
             model.ForceToStop = false;
+            #endregion
+
+            #region [LifeBar]
+            rectT = LifeBar.GetComponent<RectTransform>();
             LifeBar.value = CalculateLife();
-            playerController.SetFieldOfView(FieldOfViewObj.GetComponent<FieldOfView>());
-            if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
             SetSlideSizes();
+            #endregion
+            
+            if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
         }
+
         public void CharacterUpdate()
         {
-            //SetSlideSizes();
             CountDown.DecreaseTime(changeCharacterCountDown);
             CountDown.DecreaseTime(playerController.followEnemy);
 
@@ -145,7 +149,7 @@ namespace Assets.Script.View.Shared
 
                 if (Input.GetKey(KeyCode.J))
                 {
-                    playerController.Interact(transform, PlayerBoxCollider2D.size);
+                    playerController.Interact(transform, PlayerCollider2D.size);
                 }
                 #endregion
 
@@ -234,13 +238,7 @@ namespace Assets.Script.View.Shared
             }
             return false;
         }
-        public void StartSavePlayer()
-        {
-            if (!model.IsDead || model.ForceToStop) return;
-            SetForceToStop(true);
-            StartCoroutine("SavingPlayer");
-        }
-
+        
         public void SetForceToWalk(bool value)
         {
             playerController.SetForceToWalk(value);
@@ -249,6 +247,34 @@ namespace Assets.Script.View.Shared
         public void SetForceToStop(bool value)
         {
             playerController.SetForceToStop(value);
+        }
+        
+        private float CalculateLife()
+        {
+            return model.CurrentLife / model.MaxLife;
+        }
+
+        private void SetSlideSizes()
+        {
+            if (model.IsBeingControllable)
+            {
+                rectT.localScale = new Vector2(1.29f, 1.52f);
+                rectT.anchoredPosition = new Vector2(126, rectT.anchoredPosition.y);
+            }
+            else
+            {
+                rectT.localScale = new Vector2(1f, 1f);
+                rectT.anchoredPosition = new Vector2(113, rectT.anchoredPosition.y);
+            }
+        }
+
+        #region [SavePlayer]
+
+        public void StartSavePlayer()
+        {
+            if (!model.IsDead || model.ForceToStop) return;
+            SetForceToStop(true);
+            StartCoroutine("SavingPlayer");
         }
 
         private IEnumerator SavingPlayer()
@@ -284,32 +310,15 @@ namespace Assets.Script.View.Shared
             SetForceToStop(false);
         }
 
-        private float CalculateLife()
-        {
-            return model.CurrentLife / model.MaxLife;
-        }
-
-        private void SetSlideSizes()
-        {
-            if (model.IsBeingControllable)
-            {
-                rectT.localScale = new Vector2(1.29f, 1.52f);
-                rectT.anchoredPosition = new Vector2(126, rectT.anchoredPosition.y);
-            }
-            else
-            {
-                rectT.localScale = new Vector2(1f, 1f);
-                rectT.anchoredPosition = new Vector2(113, rectT.anchoredPosition.y);
-            }
-        }
-
         public void HealthParticles(GameObject particles)
         {
             Instantiate(particles, new Vector3(transform.position.x, transform.position.y, 99), transform.rotation);
         }
+
         public void EndSafeAnimiation()
         {
             PlayerAnimator.SetBool("WasSafe", false);
         }
+        #endregion
     }
 }

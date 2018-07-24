@@ -16,7 +16,6 @@ namespace Assets.Script.View
         public LayerMask playerLayer;
         BoxCollider2D colliderTransform;
         [HideInInspector] public Controller.EnemyController enemyController;
-        [SerializeField] GameObject FieldOfViewGameObj;
         [HideInInspector] public CountDown attackCountDown = new CountDown(3);
         [HideInInspector] public Models.EnemyViewModel model;
 
@@ -30,7 +29,7 @@ namespace Assets.Script.View
 
             enemyController = new Controller.EnemyController();
             model = enemyController.GetInitialData(gameObject);
-            enemyController.SetFieldOfView(FieldOfViewGameObj.GetComponent<FieldOfView>());
+            enemyController.SetFieldOfView(gameObject.GetComponentInChildren<FieldOfView>());
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }
 

@@ -15,11 +15,7 @@ namespace Assets.Script.Controller
         {
             var data = HealthItemFunctions.GetDataByInitialPosition(position);
             if (data == null)
-            {
-                data = DAL.ProjectVikingsContext.defaultHealthItem;
-                data.InitialX = position.x;
-                data.InitialY = position.y;
-            }
+                return null;
             var model = HealthItemFunctions.GetDataViewModel(data);
             return model;
         }

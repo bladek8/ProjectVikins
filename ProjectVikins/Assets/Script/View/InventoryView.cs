@@ -21,7 +21,7 @@ namespace Assets.Script.View
                     if (item.Amount >= 1)
                     {
                         var obj = Instantiate(item.Prefab, new Vector3(0, 0, 99), Quaternion.identity);
-                        obj.transform.parent = Inventary.transform;
+                        obj.transform.SetParent(Inventary.transform);
                         var rectTrans = obj.GetComponent<RectTransform>();
 
                         var button = obj.GetComponent<Button>();

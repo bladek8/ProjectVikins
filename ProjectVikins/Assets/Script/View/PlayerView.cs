@@ -40,7 +40,7 @@ namespace Assets.Script.View
                     }
                 }
                 else
-                    playerController.Attack(transform, PlayerBoxCollider2D.size);
+                    playerController.Attack(transform, PlayerCollider2D.size);
 
                 #endregion
             }
@@ -110,7 +110,7 @@ namespace Assets.Script.View
                 }
                 else if (playerController.canAttack && playerController.target != null)
                 {
-                    playerController.Attack(transform, PlayerBoxCollider2D.size);
+                    playerController.Attack(transform, PlayerCollider2D.size);
                 }
 
                 #endregion
