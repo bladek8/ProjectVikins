@@ -37,7 +37,7 @@ namespace Assets.Script.View
         private void FixedUpdate()
         {
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
-            if (Input.GetButtonDown("Interaction"))
+            if (Input.GetButtonDown("Interaction") && canInteract == false)
             {
                 canInteract = true;
                 dialogBox.enabled = false;
