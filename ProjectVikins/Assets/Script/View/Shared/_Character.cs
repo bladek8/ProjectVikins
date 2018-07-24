@@ -275,6 +275,7 @@ namespace Assets.Script.View.Shared
                     LifeBar.value = CalculateLife();
                     if(model.PrefToBeAttacked)
                         DAL.ProjectVikingsContext.alivePrefPlayers.Add(model.GameObject);
+                    PlayerAnimator.SetBool("WasSafe", true);
                     break;
                 }
             }
@@ -300,5 +301,13 @@ namespace Assets.Script.View.Shared
             }
         }
 
+        public void HealthParticles(GameObject particles)
+        {
+            Instantiate(particles, new Vector3(transform.position.x, transform.position.y, 99), transform.rotation);
+        }
+        public void EndSafeAnimiation()
+        {
+            PlayerAnimator.SetBool("WasSafe", false);
+        }
     }
 }
