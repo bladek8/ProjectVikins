@@ -30,11 +30,14 @@ namespace Assets.Script.View.Shared
         [HideInInspector] public CameraView cv;
 
         public Models.PlayerViewModel model;
+        public Models.HealthItemViewModel itemModel;
 
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
         public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
         
         public Slider LifeBar;
+        public Image Inventary;
+        public Image Item;
         RectTransform rectT;
         Transform oldTarget = null;
 
@@ -147,6 +150,38 @@ namespace Assets.Script.View.Shared
                     playerController.Interact(transform, PlayerBoxCollider2D.size);
                 }
                 #endregion
+
+                if (Input.GetButtonDown("teste") && Inventary.enabled == false)
+                {
+                    foreach (var a in DAL.ProjectVikingsContext.InventoryItens)
+                    {
+                        if (a.Amount >= 1)
+                            Item.enabled = true;
+                        else
+                            Item.enabled = false;
+                        break;
+                    }
+                    SetForceToStop(true);
+                    Inventary.enabled = true;
+                }
+
+                if (Inventary.enabled == true)
+                {
+                    if (Input.GetButtonDown("Interaction"))
+                    {
+                        SetForceToStop(false);
+                        Inventary.enabled = false;
+                        Item.enabled = false;
+                    }
+                    if (Input.GetButtonDown("teste2"))
+                    {
+                        Item.enabled = false;
+                        foreach (var b in DAL.ProjectVikingsContext.HealthItens)
+                        {
+                            model.CurrentLife += b.Health;
+                        }
+                    }
+                }
             }
 
             else
