@@ -9,22 +9,24 @@ namespace Assets.Script.View
 {
     public class CollectableView : MonoBehaviour
     {
-        DAL.HealthItem data;
+        Models.HealthItemViewModel model;
         public Controller.ItensController itensController;
         private BoxCollider2D BoxCollider2D;
+        public GameObject Prefab;
 
         private void Awake()
         {
             itensController = new Controller.ItensController();
-            data = itensController.HealthGetInitialData(transform.position);
+            model = itensController.HealthGetInitialData(transform.position);
+            model.Prefab = Prefab;
             BoxCollider2D = GetComponent<BoxCollider2D>();
             transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
         }
 
-        public DAL.HealthItem GetItemModel()
+        public Models.HealthItemViewModel GetItemModel()
         {
             Destroy(gameObject);
-            return data;
+            return model;
         }
     }
 }

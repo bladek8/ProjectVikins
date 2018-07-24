@@ -11,7 +11,7 @@ namespace Assets.Script.Controller
     {
         private readonly HealthItemFunctions HealthItemFunctions = new HealthItemFunctions();
         
-        public DAL.HealthItem HealthGetInitialData(Vector3 position)
+        public Models.HealthItemViewModel HealthGetInitialData(Vector3 position)
         {
             var data = HealthItemFunctions.GetDataByInitialPosition(position);
             if (data == null)
@@ -20,7 +20,8 @@ namespace Assets.Script.Controller
                 data.InitialX = position.x;
                 data.InitialY = position.y;
             }
-            return data;
+            var model = HealthItemFunctions.GetDataViewModel(data);
+            return model;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Script.DAL
 {
@@ -12,5 +13,6 @@ namespace Assets.Script.DAL
         public int ItemTypeId { get; set; }
         public int ItemId { get; set; }
         public int Amount { get; set; }
+        public GameObject Prefab { get; set; }
     }
 }

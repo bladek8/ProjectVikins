@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Script.BLL.Shared;
 using Assets.Script.DAL;
+using UnityEngine;
 
 namespace Assets.Script.BLL
 {
@@ -40,7 +41,8 @@ namespace Assets.Script.BLL
             {
                 ItemId = Convert.ToInt32(data.GetType().GetProperty("ItemId").GetValue(data, null)),
                 ItemTypeId = Convert.ToInt32(data.GetType().GetProperty("ItemTypeId").GetValue(data, null)),
-                Amount = Convert.ToInt32(data.GetType().GetProperty("Amount").GetValue(data, null))
+                Amount = Convert.ToInt32(data.GetType().GetProperty("Amount").GetValue(data, null)),
+                Prefab = (GameObject)data.GetType().GetProperty("Prefab").GetValue(data, null)
             };
             return inventoryItem;
         }

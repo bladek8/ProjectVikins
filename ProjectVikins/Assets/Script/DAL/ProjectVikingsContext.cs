@@ -43,7 +43,7 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    healthItem = new List<HealthItem>() { new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem } };
+                    healthItem = new List<HealthItem>() { new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem }, new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -18, InitialY = 1.25f } };
                     bf.Serialize(__file, healthItem);
                     __file.Close();
                 }

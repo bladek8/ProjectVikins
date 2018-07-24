@@ -34,10 +34,8 @@ namespace Assets.Script.View.Shared
 
         public Helpers.CountDown changeCharacterCountDown = new Helpers.CountDown();
         public Helpers.CountDown savePlayerCountDown = new Helpers.CountDown(3);
-        
+
         public Slider LifeBar;
-        public Image Inventary;
-        public Image Item;
         RectTransform rectT;
         Transform oldTarget = null;
 
@@ -151,37 +149,6 @@ namespace Assets.Script.View.Shared
                 }
                 #endregion
 
-                if (Input.GetButtonDown("teste") && Inventary.enabled == false)
-                {
-                    foreach (var a in DAL.ProjectVikingsContext.InventoryItens)
-                    {
-                        if (a.Amount >= 1)
-                            Item.enabled = true;
-                        else
-                            Item.enabled = false;
-                        break;
-                    }
-                    SetForceToStop(true);
-                    Inventary.enabled = true;
-                }
-
-                if (Inventary.enabled == true)
-                {
-                    if (Input.GetButtonDown("Interaction"))
-                    {
-                        SetForceToStop(false);
-                        Inventary.enabled = false;
-                        Item.enabled = false;
-                    }
-                    if (Input.GetButtonDown("teste2"))
-                    {
-                        Item.enabled = false;
-                        foreach (var b in DAL.ProjectVikingsContext.HealthItens)
-                        {
-                            model.CurrentLife += b.Health;
-                        }
-                    }
-                }
             }
 
             else
@@ -308,7 +275,7 @@ namespace Assets.Script.View.Shared
                     DAL.ProjectVikingsContext.alivePlayers.Add(model.GameObject);
                     GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = true);
                     LifeBar.value = CalculateLife();
-                    if(model.PrefToBeAttacked)
+                    if (model.PrefToBeAttacked)
                         DAL.ProjectVikingsContext.alivePrefPlayers.Add(model.GameObject);
                     PlayerAnimator.SetBool("WasSafe", true);
                     break;
