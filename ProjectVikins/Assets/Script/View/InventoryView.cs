@@ -23,7 +23,8 @@ namespace Assets.Script.View
                         var obj = Instantiate(item.Prefab, new Vector3(0, 0, 99), Quaternion.identity);
                         obj.transform.SetParent(Inventary.transform);
                         var rectTrans = obj.GetComponent<RectTransform>();
-
+                        rectTrans.anchoredPosition = new Vector2(0, 0);
+                        rectTrans.localScale = new Vector2(0.75f, 0.75f);
                         var button = obj.GetComponent<Button>();
                         button.onClick.AddListener(delegate { Interacted(item.InventoryItemId); });
                     }
