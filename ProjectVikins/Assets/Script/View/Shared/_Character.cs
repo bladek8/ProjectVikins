@@ -44,7 +44,7 @@ namespace Assets.Script.View.Shared
             colliderTransform = GetComponent<BoxCollider2D>();
             PlayerCollider2D = gameObject.GetComponent<CapsuleCollider2D>();
             #endregion
-            
+
             #region [Camera]
             camera = GameObject.FindGameObjectWithTag("camera");
             cv = camera.GetComponent<CameraView>();
@@ -62,7 +62,7 @@ namespace Assets.Script.View.Shared
             LifeBar.value = CalculateLife();
             SetSlideSizes();
             #endregion
-            
+
             if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
         }
 
@@ -210,8 +210,18 @@ namespace Assets.Script.View.Shared
             #endregion
         }
 
-        public bool GetDamage(int damage)
+        public bool GetDamage(int damage, Vector3? enemyPosition)
         {
+            if (enemyPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
+            {
+                foreach (var a in model.DirectionsDefended)
+                    print("Possição de defesa: " + a);
+                print("direção do inimigo: " + (int)playerController.GetDirection(transform.position, enemyPosition.Value));
+
+                if (model.DirectionsDefended.Contains((int)playerController.GetDirection(transform.position, enemyPosition.Value)))
+                    return false;
+            }
+
             playerController.AttackMode();
             model.CurrentLife -= damage;
             LifeBar.value = CalculateLife();
@@ -238,7 +248,7 @@ namespace Assets.Script.View.Shared
             }
             return false;
         }
-        
+
         public void SetForceToWalk(bool value)
         {
             playerController.SetForceToWalk(value);
@@ -248,7 +258,7 @@ namespace Assets.Script.View.Shared
         {
             playerController.SetForceToStop(value);
         }
-        
+
         private float CalculateLife()
         {
             return model.CurrentLife / model.MaxLife;

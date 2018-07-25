@@ -282,5 +282,23 @@ namespace Assets.Script.Controller
             else
                 SliderView.model = enemy.First();
         }
+
+        public void Defend(ref PlayerViewModel model)
+        {
+            int currentDirection = (int)model.LastMoviment;
+            if (currentDirection == 0) model.DirectionsDefended = null;
+            var directionsDefended = new List<int> { currentDirection };
+            if (currentDirection + 1 == 9)
+                directionsDefended.Add(1);
+            else
+                directionsDefended.Add(currentDirection + 1);
+            if (currentDirection - 1 == 0)
+                directionsDefended.Add(8);
+            else
+                directionsDefended.Add(currentDirection - 1);
+
+            model.DirectionsDefended = directionsDefended;
+        }
+
     }
 }

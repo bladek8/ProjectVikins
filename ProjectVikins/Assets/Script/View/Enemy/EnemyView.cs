@@ -38,7 +38,7 @@ namespace Assets.Script.View
             CountDown.DecreaseTime(enemyController.followPlayer);
             CountDown.DecreaseTime(attackCountDown);
 
-            var input = enemyController.GetInput();
+            var input = enemyController.GetInput(model);
             EnemySpriteRenderer.flipX = input.Flip.Value;
             EnemyAnimator.SetFloat("speedX", input.Vector2.x);
             EnemyAnimator.SetFloat("speedY", input.Vector2.y);

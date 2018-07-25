@@ -68,7 +68,7 @@ public class ArrowView : MonoBehaviour
             if(showSliderEnemy)
                 PlayerController.GetSliderEnemy(hit.transform);
             var script = hit.transform.gameObject.GetComponent<MonoBehaviour>();
-            script.SendMessage("GetDamage", 1);
+            //script.SendMessage("GetDamage", 1);
             Stop();
         }
     }

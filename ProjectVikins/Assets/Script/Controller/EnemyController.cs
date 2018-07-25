@@ -83,7 +83,7 @@ namespace Assets.Script.Controller
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 
                 var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                script.SendMessage("GetDamage", GetDamage());
+                SystemManagement.SystemManagement.CallMethod(script, "GetDamage", new object[] { GetDamage(), transform.position });
             }
         }
 
@@ -98,10 +98,8 @@ namespace Assets.Script.Controller
             this.fow = fow;
         }
 
-        public Helpers.KeyMove GetInput()
+        public KeyMove GetInput(EnemyViewModel enemy)
         {
-            var enemy = enemyFunctions.GetModelById(id);
-
             switch (enemy.LastMoviment)
             {
                 case Helpers.PossibleMoviment.Down:

@@ -27,5 +27,6 @@ namespace Assets.Script.Models
         public bool ForceToStop { get; set; }
         public bool IsDead { get; set; }
         public bool PrefToBeAttacked { get; set; }
-    }
+        public List<int> DirectionsDefended { get; set; }
+        }
 }

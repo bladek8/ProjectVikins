@@ -21,12 +21,12 @@ namespace Assets.Script.Helpers
     {
         None = 0,
         Left = 1,
-        Right = 2,
+        Up_Left = 2,
         Up = 3,
-        Down = 4,
-        Up_Left = 5,
-        Up_Right = 6,
-        Down_Left = 7,
-        Down_Right = 8
+        Up_Right = 4,
+        Right = 5,
+        Down_Right = 6,
+        Down = 7,
+        Down_Left = 8
     };
 }

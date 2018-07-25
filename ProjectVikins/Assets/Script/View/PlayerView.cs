@@ -43,6 +43,15 @@ namespace Assets.Script.View
                     playerController.Attack(transform, PlayerCollider2D.size);
 
                 #endregion
+
+                if (Input.GetKey(KeyCode.P))
+                {
+                    playerController.Defend(ref model);
+                }
+                if (Input.GetKeyUp(KeyCode.P))
+                {
+                    model.DirectionsDefended = null;
+                }
             }
             else
             {

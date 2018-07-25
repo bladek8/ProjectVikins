@@ -1075,13 +1075,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAnimator: {fileID: 0}
   PlayerSpriteRenderer: {fileID: 0}
-  PlayerBoxCollider2D: {fileID: 0}
+  PlayerCollider2D: {fileID: 0}
   colliderTransform: {fileID: 0}
   isPlayable: 0
-  FieldOfViewObj: {fileID: 1300946904}
-  DistanceOfPlayer: 2
   camera: {fileID: 0}
   cv: {fileID: 0}
+  DistanceOfPlayer: 2
   LifeBar: {fileID: 1914002530}
 --- !u!95 &89100171
 Animator:
@@ -1138,8 +1137,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0020132065, y: 0}
-  m_Size: {x: 0.34987068, y: 0.72}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.35305786, y: 0.72}
   m_Direction: 0
 --- !u!212 &89100174
 SpriteRenderer:
@@ -2445,7 +2444,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  FieldOfViewGameObj: {fileID: 1142788760}
   Arrow: {fileID: 1406629651232154, guid: 8a2392eb019e4e140b44b9dfe81c8754, type: 2}
 --- !u!50 &298711791
 Rigidbody2D:
@@ -3337,7 +3335,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  FieldOfViewGameObj: {fileID: 2072477009}
   Arrow: {fileID: 1406629651232154, guid: 8a2392eb019e4e140b44b9dfe81c8754, type: 2}
 --- !u!50 &414652118
 Rigidbody2D:
@@ -5320,7 +5317,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  FieldOfViewGameObj: {fileID: 1206160180}
 --- !u!95 &833567337
 Animator:
   serializedVersion: 3
@@ -6892,7 +6888,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  FieldOfViewGameObj: {fileID: 905082704}
 --- !u!50 &973664791
 Rigidbody2D:
   serializedVersion: 4
@@ -9157,11 +9152,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1311642818}
   - component: {fileID: 1311642817}
-  - component: {fileID: 1311642816}
   - component: {fileID: 1311642815}
   - component: {fileID: 1311642814}
   - component: {fileID: 1311642813}
   - component: {fileID: 1311642812}
+  - component: {fileID: 1311642816}
   m_Layer: 8
   m_Name: Archer
   m_TagString: Player
@@ -9182,13 +9177,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAnimator: {fileID: 0}
   PlayerSpriteRenderer: {fileID: 0}
-  PlayerBoxCollider2D: {fileID: 0}
+  PlayerCollider2D: {fileID: 0}
   colliderTransform: {fileID: 0}
   isPlayable: 0
-  FieldOfViewObj: {fileID: 1224233057}
-  DistanceOfPlayer: 7
   camera: {fileID: 0}
   cv: {fileID: 0}
+  DistanceOfPlayer: 7
   LifeBar: {fileID: 1851156753}
   Arrow: {fileID: 1410218114308680, guid: 26972d501567ca441bed5564b5f2406c, type: 2}
 --- !u!50 &1311642813
@@ -9254,8 +9248,8 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37, y: 0.19107938}
   m_EdgeRadius: 0
---- !u!61 &1311642816
-BoxCollider2D:
+--- !u!70 &1311642816
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -9267,18 +9261,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.37, y: 0.72}
-    newSize: {x: 0.37, y: 0.72}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.37, y: 0.72}
-  m_EdgeRadius: 0
+  m_Direction: 0
 --- !u!212 &1311642817
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13633,11 +13617,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1880916551}
   - component: {fileID: 1880916550}
-  - component: {fileID: 1880916549}
   - component: {fileID: 1880916548}
   - component: {fileID: 1880916547}
   - component: {fileID: 1880916546}
   - component: {fileID: 1880916552}
+  - component: {fileID: 1880916549}
   m_Layer: 8
   m_Name: Player (2)
   m_TagString: Player
@@ -13658,13 +13642,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAnimator: {fileID: 0}
   PlayerSpriteRenderer: {fileID: 0}
-  PlayerBoxCollider2D: {fileID: 0}
+  PlayerCollider2D: {fileID: 0}
   colliderTransform: {fileID: 0}
   isPlayable: 0
-  FieldOfViewObj: {fileID: 1844886880}
-  DistanceOfPlayer: 2
   camera: {fileID: 0}
   cv: {fileID: 0}
+  DistanceOfPlayer: 2
   LifeBar: {fileID: 1568837542}
 --- !u!95 &1880916547
 Animator:
@@ -13709,8 +13692,8 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37, y: 0.19107938}
   m_EdgeRadius: 0
---- !u!61 &1880916549
-BoxCollider2D:
+--- !u!70 &1880916549
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -13722,18 +13705,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.37, y: 0.72}
-    newSize: {x: 0.37, y: 0.72}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.37, y: 0.72}
-  m_EdgeRadius: 0
+  m_Direction: 0
 --- !u!212 &1880916550
 SpriteRenderer:
   m_ObjectHideFlags: 0
