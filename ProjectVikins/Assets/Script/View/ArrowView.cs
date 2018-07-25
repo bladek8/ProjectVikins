@@ -4,6 +4,7 @@ using UnityEngine;
 using Assets.Script.Helpers;
 using Assets.Script.Controller;
 using System.Linq;
+using Assets.Script.SystemManagement;
 
 public class ArrowView : MonoBehaviour
 {
@@ -68,7 +69,7 @@ public class ArrowView : MonoBehaviour
             if(showSliderEnemy)
                 PlayerController.GetSliderEnemy(hit.transform);
             var script = hit.transform.gameObject.GetComponent<MonoBehaviour>();
-            //script.SendMessage("GetDamage", 1);
+            SystemManagement.CallMethod(script, "GetDamage", new object[] { 1, startPosition});
             Stop();
         }
     }

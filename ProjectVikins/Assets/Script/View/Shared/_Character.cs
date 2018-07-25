@@ -214,10 +214,6 @@ namespace Assets.Script.View.Shared
         {
             if (enemyPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
             {
-                foreach (var a in model.DirectionsDefended)
-                    print("Possição de defesa: " + a);
-                print("direção do inimigo: " + (int)playerController.GetDirection(transform.position, enemyPosition.Value));
-
                 if (model.DirectionsDefended.Contains((int)playerController.GetDirection(transform.position, enemyPosition.Value)))
                     return false;
             }

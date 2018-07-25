@@ -48,8 +48,14 @@ namespace Assets.Script.View
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
 
-        public bool GetDamage(int damage)
+        public bool GetDamage(int damage, Vector3? playerPosition)
         {
+            if (playerPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
+            {
+                if (model.DirectionsDefended.Contains((int)enemyController.GetDirection(transform.position, playerPosition.Value)))
+                    return false;
+            }
+
             model.CurrentLife -= damage;
             if (model.CurrentLife <= 0)
             {
