@@ -7,6 +7,7 @@ using UnityEngine;
 using Assets.Script.Helpers;
 using Assets.Script.Models;
 using Assets.Script.BLL;
+using Assets.Script.SystemManagement;
 
 namespace Assets.Script.Controller
 {
@@ -83,7 +84,7 @@ namespace Assets.Script.Controller
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 
                 var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                SystemManagement.SystemManagement.CallMethod(script, "GetDamage", new object[] { GetDamage(), transform.position, true });
+                script.CallMethod("GetDamage", new object[] { GetDamage(), transform.position, true });
             }
         }
 

@@ -27,7 +27,7 @@ namespace Assets.Script.SystemManagement
             Class2 = EnemyArcherView
         };
         
-        public static object CallMethod(object _class, string methodName, object value = null)
+        public static object CallMethod(this object _class, string methodName, object value = null)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Assets.Script.SystemManagement
             }
         }
 
-        public static object CallMethod(object _class, string methodName, object[] value)
+        public static object CallMethod(this object _class, string methodName, object[] value)
         {
             try
             {
