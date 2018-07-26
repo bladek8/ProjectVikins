@@ -84,7 +84,7 @@ namespace Assets.Script.Controller
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 
                 var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                script.CallMethod("GetDamage", new object[] { GetDamage(), transform.position, true });
+                script.CallMethod("GetDamage", new object[] { GetDamage(), transform.position, 0.3f, true });
             }
         }
 

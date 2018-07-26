@@ -16,6 +16,12 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if (disabledCountDown.CoolDown > 0)
+            {
+                CountDown.DecreaseTime(disabledCountDown);
+                return;
+            }
+
             if (model.IsDead)
                 return;
 

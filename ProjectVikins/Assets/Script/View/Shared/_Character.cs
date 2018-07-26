@@ -29,6 +29,7 @@ namespace Assets.Script.View.Shared
 
         public CountDown changeCharacterCountDown = new CountDown();
         public CountDown savePlayerCountDown = new CountDown(3);
+        public CountDown disabledCountDown = new CountDown();
 
         public Slider LifeBar;
         RectTransform rectT;
@@ -38,7 +39,7 @@ namespace Assets.Script.View.Shared
         {
             playerController = new PlayerController();
 
-            #region GetComponents
+            #region [GetComponents]
             PlayerAnimator = gameObject.GetComponent<Animator>();
             PlayerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             colliderTransform = GetComponent<BoxCollider2D>();
@@ -210,12 +211,18 @@ namespace Assets.Script.View.Shared
             #endregion
         }
 
-        public bool GetDamage(int damage, Vector3? enemyPosition, bool recue = false)
+        public bool GetDamage(int damage, Vector3? enemyPosition, float? disabledRate, bool recue = false)
         {
             if (enemyPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
             {
                 if (model.DirectionsDefended.Contains((int)playerController.GetDirection(transform.position, enemyPosition.Value)))
                     return false;
+            }
+
+            if (disabledRate.HasValue)
+            {
+                disabledCountDown.Rate = disabledRate.Value;
+                disabledCountDown.StartToCount();
             }
 
             playerController.AttackMode();

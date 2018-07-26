@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Script.Helpers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,6 +27,12 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if (disabledCountDown.CoolDown > 0)
+            {
+                CountDown.DecreaseTime(disabledCountDown);
+                return;
+            }
+
             if (model.IsDead)
                 return;
 

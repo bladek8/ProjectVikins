@@ -47,7 +47,7 @@ namespace Assets.Script.Controller
                 {
                     target = hitCollider.transform;
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                    var killed = script.CallMethod("GetDamage", new object[] { GetDamage(), transform.position, true });
+                    var killed = script.CallMethod("GetDamage", new object[] { GetDamage(), transform.position, 0.3f, true });
                     if (killed != null)
                     {
                         if ((bool)killed)

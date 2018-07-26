@@ -17,6 +17,7 @@ namespace Assets.Script.View
         BoxCollider2D colliderTransform;
         [HideInInspector] public Controller.EnemyController enemyController;
         [HideInInspector] public CountDown attackCountDown = new CountDown(3);
+        public CountDown disabledCountDown = new CountDown();
         [HideInInspector] public Models.EnemyViewModel model;
 
         void Start()
@@ -48,12 +49,18 @@ namespace Assets.Script.View
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
 
-        public bool GetDamage(int damage, Vector3? playerPosition, bool recue = false)
+        public bool GetDamage(int damage, Vector3? playerPosition, float? disabledRate, bool recue = false)
         {
             if (playerPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
             {
                 if (model.DirectionsDefended.Contains((int)enemyController.GetDirection(transform.position, playerPosition.Value)))
                     return false;
+            }
+
+            if (disabledRate.HasValue)
+            {
+                disabledCountDown.Rate = disabledRate.Value;
+                disabledCountDown.StartToCount();
             }
 
             model.CurrentLife -= damage;
