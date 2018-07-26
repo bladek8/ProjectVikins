@@ -38,7 +38,7 @@ namespace Assets.Script.View
             CountDown.DecreaseTime(enemyController.followPlayer);
             CountDown.DecreaseTime(attackCountDown);
 
-            var input = enemyController.GetInput(model);
+            var input = enemyController.GetInput(model.LastMoviment.Value);
             EnemySpriteRenderer.flipX = input.Flip.Value;
             EnemyAnimator.SetFloat("speedX", input.Vector2.x);
             EnemyAnimator.SetFloat("speedY", input.Vector2.y);
@@ -48,7 +48,7 @@ namespace Assets.Script.View
             transform.position = Utils.SetPositionZ(transform, colliderTransform.bounds.min.y);
         }
 
-        public bool GetDamage(int damage, Vector3? playerPosition)
+        public bool GetDamage(int damage, Vector3? playerPosition, bool recue = false)
         {
             if (playerPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
             {
@@ -57,13 +57,17 @@ namespace Assets.Script.View
             }
 
             model.CurrentLife -= damage;
+
+            if (recue)
+                transform.Translate(enemyController.GetInput(enemyController.GetDirection(playerPosition.Value, transform.position)).Vector2 * 0.15f);
+
             if (model.CurrentLife <= 0)
             {
                 model.IsDead = true;
                 DAL.ProjectVikingsContext.aliveEnemies.Remove(model.GameObject);
                 GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
                 EnemyAnimator.SetBool("isWalking", false);
-                if(model.PrefToBeAttacked)
+                if (model.PrefToBeAttacked)
                     DAL.ProjectVikingsContext.alivePrefEnemies.Remove(model.GameObject);
                 return true;
             }

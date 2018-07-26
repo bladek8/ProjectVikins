@@ -177,7 +177,7 @@ namespace Assets.Script.View.Shared
 
                 #region Walk Input
 
-                input = playerController.GetInput();
+                input = playerController.GetInput(model.LastMoviment.Value);
                 PlayerSpriteRenderer.flipX = input.Flip.Value;
                 PlayerAnimator.SetFloat("speedX", input.Vector2.x);
                 PlayerAnimator.SetFloat("speedY", input.Vector2.y);
@@ -210,7 +210,7 @@ namespace Assets.Script.View.Shared
             #endregion
         }
 
-        public bool GetDamage(int damage, Vector3? enemyPosition)
+        public bool GetDamage(int damage, Vector3? enemyPosition, bool recue = false)
         {
             if (enemyPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
             {
@@ -221,6 +221,9 @@ namespace Assets.Script.View.Shared
             playerController.AttackMode();
             model.CurrentLife -= damage;
             LifeBar.value = CalculateLife();
+
+            if (recue)
+                transform.Translate(playerController.GetInput(playerController.GetDirection(enemyPosition.Value, transform.position)).Vector2 * 0.15f);
 
             StopCoroutine("SavingPlayer");
             SetForceToStop(false);

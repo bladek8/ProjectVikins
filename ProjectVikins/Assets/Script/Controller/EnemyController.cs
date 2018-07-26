@@ -83,7 +83,7 @@ namespace Assets.Script.Controller
                 targetsAttacked.Add(hitCollider.gameObject.GetInstanceID());
 
                 var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                SystemManagement.SystemManagement.CallMethod(script, "GetDamage", new object[] { GetDamage(), transform.position });
+                SystemManagement.SystemManagement.CallMethod(script, "GetDamage", new object[] { GetDamage(), transform.position, true });
             }
         }
 
@@ -98,28 +98,28 @@ namespace Assets.Script.Controller
             this.fow = fow;
         }
 
-        public KeyMove GetInput(EnemyViewModel enemy)
+        public KeyMove GetInput(PossibleMoviment lastMoviment)
         {
-            switch (enemy.LastMoviment)
+            switch (lastMoviment)
             {
-                case Helpers.PossibleMoviment.Down:
-                    return new Helpers.KeyMove(null, new Vector2(0, -1), false);
-                case Helpers.PossibleMoviment.Down_Left:
-                    return new Helpers.KeyMove(null, new Vector2(-1, -1), false);
-                case Helpers.PossibleMoviment.Down_Right:
-                    return new Helpers.KeyMove(null, new Vector2(1, -1), true);
-                case Helpers.PossibleMoviment.Left:
-                    return new Helpers.KeyMove(null, new Vector2(-1, 0), false);
-                case Helpers.PossibleMoviment.Right:
-                    return new Helpers.KeyMove(null, new Vector2(1, 0), true);
-                case Helpers.PossibleMoviment.Up:
-                    return new Helpers.KeyMove(null, new Vector2(0, 1), false);
-                case Helpers.PossibleMoviment.Up_Left:
-                    return new Helpers.KeyMove(null, new Vector2(-1, 1), false);
-                case Helpers.PossibleMoviment.Up_Right:
-                    return new Helpers.KeyMove(null, new Vector2(1, 1), true);
+                case PossibleMoviment.Down:
+                    return new KeyMove(null, new Vector2(0, -1), false);
+                case PossibleMoviment.Down_Left:
+                    return new KeyMove(null, new Vector2(-1, -1), false);
+                case PossibleMoviment.Down_Right:
+                    return new KeyMove(null, new Vector2(1, -1), true);
+                case PossibleMoviment.Left:
+                    return new KeyMove(null, new Vector2(-1, 0), false);
+                case PossibleMoviment.Right:
+                    return new KeyMove(null, new Vector2(1, 0), true);
+                case PossibleMoviment.Up:
+                    return new KeyMove(null, new Vector2(0, 1), false);
+                case PossibleMoviment.Up_Left:
+                    return new KeyMove(null, new Vector2(-1, 1), false);
+                case PossibleMoviment.Up_Right:
+                    return new KeyMove(null, new Vector2(1, 1), true);
                 default:
-                    return new Helpers.KeyMove(null, new Vector2(0, 0), false);
+                    return new KeyMove(null, new Vector2(0, 0), false);
             }
         }
         public Models.EnemyViewModel GetInitialData(GameObject go)
