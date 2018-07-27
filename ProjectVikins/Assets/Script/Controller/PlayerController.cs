@@ -47,7 +47,7 @@ namespace Assets.Script.Controller
                 {
                     target = hitCollider.transform;
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                    var killed = SystemManagement.SystemManagement.CallMethod(script, "GetDamage", new object[] { GetDamage(), transform.position });
+                    var killed = script.CallMethod("GetDamage", new object[] { GetDamage(), transform.position, 0.3f, true });
                     if (killed != null)
                     {
                         if ((bool)killed)
@@ -87,7 +87,7 @@ namespace Assets.Script.Controller
                 else if (hitCollider.tag == "Collectable")
                 {
                     var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
-                    var itemModel = SystemManagement.SystemManagement.CallMethod(script, "GetItemModel");
+                    var itemModel = script.CallMethod("GetItemModel");
                     if (itemModel != null)
                         inventoryItemFunctions.Create(itemModel);
                 }
@@ -210,11 +210,9 @@ namespace Assets.Script.Controller
             this.fow = fow;
         }
 
-        public Helpers.KeyMove GetInput()
+        public Helpers.KeyMove GetInput(PossibleMoviment lastMoviment)
         {
-            var player = playerFunctions.GetModelById(id);
-
-            switch (player.LastMoviment)
+            switch (lastMoviment)
             {
                 case Helpers.PossibleMoviment.Down:
                     return new Helpers.KeyMove(null, new Vector2(0, -1), false);

@@ -29,6 +29,7 @@ namespace Assets.Script.View.Shared
 
         public CountDown changeCharacterCountDown = new CountDown();
         public CountDown savePlayerCountDown = new CountDown(3);
+        public CountDown disabledCountDown = new CountDown();
 
         public Slider LifeBar;
         RectTransform rectT;
@@ -38,7 +39,7 @@ namespace Assets.Script.View.Shared
         {
             playerController = new PlayerController();
 
-            #region GetComponents
+            #region [GetComponents]
             PlayerAnimator = gameObject.GetComponent<Animator>();
             PlayerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             colliderTransform = GetComponent<BoxCollider2D>();
@@ -177,7 +178,7 @@ namespace Assets.Script.View.Shared
 
                 #region Walk Input
 
-                input = playerController.GetInput();
+                input = playerController.GetInput(model.LastMoviment.Value);
                 PlayerSpriteRenderer.flipX = input.Flip.Value;
                 PlayerAnimator.SetFloat("speedX", input.Vector2.x);
                 PlayerAnimator.SetFloat("speedY", input.Vector2.y);
@@ -210,7 +211,7 @@ namespace Assets.Script.View.Shared
             #endregion
         }
 
-        public bool GetDamage(int damage, Vector3? enemyPosition)
+        public bool GetDamage(int damage, Vector3? enemyPosition, float? disabledRate, bool recue = false)
         {
             if (enemyPosition.HasValue && model.DirectionsDefended != null && model.DirectionsDefended.Count > 0)
             {
@@ -218,9 +219,18 @@ namespace Assets.Script.View.Shared
                     return false;
             }
 
+            if (disabledRate.HasValue)
+            {
+                disabledCountDown.Rate = disabledRate.Value;
+                disabledCountDown.StartToCount();
+            }
+
             playerController.AttackMode();
             model.CurrentLife -= damage;
             LifeBar.value = CalculateLife();
+
+            if (recue)
+                transform.Translate(playerController.GetInput(playerController.GetDirection(enemyPosition.Value, transform.position)).Vector2 * 0.15f);
 
             StopCoroutine("SavingPlayer");
             SetForceToStop(false);

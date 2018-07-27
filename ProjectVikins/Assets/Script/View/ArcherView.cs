@@ -33,6 +33,12 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+            if (disabledCountDown.CoolDown >= 0)
+            {
+                CountDown.DecreaseTime(disabledCountDown);
+                return;
+            }
+
             if (model.IsDead)
                 return;
 
@@ -107,7 +113,7 @@ namespace Assets.Script.View
                             PlayerAnimator.SetBool("isRunning", false);
                         }
 
-                        input = playerController.GetInput();
+                        input = playerController.GetInput(model.LastMoviment.Value);
                         PlayerSpriteRenderer.flipX = input.Flip.Value;
                         PlayerAnimator.SetFloat("speedX", input.Vector2.x);
                         PlayerAnimator.SetFloat("speedY", input.Vector2.y);
