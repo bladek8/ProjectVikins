@@ -15,6 +15,7 @@ namespace Assets.Script.DAL
             List<Player> player = new List<Player>();
             List<Enemy> enemy = new List<Enemy>();
             List<HealthItem> healthItem = new List<HealthItem>();
+            List<StrenghtItem> strenghtItem = new List<StrenghtItem>();
             List<InventoryItem> InventoryItem = new List<InventoryItem>();
 
             var currentDirectory = Directory.GetCurrentDirectory();
@@ -43,8 +44,16 @@ namespace Assets.Script.DAL
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     FileStream __file = File.Create(file.FullName);
-                    healthItem = new List<HealthItem>() { new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -19, InitialY = 0.9f }, new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -17, InitialY = 0.7f }, { new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -18, InitialY = 1.25f } } };
+                    healthItem = new List<HealthItem>() { new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -19, InitialY = 0.9f }, new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -17, InitialY = 0.7f }, new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -18, InitialY = 1.25f } };
                     bf.Serialize(__file, healthItem);
+                    __file.Close();
+                }
+                if (file.Name == "StrenghtItem.dat")
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    FileStream __file = File.Create(file.FullName);
+                    strenghtItem = new List<StrenghtItem>() { new StrenghtItem() { ItemId = 2, Name = "OpenedCoconut", Strenght = 10, Amount = 1, ItemTypeId = (int)ItemTypes.StrenghtItem, InitialX = -18.4f, InitialY = 1.9f } };
+                    bf.Serialize(__file, strenghtItem);
                     __file.Close();
                 }
                 if (file.Name == "InventoryItem.dat")
@@ -69,6 +78,8 @@ namespace Assets.Script.DAL
                         enemies = SetList<Enemy>(_file);
                     if (className == typeof(HealthItem))
                         HealthItens = SetList<HealthItem>(_file);
+                    if (className == typeof(StrenghtItem))
+                        StrenghtItens = SetList<StrenghtItem>(_file);
                     if (className == typeof(InventoryItem))
                         InventoryItens = SetList<InventoryItem>(_file);
 
@@ -114,6 +125,7 @@ namespace Assets.Script.DAL
 
         #region [Inventory]
         public static List<HealthItem> HealthItens = new List<DAL.HealthItem>();
+        public static List<StrenghtItem> StrenghtItens = new List<StrenghtItem>();
         public static List<InventoryItem> InventoryItens = new List<DAL.InventoryItem>();
         #endregion
 
@@ -121,6 +133,7 @@ namespace Assets.Script.DAL
         public static readonly Player defaultPlayer = new Player() { PlayerId = players.Count, PlayerMode = Helpers.PlayerModes.Follow, IsBeingControllable = false, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 3, MaxLife = 3, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
         public static readonly Enemy defaultEnemy = new Enemy() { EnemyId = enemies.Count, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 10, MaxLife = 10, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
         public static readonly HealthItem defaultHealthItem = new HealthItem() { ItemId = HealthItens.Count, ItemTypeId = (int)ItemTypes.HealthItem, Health = 2, Amount = 1, Name = "Coconut" };
+        public static readonly StrenghtItem defaultStrenghtItem = new StrenghtItem() { ItemId = StrenghtItens.Count, ItemTypeId = (int)ItemTypes.StrenghtItem, Strenght = 10, Amount = 1, Name = "OpenedCoconut" };
         #endregion
     }
 }

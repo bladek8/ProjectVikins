@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Assets.Script.DAL
 {
-    public enum ItemTypes
+    [Serializable]
+    public class StrenghtItem : Shared.Item
     {
-        HealthItem = 1,
-        WeaponItem = 2,
-        ShottableItem = 3,
-        StrenghtItem = 4
+        public int Strenght { get; set; }
     }
 }

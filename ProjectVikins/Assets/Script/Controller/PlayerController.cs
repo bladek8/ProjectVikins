@@ -90,7 +90,13 @@ namespace Assets.Script.Controller
                     var itemModel = SystemManagement.SystemManagement.CallMethod(script, "GetItemModel");
                     if (itemModel != null)
                         inventoryItemFunctions.Create(itemModel);
-
+                }
+                else if (hitCollider.tag == "StrenghtItem")
+                {
+                    var script = hitCollider.gameObject.GetComponent<MonoBehaviour>();
+                    var itemModel = SystemManagement.SystemManagement.CallMethod(script, "GetStrenghtItemModel");
+                    if (itemModel != null)
+                        inventoryItemFunctions.Create(itemModel);
                 }
             }
         }
