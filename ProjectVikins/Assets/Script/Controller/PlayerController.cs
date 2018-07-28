@@ -303,6 +303,5 @@ namespace Assets.Script.Controller
 
             model.DirectionsDefended = directionsDefended;
         }
-
     }
 }
