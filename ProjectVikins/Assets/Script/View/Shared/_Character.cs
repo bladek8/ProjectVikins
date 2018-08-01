@@ -23,6 +23,8 @@ namespace Assets.Script.View.Shared
         [HideInInspector] public bool isPlayable;
         [HideInInspector] public new GameObject camera;
         [HideInInspector] public CameraView cv;
+        [HideInInspector] public float halfSizeY;
+        [HideInInspector] public float distanceCenterWater;
 
         public float DistanceOfPlayer;
         public Models.PlayerViewModel model;
@@ -64,6 +66,7 @@ namespace Assets.Script.View.Shared
             SetSlideSizes();
             #endregion
 
+            halfSizeY = PlayerSpriteRenderer.size.y / 2;
             if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
         }
 
@@ -336,5 +339,20 @@ namespace Assets.Script.View.Shared
             PlayerAnimator.SetBool("WasSafe", false);
         }
         #endregion
+
+        public void InWater(float distanceToCenter)
+        {
+            //print(distanceToCenter);
+            model.SpeedRun = 1;
+            model.SpeedWalk = 1;
+
+            distanceCenterWater = distanceToCenter > halfSizeY ? halfSizeY : distanceToCenter;
+        }
+        public void OutWater()
+        {
+            model.SpeedRun = 2;
+            model.SpeedWalk = 2;
+            distanceCenterWater = 0;
+        }
     }
 }
