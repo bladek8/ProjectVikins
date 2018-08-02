@@ -33,6 +33,9 @@ namespace Assets.Script.View
 
         private void FixedUpdate()
         {
+
+            PlayerSpriteRenderer.material.SetFloat("_BottomLimit", transform.position.y - halfSizeY + distanceCenterWater);
+            
             if (disabledCountDown.CoolDown > 0)
             {
                 CountDown.DecreaseTime(disabledCountDown);
