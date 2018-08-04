@@ -9,49 +9,54 @@ namespace Assets.Script.View
 {
     public class InventoryView : MonoBehaviour
     {
-        public Image Inventary;
+        public GameObject Inventary;
+        public GameObject InventarySlot;
+        public GameObject Title;
+        public Text AmountText;
+      
         Button[] PrefabButtons;
 
         private void Update()
         {
-            if (Input.GetButtonDown("teste") && Inventary.enabled == false)
+            if (Input.GetButtonDown("teste"))
             {
+                Inventary.SetActive(!Inventary.activeSelf);
+                Title.SetActive(!Title.activeSelf);
+                PrefabButtons = GetComponentsInChildren<Button>();
+                
                 foreach (var item in DAL.ProjectVikingsContext.InventoryItens)
                 {
-                    if (item.Amount >= 1 && item.ItemId == 1)
+                    if (item.Amount >= 1 && item.ItemId == 1 && Inventary.activeSelf == true)
                     {
-                        var obj = Instantiate(item.Prefab, new Vector3(0, 0, 99), Quaternion.identity);
-                        obj.transform.SetParent(Inventary.transform);
-                        var rectTrans = obj.GetComponent<RectTransform>();
-                        rectTrans.anchoredPosition = new Vector2(0, 0);
-                        rectTrans.localScale = new Vector2(0.75f, 0.75f);
-                        var button = obj.GetComponent<Button>();
-                        button.onClick.AddListener(delegate { Interacted(item.InventoryItemId); });
+                        var obj = Instantiate(item.Prefab, transform.position, Quaternion.identity, InventarySlot.transform);
+                        //var rectTrans = obj.GetComponent<RectTransform>();
+                        AmountText.enabled = true;
+                        AmountText.text = item.Amount.ToString();
+                        //var button = obj.GetComponent<Button>();
+                        //button.onClick.AddListener(delegate { Interacted(item.InventoryItemId); });
                     }
-                    else if (item.Amount >= 1 && item.ItemId == 2)
+                    else if (item.Amount >= 1 && item.ItemId == 2 && Inventary.activeSelf == true)
                     {
-                        var obj = Instantiate(item.Prefab, new Vector3(0, 0, 99), Quaternion.identity);
-                        obj.transform.SetParent(Inventary.transform);
-                        var rectTrans = obj.GetComponent<RectTransform>();
-                        rectTrans.anchoredPosition = new Vector2(100, 0);
-                        rectTrans.localScale = new Vector2(0.75f, 0.75f);
-                        var button = obj.GetComponent<Button>();
-                        button.onClick.AddListener(delegate { Interacted(item.InventoryItemId); });
+                        var obj = Instantiate(item.Prefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        obj.transform.SetParent(InventarySlot.transform);
+                        //var rectTrans = obj.GetComponent<RectTransform>();
+                        //rectTrans.anchoredPosition = new Vector3(0, 0, 0);
+                        //rectTrans.localScale = new Vector2(1, 1);
+                        //var button = obj.GetComponent<Button>();
+                        //button.onClick.AddListener(delegate { Interacted(item.InventoryItemId); });
+                    }
+                    else if (item.Amount <= 0)
+                    {
+                        AmountText.enabled = false;
                     }
                 }
-                Inventary.enabled = true;
-            }
-
-            if (Inventary.enabled == true)
-            {
-                if (Input.GetButtonDown("Interaction"))
+                if (Inventary.activeSelf == false)
                 {
-                    Inventary.enabled = false;
-                    PrefabButtons = GetComponentsInChildren<Button>();
-                    foreach (var buttons in PrefabButtons)
-                    {
-                        Destroy(buttons.gameObject);
-                    }
+                    //PrefabButtons = GetComponentsInChildren<Button>();
+                    //foreach (var buttons in PrefabButtons)
+                    //{
+                    //    Destroy(buttons.gameObject);
+                    //}
                 }
             }
         }
