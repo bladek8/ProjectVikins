@@ -24,9 +24,7 @@ namespace Assets.Script.View
             if (!collision.isTrigger && (collision.tag == "Player" || collision.tag == "Enemy"))
             {
                 var script = collision.GetComponent<MonoBehaviour>();
-
-                print(PolygonCollider2D.Distance(collision).distance);
-
+               
                 script.CallMethod("InWater", Mathf.Abs(PolygonCollider2D.Distance(collision).distance));
 
                 //Ray2D ray = new Ray2D(PolygonCollider2D.bounds.center, collision.gameObject.transform.position);
