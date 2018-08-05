@@ -25,7 +25,7 @@ namespace Assets.Script.View
 
         private void Update()
         {
-            if (Input.GetButtonDown("teste"))
+            if (Input.GetButtonDown("teste") && !Input.GetKey(KeyCode.LeftShift))
             {
                 Inventary.SetActive(!Inventary.activeSelf);
                 Title.SetActive(!Title.activeSelf);
