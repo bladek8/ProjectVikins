@@ -14,5 +14,6 @@ namespace Assets.Script.DAL
         public int ItemId { get; set; }
         public int Amount { get; set; }
         public GameObject Prefab { get; set; }
+        public Sprite Icon { get; set; }
     }
 }

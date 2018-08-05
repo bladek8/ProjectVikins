@@ -16,5 +16,6 @@ namespace Assets.Script.Models
         public float InitialX { get; set; }
         public float InitialY { get; set; }
         public GameObject Prefab { get; set; }
+        public Sprite Icon { get; set; }
     }
 }

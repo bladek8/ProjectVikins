@@ -13,6 +13,7 @@ namespace Assets.Script.View
         public Controller.ItensController itensController;
         private BoxCollider2D BoxCollider2D;
         public GameObject Prefab;
+        public Sprite Icon;
 
         private void Awake()
         {
@@ -24,6 +25,7 @@ namespace Assets.Script.View
                 return;
             }
             model.Prefab = Prefab;
+            model.Icon = Icon;
             BoxCollider2D = GetComponent<BoxCollider2D>();
             transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
         }
