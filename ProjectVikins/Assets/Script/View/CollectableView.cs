@@ -14,10 +14,13 @@ namespace Assets.Script.View
         private BoxCollider2D BoxCollider2D;
         public GameObject Prefab;
         public Sprite Icon;
+        public Sprite DescriptionSprite;
+        public static Sprite DescriptionSpriteStatic;
 
         private void Awake()
         {
             itensController = new Controller.ItensController();
+            DescriptionSpriteStatic = DescriptionSprite;
             model = itensController.HealthGetInitialData(transform.position);
             if (model == null)
             {
@@ -32,8 +35,16 @@ namespace Assets.Script.View
 
         public Models.HealthItemViewModel GetItemModel()
         {
-            Destroy(gameObject);
-            return model;
+            if (DAL.ProjectVikingsContext.InventoryItens.Count >= InventoryView.space && DAL.ProjectVikingsContext.InventoryItens[0].ItemId != model.ItemId && DAL.ProjectVikingsContext.InventoryItens[1].ItemId != model.ItemId)
+            {
+                print("Sem espaço no inventario");
+                return null;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return model;
+            }
         }
     }
 }
