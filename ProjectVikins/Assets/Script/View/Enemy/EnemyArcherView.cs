@@ -22,7 +22,7 @@ namespace Assets.Script.View
         {
             YRange = startYRange;
             XRange = startXRange;
-            SystemManagement.SystemManagement.EnemyArcherView.Add(this);
+            //SystemManagement.SystemManagement.EnemyArcherView.Add(this);
         }
 
         private void FixedUpdate()

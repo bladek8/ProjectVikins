@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,15 @@ using UnityEngine;
 
 namespace Assets.Script.Helpers
 {
-    class MonoBehaviourAttributes : MonoBehaviour
+    public class MonoBehaviourAttributes : MonoBehaviour
     {
-        static void DestroyGameObject(GameObject ob)
+        public static void DestroyGameObject(GameObject ob)
         {
             Destroy(ob);
+        }
+        public static void StartCorrotine(IEnumerator enumerator)
+        {
+            StartCorrotine(enumerator);
         }
     }
 }

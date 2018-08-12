@@ -45,15 +45,15 @@ namespace Assets.Script.Helpers
 
         public void OnDeselect(BaseEventData eventData)
         {
+            //eventData.selectedObject.GetComponent<Selectable>().Select();
             if ((Input.mousePosition.x >= 0 && Input.mousePosition.x <= 808) || (Input.mousePosition.x >= 1190 && Input.mousePosition.x <= 1366) && (Input.mousePosition.y <= 768 && Input.mousePosition.y >= 82) || (Input.mousePosition.y <= 39 && Input.mousePosition.y >= 0))
             {
-                View.InventoryView.instance.Description.SetActive(false);
                 print("unselected");
             }
         }
 
         public void OnSelect(BaseEventData eventData)
-        { 
+        {
             View.InventoryView.instance.Description.SetActive(true);
             print("selected");
         }

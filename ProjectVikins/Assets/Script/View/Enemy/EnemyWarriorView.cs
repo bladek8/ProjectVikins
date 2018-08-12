@@ -11,7 +11,7 @@ namespace Assets.Script.View
     {
         private void Awake()
         {
-            SystemManagement.SystemManagement.EnemyWarriorView.Add(this);
+            //SystemManagement.SystemManagement.EnemyWarriorView.Add(this);
         }
 
         private void FixedUpdate()

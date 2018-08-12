@@ -55,7 +55,7 @@ namespace Assets.Script.View
                         IconSlots.AddRange(Inventary.GetComponentsInChildren<Image>());
                     if (AmountTexts.Count <= 0)
                         AmountTexts.AddRange(Inventary.GetComponentsInChildren<Text>());
-                    
+
                     for (int i = 0; i < IconSlots.Count; i++)
                     {
                         if (IconSlots[i].name != "Icon")
@@ -74,8 +74,8 @@ namespace Assets.Script.View
                         SlotButtons[j].enabled = true;
                         AmountTexts[j].enabled = true;
                         AmountTexts[j].text = item.Amount.ToString();
-                        SlotButtons[j].onClick.AddListener(delegate { LeftClickInteraction(DescriptionButton); });
-                        //Helpers.ButtonFunctions.instance.leftClick.AddListener(delegate { LeftClickInteraction(item.InventoryItemId); });
+                        var text = "texto qualquer " + j;
+                        SlotButtons[j].onClick.AddListener(delegate { LeftClickInteraction(text); });
                         j++;
                     }
                     for (int i = j; i < IconSlots.Count; i++)
@@ -125,12 +125,13 @@ namespace Assets.Script.View
             }
         }
 
-        public void LeftClickInteraction(Selectable button)
+        public void LeftClickInteraction(string text)
         {
             EventSystem.current.SetSelectedGameObject(null);
-            button.Select();
-        }
+            DescriptionButton.Select();
+            DescriptionText.text = text;
 
+        }
         public void DescriptionButtonOptions(bool isClickingButton1)
         {
             if (isClickingButton1)

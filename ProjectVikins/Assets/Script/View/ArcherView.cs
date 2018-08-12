@@ -29,8 +29,9 @@ namespace Assets.Script.View
         {
             YRange = startYRange;
             XRange = startXRange;
+            SystemManagement.SystemManagement.Scripts.Add(gameObject, this);
         }
-
+        
         private void FixedUpdate()
         {
 

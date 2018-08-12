@@ -7,6 +7,11 @@ namespace Assets.Script.View
     public class PlayerView : _Character
     {
         CountDown attackCountDown = new CountDown(1.5);
+        
+        private void Awake()
+        {
+            SystemManagement.SystemManagement.Scripts.Add(gameObject, this);
+        }
 
         private void FixedUpdate()
         {

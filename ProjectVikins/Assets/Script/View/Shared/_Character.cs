@@ -32,6 +32,10 @@ namespace Assets.Script.View.Shared
         public CountDown changeCharacterCountDown = new CountDown();
         public CountDown savePlayerCountDown = new CountDown(3);
         public CountDown disabledCountDown = new CountDown();
+        private SAP2D.SAP2DManager manager;
+        public Vector2[] path;
+        public int pathIndex;
+        public SAP2D.PathfindingConfig2D Config;
 
         public Slider LifeBar;
         RectTransform rectT;
@@ -53,7 +57,7 @@ namespace Assets.Script.View.Shared
             cv = camera.GetComponent<CameraView>();
             playerController.SetFieldOfView(gameObject.GetComponentInChildren<FieldOfView>());
             #endregion
-
+                        
             #region [Model]
             model = playerController.GetInitialData(gameObject);
             model.ForceToWalk = false;
@@ -68,6 +72,11 @@ namespace Assets.Script.View.Shared
 
             halfSizeY = PlayerSpriteRenderer.size.y / 2;
             if (model.IsBeingControllable) camera.SendMessage("UpdatePlayerTranform");
+
+            manager = SAP2D.SAP2DManager.singleton;
+            Config = ScriptableObject.CreateInstance<SAP2D.PathfindingConfig2D>();
+
+            StartCoroutine(FindPath());
         }
 
         public void CharacterUpdate()
@@ -167,7 +176,9 @@ namespace Assets.Script.View.Shared
                 {
                     if (Mathf.Abs(Vector3.Distance(transform.position, cv.playerGameObj.transform.position)) > DistanceOfPlayer)
                     {
-                        playerController.WalkToPlayer(transform, cv.playerGameObj.transform, ref model);
+                        //playerController.WalkToPlayer(transform, cv.playerGameObj.transform, ref model);
+                        playerController.target = cv.playerGameObj.transform;
+                        Move();
                         PlayerAnimator.SetBool("isWalking", true);
                     }
                     else
@@ -353,6 +364,52 @@ namespace Assets.Script.View.Shared
             model.SpeedRun = 2;
             model.SpeedWalk = 2;
             distanceCenterWater = 0;
+        }
+
+        IEnumerator FindPath()
+        { //path loop update
+
+            //if (isTargetWalkable())
+            //if the object is already in the target point, the path should not be searched
+            if (playerController.target != null)
+            {
+                if (manager.grid.GetTileFromWorldPosition(transform.position).WorldPosition != manager.grid.GetTileFromWorldPosition(playerController.target.position).WorldPosition)
+                {
+                    path = manager.FindPath(transform.position, playerController.target.position, Config);
+                    pathIndex = 0;
+                }
+            }
+            yield return new WaitForSeconds(0.15f);
+
+            StartCoroutine(FindPath());
+        }
+
+        void Move()
+        { //object movement
+            if (playerController.target != null)
+            {
+                Vector3 targetVector = manager.grid.GetTileFromWorldPosition(playerController.target.position).WorldPosition; //target tile position
+
+                if (transform.position != targetVector)
+                {
+                    if (path != null && path.Length > 0)
+                    {
+
+                        Vector3 currentTargetVector = manager.grid.GetTileFromWorldPosition(path[pathIndex]).WorldPosition; //current tile position
+
+                        //line movement to current tile
+                        transform.position = Vector2.MoveTowards(transform.position, currentTargetVector, Time.deltaTime * model.SpeedWalk);
+                        playerController.fow.TurnView(playerController.target);
+                        model.LastMoviment = playerController.GetDirection(transform.position, playerController.target.position);
+
+                        if (Vector2.Distance(transform.position, currentTargetVector) < 0.1f)
+                        { //if the object has approached a sufficient distance,
+                            if (pathIndex < path.Length - 1)                                                     //to move to the next tile
+                                pathIndex++;
+                        }
+                    }
+                }
+            }
         }
     }
 }

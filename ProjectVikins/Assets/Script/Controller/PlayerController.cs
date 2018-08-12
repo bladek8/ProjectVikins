@@ -29,8 +29,14 @@ namespace Assets.Script.Controller
         public Transform target = null;
         List<Models.EnemyViewModel> enemies;
 
+        private SAP2D.SAP2DManager manager;
+        public Vector2[] path;
+		public int pathIndex;
+        public SAP2D.PathfindingConfig2D Config;
+
         public PlayerController()
         {
+            manager = SAP2D.SAP2DManager.singleton;
         }
 
         public void Attack(Transform transform, Vector3 size)
@@ -147,12 +153,19 @@ namespace Assets.Script.Controller
             var target = controllablePlayer.transform;
             if (Math.Abs(Vector3.Distance(target.transform.position, _transform.position)) > 0.5)
             {
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
+                //var config = ScriptableObject.CreateInstance<SAP2D.PathfindingConfig2D>();
+                //if (findPathCountDown.CoolDown <= 0)
+                //{
+                //    var _path = manager.FindPath(_transform.position, target.position, config);
+                //    if (_path.Count() == 0) return;
+                //    path = _path;
+                //}
+                //Move(_transform, model.SpeedWalk);
+                //_transform.position = Vector3.MoveTowards(_transform.position, path, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
                 model.LastMoviment = GetDirection(_transform.position, target.position);
             }
         }
-
 
         public void WalkTowardTo(Transform _transform, ref PlayerViewModel model)
         {
