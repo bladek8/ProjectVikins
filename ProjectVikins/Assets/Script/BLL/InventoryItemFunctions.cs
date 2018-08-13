@@ -43,7 +43,8 @@ namespace Assets.Script.BLL
                 ItemTypeId = Convert.ToInt32(data.GetType().GetProperty("ItemTypeId").GetValue(data, null)),
                 Amount = Convert.ToInt32(data.GetType().GetProperty("Amount").GetValue(data, null)),
                 Prefab = (GameObject)data.GetType().GetProperty("Prefab").GetValue(data, null),
-                Icon = (Sprite)data.GetType().GetProperty("Icon").GetValue(data, null)
+                Icon = (Sprite)data.GetType().GetProperty("Icon").GetValue(data, null),
+                DescriptionText = (string)data.GetType().GetProperty("DescriptionText").GetValue(data, null)
             };
             return inventoryItem;
         }

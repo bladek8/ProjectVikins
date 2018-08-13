@@ -14,13 +14,12 @@ namespace Assets.Script.View
         private BoxCollider2D BoxCollider2D;
         public GameObject Prefab;
         public Sprite Icon;
-        public Sprite DescriptionSprite;
-        public static Sprite DescriptionSpriteStatic;
+        public string DescriptionText;
 
         private void Awake()
         {
+            DescriptionText = "Coco: Aumenta 5 de vida";
             itensController = new Controller.ItensController();
-            DescriptionSpriteStatic = DescriptionSprite;
             model = itensController.HealthGetInitialData(transform.position);
             if (model == null)
             {
@@ -29,6 +28,7 @@ namespace Assets.Script.View
             }
             model.Prefab = Prefab;
             model.Icon = Icon;
+            model.DescriptionText = DescriptionText;
             BoxCollider2D = GetComponent<BoxCollider2D>();
             transform.position = Utils.SetPositionZ(transform, BoxCollider2D.bounds.min.y);
         }

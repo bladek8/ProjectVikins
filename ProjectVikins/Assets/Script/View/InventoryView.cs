@@ -23,7 +23,10 @@ namespace Assets.Script.View
         #endregion
 
         public GameObject Inventary;
-        public GameObject Title;
+        public GameObject InventoryTab;
+        public GameObject CharacterTab;
+        public GameObject AbilityTreeTab;
+        public GameObject SettingsTab;
         public GameObject Description;
         public Button DescriptionButton;
         public Text DescriptionText;
@@ -45,7 +48,10 @@ namespace Assets.Script.View
             if (Input.GetButtonDown("teste") && !Input.GetKey(KeyCode.LeftShift))
             {
                 Inventary.SetActive(!Inventary.activeSelf);
-                Title.SetActive(!Title.activeSelf);
+                InventoryTab.SetActive(!InventoryTab.activeSelf);
+                CharacterTab.SetActive(!CharacterTab.activeSelf);
+                AbilityTreeTab.SetActive(!AbilityTreeTab.activeSelf);
+                SettingsTab.SetActive(!SettingsTab.activeSelf);
 
                 if (Inventary.activeSelf == true)
                 {
@@ -74,7 +80,7 @@ namespace Assets.Script.View
                         SlotButtons[j].enabled = true;
                         AmountTexts[j].enabled = true;
                         AmountTexts[j].text = item.Amount.ToString();
-                        var text = "texto qualquer " + j;
+                        var text = item.DescriptionText;
                         SlotButtons[j].onClick.AddListener(delegate { LeftClickInteraction(text); });
                         j++;
                     }
@@ -98,9 +104,11 @@ namespace Assets.Script.View
                         EventSystem.current.SetSelectedGameObject(null);
                         SlotButtons[0].Select();
                     }
+                    Time.timeScale = 0;
                 }
                 else
                 {
+                    Time.timeScale = 1;
                     Description.SetActive(false);
                 }
             }

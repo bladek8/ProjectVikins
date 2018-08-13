@@ -11,6 +11,7 @@ namespace Assets.Script.Models
         public int ItemId { get; set; }
         public DAL.ItemTypes ItemTypeId { get; set; }
         public string Name { get; set; }
+        public string DescriptionText { get; set; }
         public int Strenght { get; set; }
         public int Amount { get; set; }
         public float InitialX { get; set; }
