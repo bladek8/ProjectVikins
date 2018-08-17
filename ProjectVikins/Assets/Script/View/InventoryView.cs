@@ -14,21 +14,22 @@ namespace Assets.Script.View
         public static InventoryView instance;
         private void Awake()
         {
-            instance = this;
             if (instance != null)
             {
                 Debug.LogWarning("more than 1 instance found");
             }
+            instance = this;
         }
         #endregion
-
+        
         public GameObject Inventary;
         public GameObject InventoryTab;
         public GameObject CharacterTab;
         public GameObject AbilityTreeTab;
         public GameObject SettingsTab;
         public GameObject Description;
-        public Button DescriptionButton;
+        public GameObject EquipItem;
+        public GameObject RemoveItem;
         public Text DescriptionText;
         public static int space = 2;
 
@@ -38,9 +39,12 @@ namespace Assets.Script.View
 
         private void Start()
         {
-            IconSlots = new List<Image>();
             SlotButtons = new List<Button>();
+            IconSlots = new List<Image>();
             AmountTexts = new List<Text>();
+            SlotButtons.AddRange(Inventary.GetComponentsInChildren<Button>());
+            IconSlots.AddRange(Inventary.GetComponentsInChildren<Image>().Where(x => x.name == "Icon"));
+            AmountTexts.AddRange(Inventary.GetComponentsInChildren<Text>());
         }
 
         private void Update()
@@ -54,24 +58,7 @@ namespace Assets.Script.View
                 SettingsTab.SetActive(!SettingsTab.activeSelf);
 
                 if (Inventary.activeSelf == true)
-                {
-                    if (SlotButtons.Count <= 0)
-                        SlotButtons.AddRange(GetComponentsInChildren<Button>());
-                    if (IconSlots.Count <= 0)
-                        IconSlots.AddRange(Inventary.GetComponentsInChildren<Image>());
-                    if (AmountTexts.Count <= 0)
-                        AmountTexts.AddRange(Inventary.GetComponentsInChildren<Text>());
-
-                    for (int i = 0; i < IconSlots.Count; i++)
-                    {
-                        if (IconSlots[i].name != "Icon")
-                        {
-                            IconSlots.Remove(IconSlots[i]);
-                        }
-                        if (IconSlots[i].name == "InventorySlot")
-                            IconSlots.Remove(IconSlots[i]);
-                    }
-
+                {                    
                     int j = 0;
                     foreach (var item in DAL.ProjectVikingsContext.InventoryItens)
                     {
@@ -81,7 +68,6 @@ namespace Assets.Script.View
                         AmountTexts[j].enabled = true;
                         AmountTexts[j].text = item.Amount.ToString();
                         var text = item.DescriptionText;
-                        SlotButtons[j].onClick.AddListener(delegate { LeftClickInteraction(text); });
                         j++;
                     }
                     for (int i = j; i < IconSlots.Count; i++)
@@ -110,6 +96,8 @@ namespace Assets.Script.View
                 {
                     Time.timeScale = 1;
                     Description.SetActive(false);
+                    EquipItem.SetActive(false);
+                    RemoveItem.SetActive(false);
                 }
             }
         }
@@ -133,13 +121,19 @@ namespace Assets.Script.View
             }
         }
 
-        public void LeftClickInteraction(string text)
+        public void LeftClickInteraction()
         {
-            EventSystem.current.SetSelectedGameObject(null);
-            DescriptionButton.Select();
-            DescriptionText.text = text;
+            var image = EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Image>().Where(x => x.name == "Icon").First();
 
+            if (image.sprite.name == "coco teste_0")
+                DescriptionText.text = "Coco: Aumenta 5 de vida";
+            else if (image.sprite.name == "coco teste_1")
+                DescriptionText.text = "Coco Aberto: Aumenta 5 de força por 10 segundos";
+
+            Description.SetActive(true);
+            print("LeftClicked");
         }
+
         public void DescriptionButtonOptions(bool isClickingButton1)
         {
             if (isClickingButton1)

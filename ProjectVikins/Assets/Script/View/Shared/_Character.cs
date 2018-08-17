@@ -373,7 +373,7 @@ namespace Assets.Script.View.Shared
             //if the object is already in the target point, the path should not be searched
             if (playerController.target != null)
             {
-                if (manager.grid.GetTileFromWorldPosition(transform.position).WorldPosition != manager.grid.GetTileFromWorldPosition(playerController.target.position).WorldPosition)
+                if (manager.grid.GetTileFromWorldPosition(colliderTransform.bounds.center).WorldPosition != manager.grid.GetTileFromWorldPosition(playerController.target.position).WorldPosition)
                 {
                     path = manager.FindPath(transform.position, playerController.target.position, Config);
                     pathIndex = 0;
@@ -390,7 +390,7 @@ namespace Assets.Script.View.Shared
             {
                 Vector3 targetVector = manager.grid.GetTileFromWorldPosition(playerController.target.position).WorldPosition; //target tile position
 
-                if (transform.position != targetVector)
+                if (colliderTransform.bounds.center != targetVector)
                 {
                     if (path != null && path.Length > 0)
                     {
