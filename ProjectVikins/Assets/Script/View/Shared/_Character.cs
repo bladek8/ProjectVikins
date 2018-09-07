@@ -26,8 +26,9 @@ namespace Assets.Script.View.Shared
         [HideInInspector] public float halfSizeY;
         [HideInInspector] public float distanceCenterWater;
 
+        public int id;
         public float DistanceOfPlayer;
-        public Models.PlayerViewModel model;
+        public Models.PlayerViewModel model = new Models.PlayerViewModel();
 
         public CountDown changeCharacterCountDown = new CountDown();
         public CountDown savePlayerCountDown = new CountDown(3);
@@ -44,6 +45,7 @@ namespace Assets.Script.View.Shared
         private void Start()
         {
             playerController = new PlayerController();
+            BLL.PlayerFunctions playerFunctions = new BLL.PlayerFunctions();
 
             #region [GetComponents]
             PlayerAnimator = gameObject.GetComponent<Animator>();
@@ -59,7 +61,8 @@ namespace Assets.Script.View.Shared
             #endregion
                         
             #region [Model]
-            model = playerController.GetInitialData(gameObject);
+            //model = playerFunctions.GetDataViewModel(DAL.ProjectVikingsContext.defaultPlayer);
+            model = playerController.GetInitialData(id, gameObject);
             model.ForceToWalk = false;
             model.ForceToStop = false;
             #endregion
@@ -117,13 +120,13 @@ namespace Assets.Script.View.Shared
                             {
                                 PlayerAnimator.SetBool("isRunning", true);
                                 PlayerAnimator.SetBool("isWalking", false);
-                                playerController.Walk(keyMove.Vector2, model.SpeedRun);
+                                playerController.Walk(keyMove.Vector2, (float)model.SpeedRun);
                             }
                             else
                             {
                                 PlayerAnimator.SetBool("isWalking", true);
                                 PlayerAnimator.SetBool("isRunning", false);
-                                playerController.Walk(keyMove.Vector2, model.SpeedWalk);
+                                playerController.Walk(keyMove.Vector2, (float)model.SpeedWalk);
                             }
 
                             playerController.SetLastMoviment(input.Vector2.x, input.Vector2.y);
@@ -262,7 +265,7 @@ namespace Assets.Script.View.Shared
                 PlayerAnimator.SetBool("isWalking", false);
                 PlayerAnimator.SetBool("isRunning", false);
                 GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
-                if (model.PrefToBeAttacked)
+                if (model.IsTank)
                     DAL.ProjectVikingsContext.alivePrefPlayers.Remove(model.GameObject);
                 return true;
             }
@@ -281,7 +284,7 @@ namespace Assets.Script.View.Shared
 
         private float CalculateLife()
         {
-            return model.CurrentLife / model.MaxLife;
+            return (float)(model.CurrentLife / model.MaxLife);
         }
 
         private void SetSlideSizes()
@@ -331,7 +334,7 @@ namespace Assets.Script.View.Shared
                     DAL.ProjectVikingsContext.alivePlayers.Add(model.GameObject);
                     GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = true);
                     LifeBar.value = CalculateLife();
-                    if (model.PrefToBeAttacked)
+                    if (model.IsTank)
                         DAL.ProjectVikingsContext.alivePrefPlayers.Add(model.GameObject);
                     PlayerAnimator.SetBool("WasSafe", true);
                     break;
@@ -398,7 +401,7 @@ namespace Assets.Script.View.Shared
                         Vector3 currentTargetVector = manager.grid.GetTileFromWorldPosition(path[pathIndex]).WorldPosition; //current tile position
 
                         //line movement to current tile
-                        transform.position = Vector2.MoveTowards(transform.position, currentTargetVector, Time.deltaTime * model.SpeedWalk);
+                        transform.position = Vector2.MoveTowards(transform.position, currentTargetVector, Time.deltaTime * (float)model.SpeedWalk);
                         playerController.fow.TurnView(playerController.target);
                         model.LastMoviment = playerController.GetDirection(transform.position, playerController.target.position);
 
@@ -408,6 +411,25 @@ namespace Assets.Script.View.Shared
                                 pathIndex++;
                         }
                     }
+                }
+            }
+        }
+
+        public void UseItem(List<Models.ItemAttributtesViewModel> itemAttr)
+        {
+            foreach (var item in itemAttr)
+            {
+                switch (item.Name)
+                {
+                    case "Health":
+                        model.CurrentLife += item.Value;
+                        if (model.CurrentLife > model.MaxLife) model.CurrentLife = model.MaxLife;
+                        LifeBar.value = CalculateLife();
+                        break;
+                    case "Strenght":
+                        model.AttackMin += (int)item.Value;
+                        model.AttackMax += (int)item.Value;
+                        break;
                 }
             }
         }

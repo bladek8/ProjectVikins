@@ -14,6 +14,7 @@ namespace Assets.Script.View
         [HideInInspector] public SpriteRenderer EnemySpriteRenderer;
 
         public LayerMask playerLayer;
+        public int id;
         BoxCollider2D colliderTransform;
         [HideInInspector] public Controller.EnemyController enemyController;
         [HideInInspector] public CountDown attackCountDown = new CountDown(3);
@@ -29,7 +30,7 @@ namespace Assets.Script.View
             #endregion
 
             enemyController = new Controller.EnemyController();
-            model = enemyController.GetInitialData(gameObject);
+            model = enemyController.GetInitialData(id, gameObject);
             enemyController.SetFieldOfView(gameObject.GetComponentInChildren<FieldOfView>());
             colliderTransform = GetComponents<BoxCollider2D>().Where(x => x.isTrigger == false).First();
         }
@@ -74,7 +75,7 @@ namespace Assets.Script.View
                 DAL.ProjectVikingsContext.aliveEnemies.Remove(model.GameObject);
                 GetComponents<BoxCollider2D>().Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = false);
                 EnemyAnimator.SetBool("isWalking", false);
-                if (model.PrefToBeAttacked)
+                if (model.IsTank)
                     DAL.ProjectVikingsContext.alivePrefEnemies.Remove(model.GameObject);
                 return true;
             }

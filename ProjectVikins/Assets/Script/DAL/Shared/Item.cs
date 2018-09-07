@@ -14,5 +14,6 @@ namespace Assets.Script.DAL.Shared
         public int Amount { get; set; }
         public float InitialX { get; set; }
         public float InitialY { get; set; }
+        public string DescriptionText { get; set; }
     }
 }

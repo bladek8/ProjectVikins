@@ -38,7 +38,7 @@ namespace Assets.Script.Controller
             if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, (float)enemyFunctions.GetModelById(id).SpeedWalk.Value * Time.deltaTime);
                 fow.TurnView(target);
                 model.LastMoviment = GetDirection(_transform.position, target.position);
                 canAttack = false;
@@ -123,17 +123,17 @@ namespace Assets.Script.Controller
                     return new KeyMove(null, new Vector2(0, 0), false);
             }
         }
-        public Models.EnemyViewModel GetInitialData(GameObject go)
+        public Models.EnemyViewModel GetInitialData(int id, GameObject go)
         {
-            var data = enemyFunctions.GetDataByInitialPosition(go.transform.position);
-            if (data == null)
-            {
-                data = DAL.ProjectVikingsContext.defaultEnemy;
-                data.InitialX = go.transform.position.x;
-                data.InitialY = go.transform.position.y;
-                enemyFunctions.Create(data);
-            }
-            id = data.EnemyId;
+            var data = enemyFunctions.GetDataById(id);
+            //if (data == null)
+            //{
+            //    data = DAL.ProjectVikingsContext.defaultEnemy;
+            //    data.InitialX = go.transform.position.x;
+            //    data.InitialY = go.transform.position.y;
+            //    enemyFunctions.Create(data);
+            //}
+            this.id = id;
             var model = enemyFunctions.GetDataViewModel(data);
             model.GameObject = go;
             enemyFunctions.SetModel(model);

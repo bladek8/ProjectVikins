@@ -18,8 +18,8 @@ namespace Assets.Script.BLL
             PlayerFunctions playerFunctions = new PlayerFunctions();
             EnemyFunctions enemyFunctions = new EnemyFunctions();
 
-            ProjectVikingsContext.players = playerFunctions.GetDataByViewModel(ProjectVikingsContext.playerModels);
-            ProjectVikingsContext.enemies = enemyFunctions.GetDataByViewModel(ProjectVikingsContext.enemieModels);
+            //ProjectVikingsContext.players = playerFunctions.GetDataByViewModel(ProjectVikingsContext.playerModels);
+            //ProjectVikingsContext.enemies = enemyFunctions.GetDataByViewModel(ProjectVikingsContext.enemieModels);
 
             var currentDirectory = Directory.GetCurrentDirectory();
             var dataDirectory = Path.Combine(currentDirectory, "Save");
@@ -32,11 +32,9 @@ namespace Assets.Script.BLL
 
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream __file = File.Create(file.FullName);
-
-                if (className == typeof(Player))
-                    bf.Serialize(__file, ProjectVikingsContext.players);
-                if (className == typeof(Enemy))
-                    bf.Serialize(__file, ProjectVikingsContext.enemies);
+                
+                //if (className == typeof(Enemy))
+                //    bf.Serialize(__file, ProjectVikingsContext.enemies);
                 
                 __file.Close();
             }

@@ -9,13 +9,13 @@ namespace Assets.Script.DAL.Shared
     public class Character
     {
         public int CharacterTypeId { get; set; }
-        public float CurrentLife { get; set; }
-        public float MaxLife { get; set; }
-        public float SpeedWalk { get; set; }
-        public float SpeedRun { get; set; }
+        public double CurrentLife { get; set; }
+        public double MaxLife { get; set; }
+        public double SpeedWalk { get; set; }
+        public double SpeedRun { get; set; }
         public int AttackMin { get; set; }
         public int AttackMax { get; set; }
         public bool IsDead { get; set; }
-        public bool PrefToBeAttacked { get; set; }
+        public bool IsTank { get; set; }
     }
 }

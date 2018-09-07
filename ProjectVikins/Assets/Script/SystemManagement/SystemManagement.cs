@@ -13,26 +13,7 @@ namespace Assets.Script.SystemManagement
     {
         public static Dictionary<GameObject, MonoBehaviour> Scripts = new Dictionary<GameObject, MonoBehaviour>();
 
-        public static object CallMethod(this object _class, string methodName, object value = null)
-        {
-            try
-            {
-                object[] obj = null;
-                if (value != null)
-                    obj = new object[] { value };
-                if (_class == null) return null;
-
-                Type classType = _class.GetType();
-                MethodInfo Method = classType.GetMethod(methodName);
-                return Method.Invoke(_class, obj);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public static object CallMethod(this object _class, string methodName, object[] value)
+        public static object CallMethod(this object _class, string methodName, params object[] value)
         {
             try
             {

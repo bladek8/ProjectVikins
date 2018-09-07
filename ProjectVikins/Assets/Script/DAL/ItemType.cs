@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Assets.Script.DAL
 {
-    public class CharacterType
+    public class ItemType
     {
         [DisplayName("Key")]
-        public int CharacterTypeId { get; set; }
+        public int ItemTypeId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string ExternalCode { get; set; }

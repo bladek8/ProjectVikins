@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Script.DAL;
+using Assets.Script.Helpers;
 using Assets.Script.Models;
 using UnityEngine;
 
@@ -13,8 +14,8 @@ namespace Assets.Script.BLL
         public EnemyFunctions()
             : base("EnemyId")
         {
-            SetListContext();
-            SetListModel();
+            //SetListContext();
+            //SetListModel();
         }
 
         public override int Create(Models.EnemyViewModel model)
@@ -29,7 +30,7 @@ namespace Assets.Script.BLL
                 MaxLife = model.MaxLife.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value,
-                PrefToBeAttacked = model.PrefToBeAttacked
+                IsTank = model.IsTank
             };
             ListContext.Add(enemy);
             return enemy.EnemyId;
@@ -50,7 +51,7 @@ namespace Assets.Script.BLL
         
         public override void SetListModel()
         {
-            this.ListModel = DAL.ProjectVikingsContext.enemieModels;
+            this.ListModel = DAL.ProjectVikingsContext.enemieModels.Entity;
         }
 
         public override EnemyViewModel GetDataViewModel(Enemy data)
@@ -63,12 +64,12 @@ namespace Assets.Script.BLL
                 CharacterTypeId = data.CharacterTypeId,
                 InitialX = data.InitialX,
                 InitialY = data.InitialY,
-                LastMoviment = data.LastMoviment,
+                LastMoviment = (PossibleMoviment)data.LastMoviment,
                 CurrentLife = data.CurrentLife,
                 MaxLife = data.MaxLife,
                 SpeedRun = data.SpeedRun,
                 SpeedWalk = data.SpeedWalk,
-                PrefToBeAttacked = data.PrefToBeAttacked
+                IsTank = data.IsTank
             };
         }
 
@@ -83,12 +84,12 @@ namespace Assets.Script.BLL
                         CharacterTypeId = y.CharacterTypeId,
                         InitialX = y.InitialX,
                         InitialY = y.InitialY,
-                        LastMoviment = y.LastMoviment,
+                        LastMoviment = (PossibleMoviment)y.LastMoviment,
                         CurrentLife = y.CurrentLife,
                         MaxLife = y.MaxLife,
                         SpeedRun = y.SpeedRun,
                         SpeedWalk = y.SpeedWalk,
-                        PrefToBeAttacked = y.PrefToBeAttacked
+                        IsTank = y.IsTank
                     }).ToList();
         }
 
@@ -102,12 +103,12 @@ namespace Assets.Script.BLL
                 CharacterTypeId = model.CharacterTypeId.Value,
                 InitialX = model.InitialX.Value,
                 InitialY = model.InitialY.Value,
-                LastMoviment = model.LastMoviment.Value,
+                LastMoviment = (int)model.LastMoviment.Value,
                 CurrentLife = model.CurrentLife.Value,
                 MaxLife = model.MaxLife.Value,
                 SpeedRun = model.SpeedRun.Value,
                 SpeedWalk = model.SpeedWalk.Value,
-                PrefToBeAttacked = model.PrefToBeAttacked
+                IsTank = model.IsTank
             };
         }
 
@@ -122,18 +123,18 @@ namespace Assets.Script.BLL
                         CharacterTypeId = y.CharacterTypeId.Value,
                         InitialX = y.InitialX.Value,
                         InitialY = y.InitialY.Value,
-                        LastMoviment = y.LastMoviment.Value,
+                        LastMoviment = (int)y.LastMoviment.Value,
                         CurrentLife = y.CurrentLife.Value,
                         MaxLife = y.MaxLife.Value,
                         SpeedRun = y.SpeedRun.Value,
                         SpeedWalk = y.SpeedWalk.Value,
-                        PrefToBeAttacked = y.PrefToBeAttacked
+                        IsTank = y.IsTank
                     }).ToList();
         }
 
         public override void SetListContext()
         {
-            this.ListContext = ProjectVikingsContext.enemies;
+            this.ListContext = ProjectVikingsContext.Enemy.Data;
         }
     }
 }

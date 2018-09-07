@@ -172,7 +172,7 @@ namespace Assets.Script.Controller
             if (fow.visibleTargets.Contains(target))
             {
                 if (target == null) return;
-                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, target.transform.position, (float)playerFunctions.GetModelById(id).SpeedWalk * Time.deltaTime);
                 fow.TurnView(target);
                 model.LastMoviment = GetDirection(_transform.position, target.position);
                 canAttack = false;
@@ -210,7 +210,10 @@ namespace Assets.Script.Controller
 
         public bool GetIsControllable()
         {
-            return playerFunctions.GetModelById(id).IsBeingControllable;
+            var _player = DAL.ProjectVikingsContext.playerModels.Entity.SingleOrDefault(x => x.PlayerId == id);
+            var player = playerFunctions.GetModelById(id);
+            
+            return player == null? false : playerFunctions.GetModelById(id).IsBeingControllable;
         }
 
         public bool GetPlayerMode()
@@ -248,17 +251,18 @@ namespace Assets.Script.Controller
             }
         }
 
-        public Models.PlayerViewModel GetInitialData(GameObject go)
+        public Models.PlayerViewModel GetInitialData(int id, GameObject go)
         {
-            var data = playerFunctions.GetDataByInitialPosition(go.transform.position);
-            if (data == null)
-            {
-                data = DAL.ProjectVikingsContext.defaultPlayer;
-                data.InitialX = go.transform.position.x;
-                data.InitialY = go.transform.position.y;
-                playerFunctions.Create(data);
-            }
-            id = data.PlayerId;
+            var data = playerFunctions.GetDataById(id);
+
+            //if (data == null)
+            //{
+            //    //data = DAL.ProjectVikingsContext.defaultPlayer;
+            //    //data.InitialX = go.transform.position.x;
+            //    //data.InitialY = go.transform.position.y;
+            //    //playerFunctions.Create(data);
+            //}
+            this.id = id;
             var model = playerFunctions.GetDataViewModel(data);
             model.GameObject = go;
             playerFunctions.SetModel(model);
@@ -293,7 +297,7 @@ namespace Assets.Script.Controller
 
         public static void GetSliderEnemy(Transform target)
         {
-            var enemy = ProjectVikingsContext.enemieModels.Where(x => x.GameObject.transform == target).ToList();
+            var enemy = ProjectVikingsContext.enemieModels.Entity.Where(x => x.GameObject.transform == target).ToList();
             if (enemy.Count() == 0)
                 return;
             else

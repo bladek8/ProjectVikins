@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Script.Helpers;
 using System;
+using System.ComponentModel;
 
 namespace Assets.Script.DAL
 {
     [Serializable]
     public class Player : Shared.Character
     {
-        public string Key = "PlayerId";
+        [DisplayName("Key")]
         public int PlayerId { get; set; }
-        public float InitialX { get; set; }
-        public float InitialY { get; set; }
-        public PossibleMoviment LastMoviment { get; set; }
+        public double InitialX { get; set; }
+        public double InitialY { get; set; }
+        public int LastMoviment { get; set; }
         public bool IsBeingControllable { get; set; }
         public PlayerModes PlayerMode { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
     }
 }

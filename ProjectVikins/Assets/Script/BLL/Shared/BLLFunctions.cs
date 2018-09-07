@@ -18,6 +18,8 @@ namespace Assets.Script.BLL.Shared
 
         public BLLFunctions(string entityIdPropertyName)
         {
+            SetListContext();
+            SetListModel();
             this.entityIdPropertyName = entityIdPropertyName;
         }
 
@@ -28,8 +30,8 @@ namespace Assets.Script.BLL.Shared
 
         public TEntity GetDataById(object id)
         {
-            var idProperty = ListContext[0].GetType().GetProperty(entityIdPropertyName);
-            return ListContext.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
+            var idProperty = typeof(TEntity).GetProperties().SingleOrDefault(x => x.Name == entityIdPropertyName);
+            return ListContext.SingleOrDefault(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id);
         }
 
         public List<TViewModel> GetModels()
@@ -39,25 +41,8 @@ namespace Assets.Script.BLL.Shared
 
         public TViewModel GetModelById(object id)
         {
-            var idProperty = ListModel[0].GetType().GetProperty(entityIdPropertyName);
-            return ListModel.Where(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id).First();
-        }
-
-        public TEntity GetDataByInitialPosition(Vector3 initialPosition)
-        {
-            Vector2 vector2 = initialPosition;
-            var initialX = ListContext[0].GetType().GetProperty("InitialX");
-            var initialY = ListContext[0].GetType().GetProperty("InitialY");
-            foreach(var a in ListContext)
-            {
-                var b = initialX.GetValue(a, null);
-                var c = initialY.GetValue(a, null);
-                var d = new Vector2((float)b, (float)c);
-                if (d == vector2)
-                    return a;
-            }
-            return null;
-            
+            var idProperty = (typeof(TViewModel)).GetProperties().SingleOrDefault(x => x.Name == entityIdPropertyName);
+            return ListModel.SingleOrDefault(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id);
         }
 
         public abstract int Create(TViewModel model);

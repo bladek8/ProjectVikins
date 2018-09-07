@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -9,10 +10,12 @@ namespace Assets.Script.DAL
     [Serializable]
     public class Enemy : Shared.Character
     {
-        public string Key = "EnemyId";
+        [DisplayName("Key")]
         public int EnemyId { get; set; }
-        public Helpers.PossibleMoviment LastMoviment { get; set; }
-        public float InitialX { get; set; }
-        public float InitialY { get; set; }
+        public int LastMoviment { get; set; }
+        public double InitialX { get; set; }
+        public double InitialY { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
     }
 }

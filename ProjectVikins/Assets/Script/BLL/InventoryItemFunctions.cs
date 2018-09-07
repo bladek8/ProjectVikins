@@ -13,7 +13,6 @@ namespace Assets.Script.BLL
         public InventoryItemFunctions()
             : base("InventoryItemId")
         {
-            SetListContext();
         }
 
         public override int Create(InventoryItem data)
@@ -29,7 +28,7 @@ namespace Assets.Script.BLL
         {
             var inventoryItem = InventoryItemCast(data);
             if (ListContext.Any(x => x.ItemId == inventoryItem.ItemId))
-                ListContext.Where(x => x.ItemId == inventoryItem.ItemId).First().Amount += inventoryItem.Amount;
+                ListContext.SingleOrDefault(x => x.ItemId == inventoryItem.ItemId).Amount += inventoryItem.Amount;
             else
                 ListContext.Add(inventoryItem);
             return inventoryItem.InventoryItemId;
@@ -40,18 +39,20 @@ namespace Assets.Script.BLL
             var inventoryItem = new InventoryItem
             {
                 ItemId = Convert.ToInt32(data.GetType().GetProperty("ItemId").GetValue(data, null)),
-                ItemTypeId = Convert.ToInt32(data.GetType().GetProperty("ItemTypeId").GetValue(data, null)),
                 Amount = Convert.ToInt32(data.GetType().GetProperty("Amount").GetValue(data, null)),
-                Prefab = (GameObject)data.GetType().GetProperty("Prefab").GetValue(data, null),
-                Icon = (Sprite)data.GetType().GetProperty("Icon").GetValue(data, null),
-                DescriptionText = (string)data.GetType().GetProperty("DescriptionText").GetValue(data, null)
+                InventoryItemId = ListContext.Count + 1
             };
             return inventoryItem;
         }
 
         public override void SetListContext()
         {
-            this.ListContext = ProjectVikingsContext.InventoryItens;
+            this.ListContext = ProjectVikingsContext.InventoryItens.Entity;
+        }
+
+        public void DecreaseAmount(int? itemId)
+        {
+            GetData().FirstOrDefault(x => x.ItemId == itemId).Amount--;
         }
     }
 }

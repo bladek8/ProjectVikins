@@ -26,7 +26,7 @@ namespace Assets.Script.View
 
         float? CalculateLife()
         {
-            return model.CurrentLife / model.MaxLife;
+            return (float)(model.CurrentLife / model.MaxLife);
         }
     }
 }

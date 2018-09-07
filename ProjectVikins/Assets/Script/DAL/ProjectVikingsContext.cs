@@ -5,89 +5,29 @@ using UnityEditor;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Linq;
 using UnityEngine;
+using Assets.Script.Helpers.Shared;
+using Assets.Script.Models;
 
 namespace Assets.Script.DAL
 {
     public class ProjectVikingsContext
     {
+
+        public static Sql<Player> Player = new Sql<Player>();
+        public static Sql<Enemy> Enemy = new Sql<Enemy>();
+        public static Sql<CharacterType> CharacterType = new Sql<CharacterType>();
+        public static Sql<InventoryItem> InventoryItem = new Sql<InventoryItem>();
+        public static Sql<ItemType> ItemTypes = new Sql<ItemType>();
+        public static Sql<Item> Item = new Sql<Item>();
+
         public static void GetSave()
         {
-            List<Player> player = new List<Player>();
-            List<Enemy> enemy = new List<Enemy>();
-            List<HealthItem> healthItem = new List<HealthItem>();
-            List<StrenghtItem> strenghtItem = new List<StrenghtItem>();
-            List<InventoryItem> InventoryItem = new List<InventoryItem>();
-
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var dataDirectory = Path.Combine(currentDirectory, "Save");
-            var files = new DirectoryInfo(dataDirectory).GetFiles("*.dat");
-
-            foreach (var file in files)
-            {
-                if (file.Name == "Enemy.dat")
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    FileStream __file = File.Create(file.FullName);
-                    enemy = new List<Enemy>() { new Enemy() { EnemyId = 1, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = 0, InitialY = -2, SpeedWalk = 1.5f, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false }, new Enemy() { EnemyId = 2, AttackMax = 1, AttackMin = 1, CharacterTypeId = 2, InitialX = -23, InitialY = -4, SpeedWalk = 1, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, SpeedRun = 2, IsDead = false, PrefToBeAttacked = true } };
-                    bf.Serialize(__file, enemy);
-                    __file.Close();
-                }
-                if (file.Name == "Player.dat")
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    FileStream __file = File.Create(file.FullName);
-                    player = new List<Player>() { new Player() { PlayerId = 1, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = -27, InitialY = 0, SpeedWalk = 1.5f, SpeedRun = 2, IsBeingControllable = true, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 15, MaxLife = 15, PlayerMode = Helpers.PlayerModes.Follow, X = -27, Y = 0, IsDead = false, PrefToBeAttacked = true }, new Player() { PlayerId = 2, AttackMax = 5, AttackMin = 2, CharacterTypeId = 1, InitialX = 1.15f, InitialY = -25, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 3, IsDead = false }, new Player() { PlayerId = 3, AttackMax = 2, AttackMin = 1, CharacterTypeId = 1, InitialX = -25, InitialY = 0, SpeedWalk = 3, SpeedRun = 2, IsBeingControllable = false, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 5, MaxLife = 5, PlayerMode = Helpers.PlayerModes.Follow, X = -25, Y = 0, IsDead = false } };
-                    bf.Serialize(__file, player);
-                    __file.Close();
-                }
-                if (file.Name == "HealthItem.dat")
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    FileStream __file = File.Create(file.FullName);
-                    healthItem = new List<HealthItem>() { new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -19, InitialY = 0.9f }, new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -17, InitialY = 0.7f }, new HealthItem() { ItemId = 1, Name = "Coconut", Health = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem, InitialX = -18, InitialY = 1.25f } };
-                    bf.Serialize(__file, healthItem);
-                    __file.Close();
-                }
-                if (file.Name == "StrenghtItem.dat")
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    FileStream __file = File.Create(file.FullName);
-                    strenghtItem = new List<StrenghtItem>() { new StrenghtItem() { ItemId = 2, Name = "OpenedCoconut", Strenght = 10, Amount = 1, ItemTypeId = (int)ItemTypes.StrenghtItem, InitialX = -18.4f, InitialY = 1.9f } };
-                    bf.Serialize(__file, strenghtItem);
-                    __file.Close();
-                }
-                if (file.Name == "InventoryItem.dat")
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    FileStream __file = File.Create(file.FullName);
-                    //InventoryItem = new List<InventoryItem>() { new InventoryItem() {InventoryItemId = 1,  ItemId = 1, Amount = 1, ItemTypeId = (int)ItemTypes.HealthItem } };
-                    InventoryItem = new List<InventoryItem>();
-                    bf.Serialize(__file, InventoryItem);
-                    __file.Close();
-                }
-                var fileName = file.Name.Split('.');
-                var className = Type.GetType("Assets.Script.DAL." + fileName[0]);
-
-                if (file.Directory.Exists)
-                {
-                    FileStream _file = File.Open(file.FullName, FileMode.Open);
-
-                    if (className == typeof(Player))
-                        players = SetList<Player>(_file);
-                    if (className == typeof(Enemy))
-                        enemies = SetList<Enemy>(_file);
-                    if (className == typeof(HealthItem))
-                        HealthItens = SetList<HealthItem>(_file);
-                    if (className == typeof(StrenghtItem))
-                        StrenghtItens = SetList<StrenghtItem>(_file);
-                    if (className == typeof(InventoryItem))
-                        InventoryItens = SetList<InventoryItem>(_file);
-
-                    _file.Close();
-                }
-            }
+            ItemTypes.GetData();
+            Item.GetData();
+            Player.GetData();
+            Enemy.GetData();
         }
-        
+
         public static List<TEntity> SetList<TEntity>(FileStream file)
         where TEntity : class
         {
@@ -103,37 +43,32 @@ namespace Assets.Script.DAL
 
         public static void UpdateAliveLists()
         {
-            aliveEnemies = enemieModels.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
-            alivePlayers = playerModels.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
-            alivePrefPlayers = playerModels.Where(x => !x.IsDead && x.PrefToBeAttacked).Select(x => x.GameObject).ToList();
-            alivePrefEnemies = enemieModels.Where(x => !x.IsDead && x.PrefToBeAttacked).Select(x => x.GameObject).ToList();
+            aliveEnemies = enemieModels.Entity.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
+            alivePlayers = playerModels.Entity.Where(x => !x.IsDead).Select(x => x.GameObject).ToList();
+            alivePrefPlayers = playerModels.Entity.Where(x => !x.IsDead && x.IsTank).Select(x => x.GameObject).ToList();
+            alivePrefEnemies = enemieModels.Entity.Where(x => !x.IsDead && x.IsTank).Select(x => x.GameObject).ToList();
         }
 
         #region [Players/Enemies]
         public static List<CharacterType> CharactersType;
 
-        public static List<Models.EnemyViewModel> enemieModels = new List<Models.EnemyViewModel>();
+        public static ViewComponentViewModel<EnemyViewModel> enemieModels = new ViewComponentViewModel<EnemyViewModel> { Entity = new List<EnemyViewModel>() };
         public static List<GameObject> aliveEnemies = new List<GameObject>();
         public static List<GameObject> alivePrefEnemies = new List<GameObject>();
-        public static List<Models.PlayerViewModel> playerModels = new List<Models.PlayerViewModel>();
+        public static ViewComponentViewModel<PlayerViewModel> playerModels = new ViewComponentViewModel<PlayerViewModel> { Entity = new List<PlayerViewModel>() };
         public static List<GameObject> alivePlayers = new List<GameObject>();
         public static List<GameObject> alivePrefPlayers = new List<GameObject>();
-
-        public static List<Enemy> enemies = new List<Enemy>();
-        public static List<Player> players = new List<Player>();
         #endregion
 
         #region [Inventory]
-        public static List<HealthItem> HealthItens = new List<DAL.HealthItem>();
-        public static List<StrenghtItem> StrenghtItens = new List<StrenghtItem>();
-        public static List<InventoryItem> InventoryItens = new List<DAL.InventoryItem>();
+        public static ViewComponentViewModel<ItemViewModel> ItemViewModel = new ViewComponentViewModel<ItemViewModel> { Entity = new List<ItemViewModel>()};
+        public static ViewComponentViewModel<InventoryItem> InventoryItens = new ViewComponentViewModel<InventoryItem> { Entity = new List<InventoryItem>()};
         #endregion
-
-        #region [DefaultValues]
-        public static readonly Player defaultPlayer = new Player() { PlayerId = players.Count, PlayerMode = Helpers.PlayerModes.Follow, IsBeingControllable = false, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 3, MaxLife = 3, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
-        public static readonly Enemy defaultEnemy = new Enemy() { EnemyId = enemies.Count, AttackMin = 2, AttackMax = 4, LastMoviment = Helpers.PossibleMoviment.None, CurrentLife = 10, MaxLife = 10, SpeedRun = 2, SpeedWalk = 2, CharacterTypeId = 1, IsDead = false };
-        public static readonly HealthItem defaultHealthItem = new HealthItem() { ItemId = HealthItens.Count, ItemTypeId = (int)ItemTypes.HealthItem, Health = 2, Amount = 1, Name = "Coconut" };
-        public static readonly StrenghtItem defaultStrenghtItem = new StrenghtItem() { ItemId = StrenghtItens.Count, ItemTypeId = (int)ItemTypes.StrenghtItem, Strenght = 10, Amount = 1, Name = "OpenedCoconut" };
-        #endregion
+        
+        public class ViewComponentViewModel<TEntity> where TEntity : class
+        {
+            public List<TEntity> _entity;
+            public List<TEntity> Entity { get { return _entity; } set { _entity = value; } }
+        }
     }
 }

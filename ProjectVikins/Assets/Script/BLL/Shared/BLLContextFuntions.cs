@@ -13,6 +13,7 @@ namespace Assets.Script.BLL.Shared
 
         public BLLContextFuntions(string entityIdPropertyName)
         {
+            SetListContext();
             this.entityIdPropertyName = entityIdPropertyName;
         }
 

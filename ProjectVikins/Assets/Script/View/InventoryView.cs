@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Assets.Script.SystemManagement;
 
 namespace Assets.Script.View
 {
@@ -21,7 +22,8 @@ namespace Assets.Script.View
             instance = this;
         }
         #endregion
-        
+
+        public Image icon;
         public GameObject Inventary;
         public GameObject InventoryTab;
         public GameObject CharacterTab;
@@ -32,6 +34,11 @@ namespace Assets.Script.View
         public GameObject RemoveItem;
         public Text DescriptionText;
         public static int space = 2;
+
+        private BLL.InventoryItemFunctions inventoryItemFunctions = new BLL.InventoryItemFunctions();
+        private BLL.ItemFunctions itemFunctions = new BLL.ItemFunctions();
+        private BLL.ItemTypeFunctions itemTypeFunctions = new BLL.ItemTypeFunctions();
+        private BLL.PlayerFunctions PlayerFunctions = new BLL.PlayerFunctions();
 
         List<Button> SlotButtons;
         List<Image> IconSlots;
@@ -49,7 +56,7 @@ namespace Assets.Script.View
 
         private void Update()
         {
-            if (Input.GetButtonDown("teste") && !Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.I) && !Input.GetKey(KeyCode.LeftShift))
             {
                 Inventary.SetActive(!Inventary.activeSelf);
                 InventoryTab.SetActive(!InventoryTab.activeSelf);
@@ -58,38 +65,8 @@ namespace Assets.Script.View
                 SettingsTab.SetActive(!SettingsTab.activeSelf);
 
                 if (Inventary.activeSelf == true)
-                {                    
-                    int j = 0;
-                    foreach (var item in DAL.ProjectVikingsContext.InventoryItens)
-                    {
-                        IconSlots[j].sprite = item.Icon;
-                        IconSlots[j].enabled = true;
-                        SlotButtons[j].enabled = true;
-                        AmountTexts[j].enabled = true;
-                        AmountTexts[j].text = item.Amount.ToString();
-                        var text = item.DescriptionText;
-                        j++;
-                    }
-                    for (int i = j; i < IconSlots.Count; i++)
-                    {
-                        IconSlots[i].sprite = null;
-                        IconSlots[i].enabled = false;
-                        SlotButtons[i].enabled = false;
-                        AmountTexts[i].enabled = false;
-                    }
-                    if (DAL.ProjectVikingsContext.InventoryItens.Count > 0)
-                    {
-                        if (DAL.ProjectVikingsContext.InventoryItens[0].ItemTypeId == 1)
-                        {
-                            DescriptionText.text = "Coco: Aumenta 5 de vida";
-                        }
-                        else
-                        {
-                            DescriptionText.text = "Coco Aberto: Aumenta 5 de força por 10 segundos";
-                        }
-                        EventSystem.current.SetSelectedGameObject(null);
-                        SlotButtons[0].Select();
-                    }
+                {
+                    UpdateInventory();
                     Time.timeScale = 0;
                 }
                 else
@@ -102,34 +79,53 @@ namespace Assets.Script.View
             }
         }
 
-        public void Interacted(int inventoryItemId)
+        public void UpdateInventory()
         {
-            var inventoryItem = DAL.ProjectVikingsContext.InventoryItens.Where(x => x.InventoryItemId == inventoryItemId).First();
+            int j = 0;
+            foreach (var item in inventoryItemFunctions.GetData().Where(x => x.Amount > 0))
+            {
+                //arrumar questão dos Id's por serem iguais
+                var _item = itemFunctions.GetModels().FirstOrDefault(x => x.ItemId == item.ItemId);
+                SetValues(_item.Icon, true, j);
+                AmountTexts[j].text = item.Amount.ToString();
+                j++;
+            }
+            for (int i = j; i < IconSlots.Count; i++)
+            {
+                SetValues(null, false, j);
+            }
 
-            if (inventoryItem.ItemTypeId == (int)DAL.ItemTypes.HealthItem)
+            if (inventoryItemFunctions.GetData().Count > 0)
             {
-                var heatlhItem = DAL.ProjectVikingsContext.HealthItens.Where(x => x.ItemId == inventoryItem.ItemId).First();
-                DAL.ProjectVikingsContext.playerModels.First().CurrentLife += heatlhItem.Health * heatlhItem.Amount;
-                print("Player usou o item de vida");
+                EventSystem.current.SetSelectedGameObject(null);
+                SlotButtons[0].Select();
             }
-            else if (inventoryItem.ItemTypeId == (int)DAL.ItemTypes.StrenghtItem)
-            {
-                var strenghtItem = DAL.ProjectVikingsContext.StrenghtItens.Where(x => x.ItemId == inventoryItem.ItemId).First();
-                DAL.ProjectVikingsContext.playerModels.First().AttackMin += strenghtItem.Strenght * strenghtItem.Amount;
-                DAL.ProjectVikingsContext.playerModels.First().AttackMax += strenghtItem.Strenght * strenghtItem.Amount;
-                print("Player usou o item de força");
-            }
+        }
+        
+        public void Interacted(int? itemId)
+        {
+            if (!itemId.HasValue) return;
+            
+            var player = PlayerFunctions.GetModelById(PlayerFunctions.GetIdOfControllable());
+            MonoBehaviour script;
+            SystemManagement.SystemManagement.Scripts.TryGetValue(player.GameObject, out script);
+            
+            var itemAttr = itemFunctions.GetItemAtributtes(itemId.Value);
+            script.CallMethod("UseItem", itemAttr);
+            //_p.UseItem(itemAttr);
+
+            //player.UseItem(itemAttr);            
+            inventoryItemFunctions.DecreaseAmount(itemId);
+
+            UpdateInventory();
         }
 
         public void LeftClickInteraction()
         {
-            var image = EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Image>().Where(x => x.name == "Icon").First();
+            var image = EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Image>().SingleOrDefault(x => x.name == "Icon");
 
-            if (image.sprite.name == "coco teste_0")
-                DescriptionText.text = "Coco: Aumenta 5 de vida";
-            else if (image.sprite.name == "coco teste_1")
-                DescriptionText.text = "Coco Aberto: Aumenta 5 de força por 10 segundos";
-
+            var item = itemFunctions.GetDataByIcon(image.sprite);
+            DescriptionText.text = item.Name + ": " + item.DescriptionText;
             Description.SetActive(true);
             print("LeftClicked");
         }
@@ -138,10 +134,9 @@ namespace Assets.Script.View
         {
             if (isClickingButton1)
             {
-                foreach (var item in DAL.ProjectVikingsContext.InventoryItens)
-                {
-                    Interacted(item.InventoryItemId);
-                }
+                var item = itemFunctions.GetDataByIcon(icon.sprite);
+                Interacted(item.ItemId);
+
                 print("Equipping item/Using item");
             }
             else
@@ -149,5 +144,14 @@ namespace Assets.Script.View
                 print("Removing item");
             }
         }
+
+        public void SetValues(Sprite sprite, bool enable, int j)
+        {
+            IconSlots[j].sprite = sprite;
+            IconSlots[j].enabled = enable;
+            SlotButtons[j].enabled = enable;
+            AmountTexts[j].enabled = enable;
+        }
+
     }
 }

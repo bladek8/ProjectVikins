@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Script.DAL;
+using Assets.Script.Helpers;
 using Assets.Script.Models;
 
 namespace Assets.Script.BLL
 {
-    public class PlayerFunctions : Shared.BLLFunctions<DAL.Player, Models.PlayerViewModel>
+    public class PlayerFunctions : Shared.BLLFunctions<Player, PlayerViewModel>
     {
         public PlayerFunctions()
             : base("PlayerId")
         {
-            SetListContext();
-            SetListModel();
         }
+
         public override int Create(Models.PlayerViewModel model)
         {
             var player = new DAL.Player()
@@ -31,8 +31,8 @@ namespace Assets.Script.BLL
                 PlayerMode = model.PlayerMode.Value,
                 InitialX = model.InitialX,
                 InitialY = model.InitialY,
-                LastMoviment = model.LastMoviment.Value,
-                PrefToBeAttacked = model.PrefToBeAttacked
+                LastMoviment = (int)model.LastMoviment.Value,
+                IsTank = model.IsTank
             };
             ListContext.Add(player);
             return player.PlayerId;
@@ -61,14 +61,14 @@ namespace Assets.Script.BLL
                 InitialX = data.InitialX,
                 InitialY = data.InitialY,
                 IsBeingControllable = data.IsBeingControllable,
-                LastMoviment = data.LastMoviment,
+                LastMoviment = (PossibleMoviment)data.LastMoviment,
                 CurrentLife = data.CurrentLife,
                 MaxLife = data.MaxLife,
                 PlayerId = data.PlayerId,
                 PlayerMode = data.PlayerMode,
                 SpeedRun = data.SpeedRun,
                 SpeedWalk = data.SpeedWalk,
-                PrefToBeAttacked = data.PrefToBeAttacked
+                IsTank = data.IsTank
             };
         }
 
@@ -83,26 +83,26 @@ namespace Assets.Script.BLL
                          InitialX = y.InitialX,
                          InitialY = y.InitialY,
                          IsBeingControllable = y.IsBeingControllable,
-                         LastMoviment = y.LastMoviment,
+                         LastMoviment = (PossibleMoviment)y.LastMoviment,
                          CurrentLife = y.CurrentLife,
                          MaxLife = y.MaxLife,
                          PlayerId = y.PlayerId,
                          PlayerMode = y.PlayerMode,
                          SpeedRun = y.SpeedRun,
                          SpeedWalk = y.SpeedWalk,
-                         PrefToBeAttacked = y.PrefToBeAttacked
+                         IsTank = y.IsTank
                      }).ToList();
             return r;
         }
 
         public override void SetListContext()
         {
-            this.ListContext = DAL.ProjectVikingsContext.players;
+            this.ListContext = DAL.ProjectVikingsContext.Player.Data;
         }
 
         public override void SetListModel()
         {
-            this.ListModel = DAL.ProjectVikingsContext.playerModels;
+            this.ListModel = DAL.ProjectVikingsContext.playerModels.Entity;
         }
 
         public void ChangeControllableCharacter(int id)
@@ -138,7 +138,7 @@ namespace Assets.Script.BLL
             player.InitialX = player.InitialX;
             player.InitialY = player.InitialY;
             player.IsBeingControllable = model.IsBeingControllable;
-            player.LastMoviment = model.LastMoviment.Value;
+            player.LastMoviment = (int)model.LastMoviment.Value;
             player.CurrentLife = model.CurrentLife;
             player.MaxLife = model.MaxLife;
             player.PlayerId = player.PlayerId;
@@ -147,7 +147,7 @@ namespace Assets.Script.BLL
             player.SpeedWalk = model.SpeedWalk;
             player.X = model.GameObject.transform.position.x;
             player.Y = model.GameObject.transform.position.y;
-            player.PrefToBeAttacked = model.PrefToBeAttacked;
+            player.IsTank = model.IsTank;
 
             return player;
         }
@@ -163,7 +163,7 @@ namespace Assets.Script.BLL
                         InitialX = y.InitialX,
                         InitialY = y.InitialY,
                         IsBeingControllable = y.IsBeingControllable,
-                        LastMoviment = y.LastMoviment.Value,
+                        LastMoviment = (int)y.LastMoviment.Value,
                         CurrentLife = y.CurrentLife,
                         MaxLife = y.MaxLife,
                         PlayerId = y.PlayerId,
@@ -172,7 +172,7 @@ namespace Assets.Script.BLL
                         SpeedWalk = y.SpeedWalk,
                         X = y.GameObject.transform.position.x,
                         Y = y.GameObject.transform.position.y,
-                        PrefToBeAttacked = y.PrefToBeAttacked
+                        IsTank = y.IsTank
                     }).ToList();
         }
 
@@ -180,6 +180,11 @@ namespace Assets.Script.BLL
         {
             foreach (var y in ListModel)
                 y.PlayerMode = Helpers.PlayerModes.Attack;
+        }
+
+        public int GetIdOfControllable()
+        {
+            return this.ListModel.SingleOrDefault(x => x.IsBeingControllable).PlayerId;
         }
     }
 }

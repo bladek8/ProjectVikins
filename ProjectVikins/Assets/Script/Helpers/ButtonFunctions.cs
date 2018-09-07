@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.UI;
+using Assets.Script.View;
+using System.Linq;
 
 namespace Assets.Script.Helpers
 {
@@ -60,7 +62,7 @@ namespace Assets.Script.Helpers
             //{
             //    print("unselected");
             //}
-            View.InventoryView.instance.Description.SetActive(false);
+            //View.InventoryView.instance.Description.SetActive(false);
         }
 
         public void OnSelect(BaseEventData eventData) //Util para o joystick
@@ -71,6 +73,9 @@ namespace Assets.Script.Helpers
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            var _icon = eventData.pointerEnter.GetComponentsInChildren<Image>().FirstOrDefault(x => x.gameObject.layer == LayerMask.NameToLayer("Icon")); 
+            InventoryView.instance.icon = _icon;
+
             if (Icon.enabled == true)
             {
                 highlightImage.enabled = true;
@@ -140,6 +145,7 @@ namespace Assets.Script.Helpers
 
         public void RightClickInteraction()
         {
+
             if (button.enabled == true)
             {
                 equipItem.SetActive(true);
