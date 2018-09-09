@@ -417,6 +417,8 @@ namespace Assets.Script.View.Shared
 
         public void UseItem(List<Models.ItemAttributtesViewModel> itemAttr)
         {
+            if (!model.IsBeingControllable) return;
+
             foreach (var item in itemAttr)
             {
                 switch (item.Name)
