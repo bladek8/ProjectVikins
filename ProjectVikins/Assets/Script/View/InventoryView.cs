@@ -24,6 +24,7 @@ namespace Assets.Script.View
         #endregion
 
         public Image icon;
+        public Image highlightImage;
         public GameObject Inventary;
         public GameObject InventoryTab;
         public GameObject CharacterTab;
@@ -72,6 +73,7 @@ namespace Assets.Script.View
                 else
                 {
                     Time.timeScale = 1;
+                    highlightImage.enabled = false;
                     Description.SetActive(false);
                     EquipItem.SetActive(false);
                     RemoveItem.SetActive(false);
@@ -136,7 +138,8 @@ namespace Assets.Script.View
             {
                 var item = itemFunctions.GetDataByIcon(icon.sprite);
                 Interacted(item.ItemId);
-
+                EquipItem.SetActive(false);
+                RemoveItem.SetActive(false);
                 print("Equipping item/Using item");
             }
             else

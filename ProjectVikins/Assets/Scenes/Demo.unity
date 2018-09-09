@@ -210,6 +210,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -1172,6 +1176,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -2143,6 +2151,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -2762,7 +2774,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 1.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2785,7 +2797,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 163982690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -27, y: 0.000000059604645, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 241417037}
@@ -3406,6 +3418,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -4283,6 +4299,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -5338,6 +5358,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -5737,6 +5761,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -6564,6 +6592,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -6781,6 +6813,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -8089,6 +8125,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -8426,6 +8466,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -9194,6 +9238,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -9738,6 +9786,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -10021,6 +10073,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -15572,6 +15628,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -16011,6 +16071,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -16871,6 +16935,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -16943,7 +17011,7 @@ GameObject:
   - component: {fileID: 1304363766}
   - component: {fileID: 1304363764}
   m_Layer: 5
-  m_Name: LeftClickOption1
+  m_Name: RightClickOption1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17016,7 +17084,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1304363766}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -17406,6 +17474,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -21254,6 +21326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
+  highlightImage: {fileID: 518340205}
   Inventary: {fileID: 1716178139}
   InventoryTab: {fileID: 1890821772}
   CharacterTab: {fileID: 1095010447}
@@ -23477,6 +23550,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -26349,6 +26426,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -27159,6 +27240,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -27638,7 +27723,7 @@ GameObject:
   - component: {fileID: 1846047286}
   - component: {fileID: 1846047284}
   m_Layer: 5
-  m_Name: LeftClickOption2
+  m_Name: RightClickOption2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28098,6 +28183,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -28197,6 +28286,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -28488,6 +28581,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
@@ -30268,6 +30365,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
   m_IsPrefabAsset: 0
@@ -31053,6 +31154,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236933871620516, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3276331cde1250b4ba5611d2e19c3764, type: 2}
