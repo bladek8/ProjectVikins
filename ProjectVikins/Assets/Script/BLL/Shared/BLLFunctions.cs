@@ -41,7 +41,7 @@ namespace Assets.Script.BLL.Shared
 
         public TViewModel GetModelById(object id)
         {
-            var idProperty = (typeof(TViewModel)).GetProperties().SingleOrDefault(x => x.Name == entityIdPropertyName);
+            var idProperty = (typeof(TViewModel)).GetProperties().SingleOrDefault(x => x.Name == "Internal" + entityIdPropertyName);
             return ListModel.SingleOrDefault(x => int.Parse(idProperty.GetValue(x, null).ToString()) == (int)id);
         }
 

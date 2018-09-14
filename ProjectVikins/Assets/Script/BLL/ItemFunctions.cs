@@ -74,8 +74,10 @@ namespace Assets.Script.BLL
 
         public override int SetModel(ItemViewModel model)
         {
+            model.InternalItemId = ListModel.Count + 1;
+
             this.ListModel.Add(model);
-            return model.ItemId.Value;
+            return model.InternalItemId;
         }
 
         public ItemViewModel GetDataByIcon(Sprite icon)

@@ -14,8 +14,6 @@ namespace Assets.Script.BLL
         public EnemyFunctions()
             : base("EnemyId")
         {
-            //SetListContext();
-            //SetListModel();
         }
 
         public override int Create(Models.EnemyViewModel model)
@@ -44,9 +42,11 @@ namespace Assets.Script.BLL
 
         public override int SetModel(Models.EnemyViewModel model)
         {
+            model.InternalEnemyId = ListModel.Count + 1;
+
             ListModel.Add(model);
             ProjectVikingsContext.UpdateAliveLists();
-            return model.EnemyId;
+            return model.InternalEnemyId;
         }
         
         public override void SetListModel()

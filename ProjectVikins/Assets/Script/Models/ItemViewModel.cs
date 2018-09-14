@@ -9,6 +9,7 @@ namespace Assets.Script.Models
     public class ItemViewModel
     {
         public int? ItemId { get; set; }
+        public int InternalItemId { get; set; }
         public int? ItemTypeId { get; set; }
         public int? Amount { get; set; }
         public string DescriptionText { get; set; }

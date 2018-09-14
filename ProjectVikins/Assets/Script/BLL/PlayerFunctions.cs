@@ -40,9 +40,11 @@ namespace Assets.Script.BLL
 
         public override int SetModel(Models.PlayerViewModel model)
         {
+            model.InternalPlayerId = ListModel.Count + 1;
+
             ListModel.Add(model);
             ProjectVikingsContext.UpdateAliveLists();
-            return model.PlayerId;
+            return model.InternalPlayerId;
         }
 
         public int Create(Player data)
@@ -184,7 +186,7 @@ namespace Assets.Script.BLL
 
         public int GetIdOfControllable()
         {
-            return this.ListModel.SingleOrDefault(x => x.IsBeingControllable).PlayerId;
+            return this.ListModel.SingleOrDefault(x => x.IsBeingControllable).InternalPlayerId;
         }
     }
 }

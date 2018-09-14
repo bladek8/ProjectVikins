@@ -9,6 +9,7 @@ namespace Assets.Script.Models
     public class EnemyViewModel
     {
         public Helpers.PossibleMoviment? LastMoviment { get; set; }
+        public int InternalEnemyId { get; set; }
         public int EnemyId { get; set; }
         public int? CharacterTypeId { get; set; }
         public double? CurrentLife { get; set; }

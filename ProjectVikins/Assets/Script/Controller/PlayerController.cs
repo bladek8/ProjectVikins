@@ -31,7 +31,7 @@ namespace Assets.Script.Controller
 
         private SAP2D.SAP2DManager manager;
         public Vector2[] path;
-		public int pathIndex;
+        public int pathIndex;
         public SAP2D.PathfindingConfig2D Config;
 
         public PlayerController()
@@ -212,8 +212,8 @@ namespace Assets.Script.Controller
         {
             var _player = DAL.ProjectVikingsContext.playerModels.Entity.SingleOrDefault(x => x.PlayerId == id);
             var player = playerFunctions.GetModelById(id);
-            
-            return player == null? false : playerFunctions.GetModelById(id).IsBeingControllable;
+
+            return player == null ? false : playerFunctions.GetModelById(id).IsBeingControllable;
         }
 
         public bool GetPlayerMode()
@@ -262,10 +262,10 @@ namespace Assets.Script.Controller
             //    //data.InitialY = go.transform.position.y;
             //    //playerFunctions.Create(data);
             //}
-            this.id = id;
             var model = playerFunctions.GetDataViewModel(data);
             model.GameObject = go;
-            playerFunctions.SetModel(model);
+            this.id = playerFunctions.SetModel(model);
+            model.InternalPlayerId = this.id;
             return model;
         }
 

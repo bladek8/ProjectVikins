@@ -11,6 +11,7 @@ namespace Assets.Script.Models
     {
         public GameObject GameObject { get; set; }
         public PossibleMoviment? LastMoviment { get; set; }
+        public int InternalPlayerId { get; set; }
         public int PlayerId { get; set; }
         public int? CharacterTypeId { get; set; }
         public double CurrentLife { get; set; }

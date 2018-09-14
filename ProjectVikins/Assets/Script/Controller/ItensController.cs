@@ -21,7 +21,7 @@ namespace Assets.Script.Controller
             model.Prefab = prefab;
             model.Icon = icon;
 
-            itemFunctions.SetModel(model);
+            model.InternalItemId = itemFunctions.SetModel(model);
             return model;
         }
 

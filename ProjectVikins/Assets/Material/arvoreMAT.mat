@@ -4,10 +4,10 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: arvoreMAT
-  m_Shader: {fileID: 4800000, guid: 92f060c3b1e94364f8e06d85b86d7dac, type: 3}
+  m_Shader: {fileID: 4800000, guid: e716cb402c6ab8740af7fa6a51adf698, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -63,7 +63,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BendScale: 1
+    - _BendScale: 0.608
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1

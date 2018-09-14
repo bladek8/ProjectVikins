@@ -133,10 +133,10 @@ namespace Assets.Script.Controller
             //    data.InitialY = go.transform.position.y;
             //    enemyFunctions.Create(data);
             //}
-            this.id = id;
             var model = enemyFunctions.GetDataViewModel(data);
             model.GameObject = go;
-            enemyFunctions.SetModel(model);
+            this.id = enemyFunctions.SetModel(model);
+            model.InternalEnemyId = this.id;
 
             return model;
         }
